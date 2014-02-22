@@ -1,0 +1,96 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="1.4.0-borrowing" author="daniel.arndt">
+		<createTable tableName="Borrowing">
+			<column name="id" autoIncrement="true" type="bigint(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="borrowDate" type="date">
+				<constraints nullable="true" />
+			</column>
+			<column name="borrowerEmailAddress" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="1.4.0-book" author="daniel.arndt">
+		<createTable tableName="Book">
+			<column name="id" autoIncrement="true" type="bigint(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="title" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="author" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="edition" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="isbn" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="year" type="int(4)">
+				<constraints nullable="true" />
+			</column>
+			<column name="emailAddress" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="currentBorrowing_id" type="bigint(20)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint constraintName="FK_BORROWING"
+			referencedTableName="Borrowing" baseColumnNames="currentBorrowing_id"
+			baseTableName="Book" referencedColumnNames="id" />
+	</changeSet>
+
+	<changeSet id="1.4.0-testdata" author="daniel.arndt">
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und der Stein der Weisen" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551551677" />
+			<column name="year" value="1998" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und die Kammer des Schreckens" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551551685" />
+			<column name="year" value="1999" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und der Gefangene von Askaban" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551551693" />
+			<column name="year" value="1999" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und der Feuerkelch" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551551936" />
+			<column name="year" value="2000" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und der Orden des Phönix" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551555559" />
+			<column name="year" value="2003" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und der Halbblutprinz" />
+			<column name="edition" value="" />
+			<column name="isbn" value="3551354065" />
+			<column name="year" value="2010" />
+		</insert>
+		<insert tableName="Book">
+			<column name="title" value="Harry Potter und die Heiligtümer des Todes" />
+			<column name="edition" value="" />
+			<column name="isbn" value="355155577X" />
+			<column name="year" value="2010" />
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>

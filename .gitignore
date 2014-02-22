@@ -1,0 +1,7 @@
+*/target/
+*/bin/
+*/.project
+*/.classpath
+*/.metadata
+*/local.properties
+*/.settings/

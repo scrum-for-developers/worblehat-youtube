@@ -1,0 +1,5 @@
+[paths]
+default = http://psd:codecentric@${PSD_SERVER}/hg/worblehat
+
+[ui]
+ignore = ${HG_REPO}/worblehat-build/hgignore

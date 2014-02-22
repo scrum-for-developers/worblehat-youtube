@@ -1,0 +1,5 @@
+#Tue Apr 05 15:47:00 CEST 2011
+file_export_version=3.0
+@org.eclipse.ui.workbench=3.6.2.M20110210-1200
+/instance/org.eclipse.ui.workbench/org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<org.eclipse.ui.commands>\r\n<keyBinding commandId\="com.vectrace.MercurialEclipse.menu.CommitHandler" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+C"/>\r\n<keyBinding commandId\="com.vectrace.MercurialEclipse.menu.PullHandler" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+U"/>\r\n<keyBinding commandId\="com.vectrace.MercurialEclipse.menu.PushHandler" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+P"/>\r\n<keyBinding commandId\="com.vectrace.MercurialEclipse.menu.SyncHandler" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+S"/>\r\n</org.eclipse.ui.commands>
+\!/=
