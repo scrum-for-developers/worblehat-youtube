@@ -72,39 +72,55 @@ public class Library {
 	
 	
 	@Then("the library contains only the book with <isbn>")
-	public void shouldContainOnlyOneBook(@Named("isbn") String isbn) throws SQLException
-	{  
+	public void shouldContainOnlyOneBook(@Named("isbn") String isbn) throws SQLException {
+		waitForServerResponse();
 		database.shouldReturnExactlyOne("SELECT * FROM Book WHERE isbn = '" + isbn + "'");
 	}
 
 	@Then("the library contains a no book with an <attribute> of <value>")
 	public void thenTheDatabaseContainsANoEntryForBookisbn(@Named("attribute") String attribute,
 			@Named("value") String value) throws SQLException{
+		waitForServerResponse();
 		database.shouldReturnNothing("SELECT * FROM Book WHERE " + getColumnForAttribute(attribute) + " = '" + value + "'");
 	}
 
 	@Then("the book <isbn> is not available for borrowing anymore")
 	public void shouldNotBeAvailableForBorrowing(@Named("isbn") String isbn) throws SQLException{
+		waitForServerResponse();
 		database.shouldReturnNothing("SELECT * FROM Book WHERE isbn = '"+isbn+"' AND currentBorrowing_id is null");
 	}
 
 	@Then("the user <user> has borrowed the book <isbn>")
 	public void thenTheUseruserHasBorrowedTheBookisbn(@Named("user") String user, @Named("isbn") String isbn) throws SQLException{
+		waitForServerResponse();
 		String id = database.getResult("SELECT id FROM Borrowing WHERE borrowerEmailAddress='"+user+"'");
 		database.shouldReturnExactlyOne("SELECT * FROM Book WHERE currentBorrowing_id="+id+" AND isbn='"+isbn+"'");
 	}
 
 	@Then("books <isbns> are not borrowed anymore by user <user>")
 	public void shouldNotBorrowBooks(@Named("isbns") String isbns, @Named("user") String user) throws SQLException{
+		waitForServerResponse();
 		database.shouldReturnNothing("SELECT * FROM Borrowing WHERE borrowerEmailAddress='"+user+"'");
 	}
 
 	@Then("books <isbns2> are still borrowed by user <user2>")
-	public void userShouldBorrowBooks(@Named("isbns") String isbns, @Named("user") String user) throws SQLException{
+	public void userShouldBorrowBooks(@Named("isbns") String isbns, @Named("user") String user) throws SQLException {
+		waitForServerResponse();
 		List<String> isbnList = getListOfItems(isbns);
 		for (String isbn : isbnList) {
 			database.shouldReturnExactlyOne("SELECT count(*) FROM Book b LEFT JOIN Borrowing g ON b.currentBorrowing_id = g.id " +
 					"WHERE borrowerEmailAddress = '"+user+"' and isbn = '"+isbn+"'");
+		}
+	}
+
+	private void waitForServerResponse() {
+		// normally you would have much better mechanisms for waiting for a
+		// server response. We are choosing a simple solution for the sake of this
+		// training 
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// pass
 		}
 	}
 	
