@@ -301,7 +301,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jbehave.core.version>3.6.6</jbehave.core.version>
 		<jbehave.site.version>3.1.1</jbehave.site.version>
-		<selenium.version>2.21.0</selenium.version>
+		<selenium.version>2.40.0</selenium.version>
 		<embeddables>**/*Stories.java</embeddables>
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
