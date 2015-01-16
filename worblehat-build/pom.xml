@@ -396,7 +396,7 @@
 		    <psd.dbserver.username>worblehat</psd.dbserver.username>
 		    <psd.dbserver.password>worblehat</psd.dbserver.password>
                     <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
-                    <sonar.jdbc.url>jdbc:${env.SONAR_DB_HOST}://mysql/sonar</sonar.jdbc.url>
+                    <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
                     <sonar.jdbc.username>sonar</sonar.jdbc.username>
                     <sonar.jdbc.password>123qwe</sonar.jdbc.password>
                 </properties>
