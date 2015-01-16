@@ -10,12 +10,6 @@
 	<artifactId>worblehat-domain</artifactId>
 	<name>worblehat-domain</name>
 
-	<properties>
-		<psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
-		<psd.dbserver.username>worblehat</psd.dbserver.username>
-		<psd.dbserver.password>worblehat</psd.dbserver.password>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -58,8 +52,8 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -75,15 +69,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-        <profiles>
-            <profile>
-                <id>jenkins</id>
-                <properties>
-		    <psd.dbserver.url>jdbc:${env.WORBLEHAT_DB_HOST}://mysql/worblehat</psd.dbserver.url>
-		    <psd.dbserver.username>worblehat</psd.dbserver.username>
-		    <psd.dbserver.password>worblehat</psd.dbserver.password>
-                </properties>
-            </profile>
-        </profiles>
 </project>

@@ -13,7 +13,11 @@
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.0.4.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.6.4</org.slf4j-version>
+		<psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
+		<psd.dbserver.username>worblehat</psd.dbserver.username>
+		<psd.dbserver.password>worblehat</psd.dbserver.password>
 	</properties>
+
 	<scm>
 		<connection>scm:hg:http://${env.PSD_SERVER}/hg/worblehat/</connection>
 		<developerConnection>scm:hg:http://${env.PSD_SERVER}/hg/worblehat</developerConnection>
@@ -385,6 +389,18 @@
 				<module>../worblehat-acceptancetests</module>
 			</modules>
 		</profile>
+            <profile>
+                <id>jenkins</id>
+                <properties>
+		    <psd.dbserver.url>jdbc:${env.WORBLEHAT_DB_HOST}://mysql/worblehat</psd.dbserver.url>
+		    <psd.dbserver.username>worblehat</psd.dbserver.username>
+		    <psd.dbserver.password>worblehat</psd.dbserver.password>
+                    <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+                    <sonar.jdbc.url>jdbc:${env.SONAR_DB_HOST}://mysql/sonar</sonar.jdbc.url>
+                    <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                    <sonar.jdbc.password>123qwe</sonar.jdbc.password>
+                </properties>
+            </profile>
 	</profiles>
 
 </project>
