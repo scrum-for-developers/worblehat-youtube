@@ -19,29 +19,29 @@
 		<developerConnection>scm:hg:http://${env.PSD_SERVER}/hg/worblehat</developerConnection>
 	</scm>
 	<url>http://${env.PSD_SERVER}/site/worblehat-build/</url>
-	<ciManagement>
-		<system>jenkins</system>
-		<url>http://${env.PSD_SERVER}/jenkins/</url>
-	</ciManagement>
 	<modules>
 		<module>../worblehat-domain</module>
 		<module>../worblehat-web</module>
 	</modules>
+	<ciManagement>
+		<system>jenkins</system>
+		<url>${env.JENKINS_URL}</url>
+	</ciManagement>
 	<distributionManagement>
 	    <repository>
 	        <id>psd-teamserver-releases</id>
 	        <name>psd-teamserver.internal-releases</name>
-	        <url>http://${env.PSD_SERVER}/artifactory/libs-release-local</url>
+	        <url>${env.ARTIFACTORY_URL}/libs-release-local</url>
 	    </repository>
-		<snapshotRepository>
-			<id>psd-teamserver-snapshots</id>
+	    <snapshotRepository>
+	        <id>psd-teamserver-snapshots</id>
 	        <name>psd-teamserver.internal-snapshots</name>
-	        <url>http://${env.PSD_SERVER}/artifactory/libs-snapshot-local</url>
-		</snapshotRepository>
-		<site>
-			<id>psd-teamserver-website</id>
-			<url>dav:http://${env.PSD_SERVER}/site/worblehat-build/</url>
-		</site>
+	        <url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
+	    </snapshotRepository>
+	    <site>
+	        <id>psd-teamserver-website</id>
+		<url>dav:${env.APACHE_URL}/site/worblehat-build/</url>
+	    </site>
 	</distributionManagement>
 
 	<dependencyManagement>
