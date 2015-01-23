@@ -44,7 +44,7 @@
 	    </snapshotRepository>
 	    <site>
 	        <id>psd-teamserver-website</id>
-		<url>dav:${env.APACHE_URL}/site/worblehat-build/</url>
+            <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
 	    </site>
 	</distributionManagement>
 
