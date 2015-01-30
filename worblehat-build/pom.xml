@@ -32,20 +32,20 @@
 		<url>${env.JENKINS_URL}</url>
 	</ciManagement>
 	<distributionManagement>
-	    <repository>
-	        <id>psd-teamserver-releases</id>
-	        <name>psd-teamserver.internal-releases</name>
-	        <url>${env.ARTIFACTORY_URL}/libs-release-local</url>
-	    </repository>
-	    <snapshotRepository>
-	        <id>psd-teamserver-snapshots</id>
-	        <name>psd-teamserver.internal-snapshots</name>
-	        <url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
-	    </snapshotRepository>
-	    <site>
-	        <id>psd-teamserver-website</id>
-            <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
-	    </site>
+			<repository>
+					<id>psd-teamserver-releases</id>
+					<name>psd-teamserver.internal-releases</name>
+					<url>${env.ARTIFACTORY_URL}/libs-release-local</url>
+			</repository>
+			<snapshotRepository>
+					<id>psd-teamserver-snapshots</id>
+					<name>psd-teamserver.internal-snapshots</name>
+					<url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
+			</snapshotRepository>
+			<site>
+					<id>psd-teamserver-website</id>
+						<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+			</site>
 	</distributionManagement>
 
 	<dependencyManagement>
@@ -361,22 +361,22 @@
 			</extension>
 		</extensions>
 	</build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.11</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-    </plugins>
-  </reporting>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.11</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 	<profiles>
 		<profile>
 			<id>include-acceptancetests</id>
@@ -389,18 +389,18 @@
 				<module>../worblehat-acceptancetests</module>
 			</modules>
 		</profile>
-            <profile>
-                <id>jenkins</id>
-                <properties>
-		    <psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
-		    <psd.dbserver.username>worblehat</psd.dbserver.username>
-		    <psd.dbserver.password>worblehat</psd.dbserver.password>
-                    <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
-                    <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
-                    <sonar.jdbc.username>sonar</sonar.jdbc.username>
-                    <sonar.jdbc.password>123qwe</sonar.jdbc.password>
-                </properties>
-            </profile>
+						<profile>
+								<id>jenkins</id>
+								<properties>
+				<psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
+				<psd.dbserver.username>worblehat</psd.dbserver.username>
+				<psd.dbserver.password>worblehat</psd.dbserver.password>
+										<sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+										<sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
+										<sonar.jdbc.username>sonar</sonar.jdbc.username>
+										<sonar.jdbc.password>123qwe</sonar.jdbc.password>
+								</properties>
+						</profile>
 	</profiles>
 
 </project>
