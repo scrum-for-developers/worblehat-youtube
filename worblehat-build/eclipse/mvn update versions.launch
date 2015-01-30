@@ -6,6 +6,6 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${env_var:MAVEN_HOME}/bin/mvn.bat"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-s C:\psd\bin\maven\conf\settings.xml --batch-mode -Dinclude-acceptancetests -DnewVersion=${string_prompt:the new version of all pom.xml files} versions:set"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-s C:\psd\maven_repository\settings.xml --batch-mode -Dinclude-acceptancetests -DnewVersion=${string_prompt:the new version of all pom.xml files} versions:set"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/worblehat-build}"/>
 </launchConfiguration>
