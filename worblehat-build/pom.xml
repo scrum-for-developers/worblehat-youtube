@@ -117,8 +117,8 @@
 			<!-- JPA -->
 			<dependency>
 				<groupId>javax.persistence</groupId>
-				<artifactId>com.springsource.javax.persistence</artifactId>
-				<version>1.0.0</version>
+				<artifactId>persistence-api</artifactId>
+				<version>1.0.2</version>
 			</dependency>
 			<!-- Logging -->
 			<dependency>
