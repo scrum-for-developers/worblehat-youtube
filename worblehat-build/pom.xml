@@ -79,11 +79,6 @@
 				<artifactId>spring-orm</artifactId>
 				<version>${org.springframework-version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate</artifactId>
-				<version>3.3.2.GA</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.hibernate</groupId>
