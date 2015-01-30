@@ -303,15 +303,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>install</id>
-							<phase>install</phase>
-							<goals>
-								<goal>sources</goal>
-							</goals>
-						</execution>
-					</executions>
+					<version>2.10</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
