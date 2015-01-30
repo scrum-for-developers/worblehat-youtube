@@ -10,19 +10,16 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<java-version>1.6</java-version>
+		<java-version>1.8</java-version>
+		
 		<org.springframework-version>3.0.4.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.6.4</org.slf4j-version>
+		
 		<psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
 		<psd.dbserver.username>worblehat</psd.dbserver.username>
 		<psd.dbserver.password>worblehat</psd.dbserver.password>
 	</properties>
 
-	<scm>
-		<connection>scm:hg:http://${env.PSD_SERVER}/hg/worblehat/</connection>
-		<developerConnection>scm:hg:http://${env.PSD_SERVER}/hg/worblehat</developerConnection>
-	</scm>
-	<url>http://${env.PSD_SERVER}/site/worblehat-build/</url>
 	<modules>
 		<module>../worblehat-domain</module>
 		<module>../worblehat-web</module>
@@ -44,7 +41,7 @@
 			</snapshotRepository>
 			<site>
 					<id>psd-teamserver-website</id>
-						<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+					<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
 			</site>
 	</distributionManagement>
 
@@ -224,58 +221,11 @@
 		</dependencies>
 	</dependencyManagement>
 	<repositories>
-		<!-- For testing against latest Spring snapshots -->
-		<repository>
-			<id>org.springframework.maven.snapshot</id>
-			<name>Spring Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- For developing against latest Spring milestones -->
-		<repository>
-			<id>org.springframework.maven.milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
 	</repositories>
+	
 	<pluginRepositories>
-		<pluginRepository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</pluginRepository>
 	</pluginRepositories>
+	
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -289,42 +239,9 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.9</version>
-					<configuration>
-						<wtpversion>2.0</wtpversion>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.10</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.18.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-changes-plugin</artifactId>
-					<version>2.11</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.4</version>
-				</plugin>
-				<plugin>
 					<groupId>org.liquibase</groupId>
 					<artifactId>liquibase-maven-plugin</artifactId>
-					<version>2.0.3</version>
+					<version>3.3.2</version>
 					<configuration>
 						<logging>info</logging>
 						<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>

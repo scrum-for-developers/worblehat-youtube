@@ -9,9 +9,6 @@
 			<property name="severity" value="warning"/>
 			<property name="max" value="7"/>
 		</module>
-		<module name="DoubleCheckedLocking">
-			<property name="severity" value="warning"/>
-		</module>
 		<module name="HiddenField">
 			<property name="severity" value="warning"/>
 			<property name="tokens" value="VARIABLE_DEF"/>
@@ -71,9 +68,6 @@
 			<property name="severity" value="warning"/>
 		</module>
 		<module name="ConstantName">
-			<property name="severity" value="info"/>
-		</module>
-		<module name="RedundantThrows">
 			<property name="severity" value="info"/>
 		</module>
 		<module name="ParameterAssignment">
