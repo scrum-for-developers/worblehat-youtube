@@ -103,8 +103,8 @@
 		</pluginManagement>
 	</build>
 	<profiles>
-		<!-- profile for various browsers. set the BROWSER_PROFILE property can 
-			be activated from hudson by setting the environment variable maven.browser-profile 
+		<!-- profile for various browsers. set the BROWSER_PROFILE property can
+			be activated from hudson by setting the environment variable maven.browser-profile
 			to firefox, iexplorer or chrome -->
 		<profile>
 			<id>xp</id>
@@ -209,7 +209,7 @@
 			<id>ci</id>
 			<activation>
 				<property>
-					<!-- this is set automatically by Hudson, thus, configure here what 
+					<!-- this is set automatically by Hudson, thus, configure here what
 						is different when tests are run on hudson server -->
 					<name>env.WORKSPACE</name>
 				</property>
@@ -301,7 +301,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jbehave.core.version>3.6.6</jbehave.core.version>
 		<jbehave.site.version>3.1.1</jbehave.site.version>
-		<selenium.version>2.40.0</selenium.version>
+		<selenium.version>2.44.0</selenium.version>
 		<embeddables>**/*Stories.java</embeddables>
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
