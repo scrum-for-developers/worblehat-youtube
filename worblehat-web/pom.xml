@@ -12,7 +12,11 @@
 
 	<name>worblehat-web</name>
 	<artifactId>worblehat-web</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
+
+	<properties>
+		<start-class>de.codecentric.Application</start-class>
+	</properties>
 
 	<url>http://${env.PSD_SERVER}/site/worblehat-web</url>
 	<dependencies>
@@ -84,5 +88,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
