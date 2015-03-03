@@ -18,7 +18,7 @@
 		<psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
 		<psd.dbserver.username>worblehat</psd.dbserver.username>
 		<psd.dbserver.password>worblehat</psd.dbserver.password> <!-- Jacoco config -->
- 	</properties>
+	</properties>
 
 	<modules>
 		<module>../worblehat-domain</module>
@@ -29,20 +29,20 @@
 		<url>${env.JENKINS_URL}</url>
 	</ciManagement>
 	<distributionManagement>
-			<repository>
-					<id>psd-teamserver-releases</id>
-					<name>psd-teamserver.internal-releases</name>
-					<url>${env.ARTIFACTORY_URL}/libs-release-local</url>
-			</repository>
-			<snapshotRepository>
-					<id>psd-teamserver-snapshots</id>
-					<name>psd-teamserver.internal-snapshots</name>
-					<url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
-			</snapshotRepository>
-			<site>
-					<id>psd-teamserver-website</id>
-					<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
-			</site>
+		<repository>
+			<id>psd-teamserver-releases</id>
+			<name>psd-teamserver.internal-releases</name>
+			<url>${env.ARTIFACTORY_URL}/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>psd-teamserver-snapshots</id>
+			<name>psd-teamserver.internal-snapshots</name>
+			<url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
+		</snapshotRepository>
+		<site>
+			<id>psd-teamserver-website</id>
+			<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+		</site>
 	</distributionManagement>
 
 	<dependencyManagement>
@@ -263,15 +263,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.8</version>
-				<!--
-					Fixes build warning
-					[WARNING] The repository url 'http://url.to/repository' is invalid - Repository 'repository-id' will be blacklisted.
-					see http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin
-				-->
+				<!-- Fixes build warning [WARNING] The repository url 'http://url.to/repository' 
+					is invalid - Repository 'repository-id' will be blacklisted. see http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin -->
 				<configuration>
 					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 				</configuration>
-		</plugin>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changes-plugin</artifactId>
@@ -300,49 +297,48 @@
 		</profile>
 		<profile>
 			<id>jenkins</id>
-				<properties>
-					<psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
-					<psd.dbserver.username>worblehat</psd.dbserver.username>
-					<psd.dbserver.password>worblehat</psd.dbserver.password>
-					<sonar.host.url>${env.SONAR_URL}</sonar.host.url>
-					<sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
-					<sonar.jdbc.username>sonar</sonar.jdbc.username>
-					<sonar.jdbc.password>123qwe</sonar.jdbc.password>
-				</properties>
+			<properties>
+				<psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
+				<psd.dbserver.username>worblehat</psd.dbserver.username>
+				<psd.dbserver.password>worblehat</psd.dbserver.password>
+				<sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+				<sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
+				<sonar.jdbc.username>sonar</sonar.jdbc.username>
+				<sonar.jdbc.password>123qwe</sonar.jdbc.password>
+			</properties>
 		</profile>
 
-                <profile>
-                    <id>coverage</id>
-                    <build>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.jacoco</groupId>
-                            <artifactId>jacoco-maven-plugin</artifactId>
-                            <version>0.7.2.201409121644</version>
-                            <executions>
-                                <!-- Prepares the property pointing to the JaCoCo
-                                    runtime agent which is passed as VM argument when Maven the Surefire plugin
-                                    is executed. -->
-                                <execution>
-                                    <id>pre-unit-test</id>
-                                    <goals>
-                                        <goal>prepare-agent</goal>
-                                    </goals>
-                                </execution>
+		<profile>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.2.201409121644</version>
+						<executions>
+							<!-- Prepares the property pointing to the JaCoCo runtime agent which 
+								is passed as VM argument when Maven the Surefire plugin is executed. -->
+							<execution>
+								<id>pre-unit-test</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
 
-                                <!-- Ensures that the code coverage report for
-                                    unit tests is created after unit tests have been run. -->
-                                <execution>
-                                    <id>post-unit-test</id>
-                                    <phase>test</phase>
-                                    <goals>
-                                        <goal>report</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </build>
-            </profile>
+							<!-- Ensures that the code coverage report for unit tests is created 
+								after unit tests have been run. -->
+							<execution>
+								<id>post-unit-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>

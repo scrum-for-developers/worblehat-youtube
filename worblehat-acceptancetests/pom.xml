@@ -20,7 +20,7 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		
+
 		<plugins>
 			<plugin>
 				<groupId>org.jbehave</groupId>
@@ -51,8 +51,8 @@
 		</plugins>
 	</build>
 	<profiles>
-		<!-- profile for various browsers. set the BROWSER_PROFILE property can
-			be activated from hudson by setting the environment variable maven.browser-profile
+		<!-- profile for various browsers. set the BROWSER_PROFILE property can 
+			be activated from hudson by setting the environment variable maven.browser-profile 
 			to firefox, iexplorer or chrome -->
 		<profile>
 			<id>xp</id>
@@ -157,7 +157,7 @@
 			<id>ci</id>
 			<activation>
 				<property>
-					<!-- this is set automatically by Hudson, thus, configure here what
+					<!-- this is set automatically by Hudson, thus, configure here what 
 						is different when tests are run on hudson server -->
 					<name>env.WORKSPACE</name>
 				</property>
@@ -239,11 +239,11 @@
 			<artifactId>jbehave-junit-runner</artifactId>
 			<version>1.0.1</version>
 		</dependency>
-<dependency>
-    <groupId>org.jbehave.web</groupId>
-    <artifactId>jbehave-web-selenium</artifactId>
-    <version>3.5.5</version>
-</dependency>
+		<dependency>
+			<groupId>org.jbehave.web</groupId>
+			<artifactId>jbehave-web-selenium</artifactId>
+			<version>3.5.5</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
