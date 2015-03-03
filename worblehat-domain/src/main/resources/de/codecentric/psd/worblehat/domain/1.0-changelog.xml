@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-	<changeSet id="1.4.0-borrowing" author="daniel.arndt">
+	<changeSet id="1.0-borrowing" author="daniel.arndt">
 		<createTable tableName="Borrowing">
 			<column name="id" autoIncrement="true" type="bigint(20)">
 				<constraints primaryKey="true" nullable="false" />
@@ -16,7 +16,7 @@
 		</createTable>
 	</changeSet>
 
-	<changeSet id="1.4.0-book" author="daniel.arndt">
+	<changeSet id="1.0-book" author="daniel.arndt">
 		<createTable tableName="Book">
 			<column name="id" autoIncrement="true" type="bigint(20)">
 				<constraints primaryKey="true" nullable="false" />
@@ -48,7 +48,7 @@
 			baseTableName="Book" referencedColumnNames="id" />
 	</changeSet>
 
-	<changeSet id="1.4.0-testdata" author="daniel.arndt">
+	<changeSet id="1.0-testdata" author="daniel.arndt">
 		<insert tableName="Book">
 			<column name="title" value="Harry Potter und der Stein der Weisen" />
 			<column name="edition" value="" />

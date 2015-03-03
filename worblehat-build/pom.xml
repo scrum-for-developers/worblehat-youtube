@@ -5,12 +5,12 @@
 
 	<groupId>de.codecentric.psd</groupId>
 	<artifactId>worblehat-build</artifactId>
-	<version>2.1.0-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<name>worblehat-build</name>
 	<packaging>pom</packaging>
 
 	<properties>
-		<java-version>1.7</java-version>
+		<java.version>1.7</java.version>
 
 		<org.springframework-version>3.0.4.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.6.4</org.slf4j-version>
@@ -234,8 +234,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.2</version>
 					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -263,8 +263,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.8</version>
-				<!-- Fixes build warning [WARNING] The repository url 'http://url.to/repository' 
-					is invalid - Repository 'repository-id' will be blacklisted. see http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin -->
+				<!-- 
+                                     Fixes build warning [WARNING] The repository url 'http://url.to/repository' 
+				     is invalid - Repository 'repository-id' will be blacklisted. see 
+                                     http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin
+                                -->
 				<configuration>
 					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 				</configuration>
@@ -317,8 +320,10 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<version>0.7.2.201409121644</version>
 						<executions>
-							<!-- Prepares the property pointing to the JaCoCo runtime agent which 
-								is passed as VM argument when Maven the Surefire plugin is executed. -->
+							<!-- 
+                                                             Prepares the property pointing to the JaCoCo runtime agent which 
+							     is passed as VM argument when Maven the Surefire plugin is executed. 
+                                                        -->
 							<execution>
 								<id>pre-unit-test</id>
 								<goals>
@@ -326,8 +331,10 @@
 								</goals>
 							</execution>
 
-							<!-- Ensures that the code coverage report for unit tests is created 
-								after unit tests have been run. -->
+							<!-- 
+                                                             Ensures that the code coverage report for unit tests is created 
+							     after unit tests have been run. 
+                                                        -->
 							<execution>
 								<id>post-unit-test</id>
 								<phase>test</phase>

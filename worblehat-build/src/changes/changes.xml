@@ -6,19 +6,19 @@
 		<author email="markus.bonsch@codecentric.de">Markus Bonsch</author>
 	</properties>
 	<body>
-		<release version="1.3.0" date="2011-04-05" description="First release">
+		<release version="0.8" date="2011-04-05" description="First release">
 			<action dev="betaworblers" type="update">
 				Adding new books.
 			</action>
 		</release>
-		<release version="1.4.0" date="2011-04-06"
+		<release version="0.9" date="2011-04-06"
 			description="Second Release with much improved functionality">
 			<action dev="betaworblers" type="update">
 				Borrowing books.
 			</action>
 		</release>
 
-		<release version="1.4.0" date="2011-04-06"
+		<release version="1.0" date="2011-04-06"
 			description="Release with much improved functionality">
 			<action dev="betaworblers" type="update">
 				Return all borrowed books by one member.
