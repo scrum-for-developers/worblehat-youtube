@@ -29,16 +29,6 @@
 		<url>${env.JENKINS_URL}</url>
 	</ciManagement>
 	<distributionManagement>
-		<repository>
-			<id>psd-teamserver-releases</id>
-			<name>psd-teamserver.internal-releases</name>
-			<url>${env.ARTIFACTORY_URL}/libs-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>psd-teamserver-snapshots</id>
-			<name>psd-teamserver.internal-snapshots</name>
-			<url>${env.ARTIFACTORY_URL}/libs-snapshot-local</url>
-		</snapshotRepository>
 		<site>
 			<id>psd-teamserver-website</id>
 			<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
