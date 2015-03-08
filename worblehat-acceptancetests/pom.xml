@@ -163,9 +163,9 @@
 				</property>
 			</activation>
 			<properties>
-				<BASE_URL>http://psd:codecentric@${env.PSD_SERVER}</BASE_URL>
-				<CONTEXT>worblehat</CONTEXT>
-				<DB_URL>jdbc:mysql://localhost/worblehat</DB_URL>
+				<BASE_URL>http://${env.PSD_SERVER}</BASE_URL>
+				<CONTEXT>worblehat-test</CONTEXT>
+				<DB_URL>jdbc:mysql://worblehatdb/worblehat</DB_URL>
 				<DB_USER>worblehat</DB_USER>
 				<DB_PASSWORD>worblehat</DB_PASSWORD>
 				<SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
