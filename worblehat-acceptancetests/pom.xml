@@ -51,97 +51,6 @@
 		</plugins>
 	</build>
 	<profiles>
-		<!-- profile for various browsers. set the BROWSER_PROFILE property can 
-			be activated from hudson by setting the environment variable maven.browser-profile 
-			to firefox, iexplorer or chrome -->
-		<profile>
-			<id>xp</id>
-			<activation>
-				<property>
-					<name>maven.browser-os</name>
-					<value>xp</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_OS>XP</BROWSER_OS>
-			</properties>
-		</profile>
-		<profile>
-			<id>vista</id>
-			<activation>
-				<property>
-					<name>maven.browser-os</name>
-					<value>vista</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_OS>VISTA</BROWSER_OS>
-			</properties>
-		</profile>
-		<profile>
-			<id>linux</id>
-			<activation>
-				<property>
-					<name>maven.browser-os</name>
-					<value>linux</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_OS>LINUX</BROWSER_OS>
-			</properties>
-		</profile>
-		<profile>
-			<id>firefox</id>
-			<activation>
-				<property>
-					<name>maven.browser-profile</name>
-					<value>firefox</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_PROFILE>FIREFOX</BROWSER_PROFILE>
-				<BROWSER_VERSION>10</BROWSER_VERSION>
-			</properties>
-		</profile>
-		<profile>
-			<id>iexplorer8</id>
-			<activation>
-				<property>
-					<name>maven.browser-profile</name>
-					<value>iexplorer8</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_PROFILE>IE</BROWSER_PROFILE>
-				<BROWSER_VERSION>8</BROWSER_VERSION>
-			</properties>
-		</profile>
-		<profile>
-			<id>iexplorer9</id>
-			<activation>
-				<property>
-					<name>maven.browser-profile</name>
-					<value>iexplorer9</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_PROFILE>IE</BROWSER_PROFILE>
-				<BROWSER_VERSION>9</BROWSER_VERSION>
-			</properties>
-		</profile>
-		<profile>
-			<id>chrome</id>
-			<activation>
-				<property>
-					<name>maven.browser-profile</name>
-					<value>chrome</value>
-				</property>
-			</activation>
-			<properties>
-				<BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
-				<BROWSER_VERSION></BROWSER_VERSION>
-			</properties>
-		</profile>
 		<profile>
 			<id>local</id>
 			<properties>
@@ -154,7 +63,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>ci</id>
+			<id>jenkins</id>
 			<activation>
 				<property>
 					<!-- this is set automatically by Hudson, thus, configure here what 
@@ -169,6 +78,9 @@
 				<DB_USER>worblehat</DB_USER>
 				<DB_PASSWORD>worblehat</DB_PASSWORD>
 				<SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
+				<BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
+				<BROWSER_VERSION></BROWSER_VERSION>
+                                <BROWSER_OS>VISTA</BROWSER_OS>                                
 				<TEST_DESCRIPTION>Running Worblehat acceptance tests on
 					${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}</TEST_DESCRIPTION>
 			</properties>
