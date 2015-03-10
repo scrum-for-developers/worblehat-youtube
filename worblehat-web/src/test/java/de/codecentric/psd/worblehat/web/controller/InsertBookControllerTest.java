@@ -3,48 +3,33 @@ package de.codecentric.psd.worblehat.web.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 
 import de.codecentric.psd.worblehat.domain.BookFactory;
 import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.web.command.BookDataFormData;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 
 public class InsertBookControllerTest {
 
-	@InjectMocks
 	private InsertBookController insertBookController;
 
-	@Mock
-	private HttpServletRequest mockRequest;
-
-	@Mock
-	private ModelMap mockModelMap;
-
-	@Mock
-	private BindingResult mockBindingResult;
-
-	@Mock
 	private BookFactory bookFactory;
 
-	@Mock
 	private BookRepository bookRepository;
 
 	@Before
 	public void setup() {
-		insertBookController = new InsertBookController();
-		MockitoAnnotations.initMocks(this);
+		bookFactory = mock(BookFactory.class);
+		bookRepository = mock(BookRepository.class);
+		insertBookController = new InsertBookController(bookFactory, bookRepository);
 	}
 
 	@Test
@@ -63,13 +48,15 @@ public class InsertBookControllerTest {
 		cmd.setEdition("2");
 		cmd.setTitle("Test with JUnit");
 		cmd.setYear("1999");
+		BindingResult mockBindingResult = mock(BindingResult.class);
 		when(mockBindingResult.hasErrors()).thenReturn(false);
-		String path = insertBookController.processSubmit(mockRequest,
-				mockModelMap, cmd, mockBindingResult);
+		ModelMap modelMap = new ModelMap();
+		String path = insertBookController.processSubmit(
+				modelMap, cmd, mockBindingResult);
 
-		verify(mockModelMap).put("bookDataFormData", cmd);
 		verify(bookFactory).createBook("Test with JUnit", "Horst Tester", "2",
 				"ISBN-123132-21", 1999);
 		assertThat(path, is("/bookList"));
+		assertEquals(cmd, modelMap.get("bookDataFormData"));
 	}
 }

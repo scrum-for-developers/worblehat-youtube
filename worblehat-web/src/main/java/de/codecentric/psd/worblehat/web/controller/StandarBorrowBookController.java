@@ -39,6 +39,7 @@ public class StandarBorrowBookController {
 	}
 
 	public StandarBorrowBookController() {
+		// needed for CGLIB proxy creation as long as this class is declared with @Transactional
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -74,10 +75,6 @@ public class StandarBorrowBookController {
 		}
 
 		return "/home";
-	}
-
-	public void setValidator(ValidateBorrowBook validater) {
-		this.validator = validater;
 	}
 
 	@ExceptionHandler(Exception.class)

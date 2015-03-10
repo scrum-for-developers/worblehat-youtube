@@ -1,43 +1,50 @@
 package de.codecentric.psd.worblehat.web.controller;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
+
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
-
-import de.codecentric.psd.worblehat.domain.BookRepository;
 
 public class BookListControllerTest {
 
-	@Mock
-	private ModelMap mockModelMap;
-
-	@Mock
 	private BookRepository mockRepository;
 
-	@InjectMocks
-	BookListController bookListController;
+	private BookListController bookListController;
+
+	private ModelMap modelMap;
 
 	@Before
 	public void setUp() {
-		bookListController = new BookListController();
-		MockitoAnnotations.initMocks(this);
+		modelMap = new ModelMap();
+		mockRepository = mock(BookRepository.class);
+		bookListController = new BookListController(mockRepository);
+	}
+
+	@Test
+	public void shouldRedirectToBooklist() throws Exception {
+		String viewToShow = bookListController.setupForm(modelMap);
+		assertThat(viewToShow, is("bookList"));
 	}
 
 	@Test
 	public void shouldShowAllBooks() {
-		String bookList = bookListController.setupForm(mockModelMap);
+		Book testBook = new Book("Test", "Test", "Test", "Test", 2010);
+		when(mockRepository.findAllBooks()).thenReturn(Collections.singletonList(testBook));
 
-		verify(mockModelMap).addAttribute(anyString(), any());
-		verify(mockRepository).findAllBooks();
-		assertThat(bookList, is("bookList"));
+		bookListController.setupForm(modelMap);
+
+		List<Book> books = (List<Book>) modelMap.get("books");
+		assertThat(books.size(), is(1));
+		assertThat(books.get(0), is(equalTo(testBook)));
 	}
 }
