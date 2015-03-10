@@ -30,20 +30,16 @@ public class InsertBookController {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(InsertBookController.class);
 
-	@Inject
 	private BookFactory bookFactory;
+
+	private BookRepository bookRepository;
 
 	private final ValidateAddBook validateAddBook = new ValidateAddBook();
 
 	@Inject
-	private BookRepository bookRepository;
-
-	public void setBookRepository(BookRepository bookRepository) {
-		this.bookRepository = bookRepository;
-	}
-
-	public void setBookFactory(BookFactory bookFactory) {
+	public InsertBookController(BookFactory bookFactory, BookRepository bookRepository) {
 		this.bookFactory = bookFactory;
+		this.bookRepository = bookRepository;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -52,7 +48,7 @@ public class InsertBookController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(HttpServletRequest request, ModelMap modelMap,
+	public String processSubmit(ModelMap modelMap,
 			@ModelAttribute("bookDataFormData") BookDataFormData cmd,
 			BindingResult result) {
 
