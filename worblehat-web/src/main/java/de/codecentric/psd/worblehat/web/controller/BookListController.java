@@ -23,13 +23,9 @@ import de.codecentric.psd.worblehat.domain.BookRepository;
 @RequestMapping("/bookList")
 public class BookListController {
 
-	@Inject
 	private BookRepository bookRepository;
 
-	public BookListController() {
-		super();
-	}
-
+	@Inject
 	public BookListController(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
