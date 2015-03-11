@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 
@@ -29,13 +27,13 @@ public class BorrowBookControllerTest {
 
 	private ModelMap modelMap;
 
-	private StandarBorrowBookController booksController;
+	private BorrowBookController booksController;
 
 	@Before
 	public void setUp() {
 		mockBindingResult = mock(BindingResult.class);
 		mockRepository = mock(BookRepository.class);
-		booksController = new StandarBorrowBookController(mockRepository);
+		booksController = new BorrowBookController(mockRepository);
 
 		modelMap = new ModelMap();
 	}
