@@ -6,4 +6,5 @@
 */local.properties
 */.settings/
 *.versionsBackup
-
+*.idea
+*.iml
