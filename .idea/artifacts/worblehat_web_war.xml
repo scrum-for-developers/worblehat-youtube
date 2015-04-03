@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="worblehat-web:war">
+    <output-path>$PROJECT_DIR$/worblehat-web/target</output-path>
+    <root id="archive" name="worblehat-web-2.1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="worblehat-web:war exploded" />
+    </root>
+  </artifact>
+</component>
