@@ -55,6 +55,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-project-info-reports-plugin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+		</dependency>
 	</dependencies>
 
 
@@ -84,13 +92,6 @@
 						<logging>info</logging>
 						<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>mysql</groupId>
-							<artifactId>mysql-connector-java</artifactId>
-							<version>5.1.15</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
