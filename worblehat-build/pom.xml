@@ -4,15 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>de.codecentric.psd</groupId>
+		<artifactId>worblehat</artifactId>
+		<version>2.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>de.codecentric.psd</groupId>
-	<artifactId>worblehat-build</artifactId>
-	<version>2.1.0-SNAPSHOT</version>
+	<artifactId>worblehat-build</artifactId>	
 	<name>worblehat-build</name>
 	<packaging>pom</packaging>
 
@@ -23,10 +21,6 @@
 		<psd.dbserver.password>worblehat</psd.dbserver.password> <!-- Jacoco config -->
  	</properties>
 
-	<modules>
-		<module>../worblehat-domain</module>
-		<module>../worblehat-web</module>
-	</modules>
 	<ciManagement>
 		<system>jenkins</system>
 		<url>${env.JENKINS_URL}</url>
@@ -37,36 +31,40 @@
 			<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
 		</site>
 	</distributionManagement>	
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
-				<version>1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.6</version>
-			</dependency>
-			<dependency>
-				<groupId>oro</groupId>
-				<artifactId>oro</artifactId>
-				<version>2.0.8</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-validator</groupId>
-				<artifactId>commons-validator</artifactId>
-				<version>1.3.1</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-collections</groupId>
-						<artifactId>commons-collections</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>oro</groupId>
+			<artifactId>oro</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>				
+			<exclusions>
+				<exclusion>
+					<groupId>commons-collections</groupId>
+					<artifactId>commons-collections</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-project-info-reports-plugin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+		</dependency>
+	</dependencies>
+
 
 	<repositories>
 	</repositories>
@@ -94,13 +92,6 @@
 						<logging>info</logging>
 						<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>mysql</groupId>
-							<artifactId>mysql-connector-java</artifactId>
-							<version>5.1.15</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
