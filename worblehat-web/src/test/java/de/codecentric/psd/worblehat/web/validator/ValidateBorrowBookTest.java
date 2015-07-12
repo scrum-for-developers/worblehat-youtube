@@ -1,8 +1,8 @@
 package de.codecentric.psd.worblehat.web.validator;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class ValidateBorrowBookTest {
 		validateAddBook.validate(cmd, errors);
 		Object value = errors.getFieldValue("isbn");
 		assertThat(errors.getErrorCount(), is(0));
-		Assert.assertEquals(isbn13, value);
+		assertEquals(isbn13, value);
 	}
 
 	@Test
