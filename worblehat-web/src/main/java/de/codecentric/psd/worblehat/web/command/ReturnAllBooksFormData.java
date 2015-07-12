@@ -1,25 +1,15 @@
 package de.codecentric.psd.worblehat.web.command;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * This class represent the form data of the return book form.
  */
 public class ReturnAllBooksFormData {
 
-	
-	/**
-	 * Empty constructor, required by Spring Framework.
-	 */
-	public ReturnAllBooksFormData() {
-		super();
-	}
-
-	/**
-	 * @param emailAddress the user email address
-	 */
-	public ReturnAllBooksFormData(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
+	@NotEmpty(message = "{empty.returnAllBookFormData.emailAddress}") 
+	@Email(message = "{notvalid.returnAllBookFormData.emailAddress}")
 	private String emailAddress;
 
 	public String getEmailAddress() {

@@ -1,12 +1,12 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
 import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
-import de.codecentric.psd.worblehat.web.validator.ValidateBorrowBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BorrowBookController {
 
 	private BookRepository bookRepository;
-	private ValidateBorrowBook validator = new ValidateBorrowBook();
 
 	@Autowired
 	public BorrowBookController(BookRepository bookRepository) {
@@ -40,10 +39,9 @@ public class BorrowBookController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(ModelMap modelMap,
-			@ModelAttribute("borrowFormData") BookBorrowFormData cmd,
+			@ModelAttribute("borrowFormData") @Valid BookBorrowFormData cmd,
 			BindingResult result) {
 
-		validator.validate(cmd, result);
 		if (result.hasErrors()) {
 			modelMap.put("borrowFormData", cmd);
 			return "/borrow";

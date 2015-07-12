@@ -1,8 +1,9 @@
 package de.codecentric.psd.worblehat.web.controller;
 
+import javax.validation.Valid;
+
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.command.ReturnAllBooksFormData;
-import de.codecentric.psd.worblehat.web.validator.ValidateReturnAllBooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/returnAllBooks")
 public class ReturnAllBooksController {
 
-	ValidateReturnAllBooks validateReturnAllBooks = new ValidateReturnAllBooks();
-
 	private BookService bookService;
 
 	@Autowired
@@ -34,9 +33,8 @@ public class ReturnAllBooksController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String returnAllBooks(
-			@ModelAttribute("returnAllBookFormData") ReturnAllBooksFormData formData,
+			@ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
 			BindingResult result) {
-		validateReturnAllBooks.validate(formData, result);
 		if (result.hasErrors()) {
 			return "/returnAllBooks";
 		} else {

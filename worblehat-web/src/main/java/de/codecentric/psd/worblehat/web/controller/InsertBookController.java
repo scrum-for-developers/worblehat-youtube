@@ -1,12 +1,12 @@
 package de.codecentric.psd.worblehat.web.controller;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookFactory;
 import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.web.command.BookDataFormData;
-import de.codecentric.psd.worblehat.web.validator.ValidateAddBook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,6 @@ public class InsertBookController {
 
 	private BookRepository bookRepository;
 
-	private final ValidateAddBook validateAddBook = new ValidateAddBook();
-
 	@Autowired
 	public InsertBookController(BookFactory bookFactory, BookRepository bookRepository) {
 		this.bookFactory = bookFactory;
@@ -46,16 +44,13 @@ public class InsertBookController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(ModelMap modelMap,
-			@ModelAttribute("bookDataFormData") BookDataFormData cmd,
+			@ModelAttribute("bookDataFormData") @Valid BookDataFormData cmd,
 			BindingResult result) {
 
 		modelMap.put("bookDataFormData", cmd);
-		validateAddBook.validate(cmd, result);
-
 		if (result.hasErrors()) {
 			return "/insertBooks";
 		} else {
-
 			bookFactory.createBook(cmd.getTitle(), cmd.getAuthor(),
 					cmd.getEdition(), cmd.getIsbn(),
 					Integer.parseInt(cmd.getYear()));

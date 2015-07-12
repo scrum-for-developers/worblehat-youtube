@@ -24,6 +24,8 @@ public class BorrowBookControllerTest {
 
 	private ModelMap modelMap;
 
+	private BookBorrowFormData borrowFormData;
+
 	private BorrowBookController booksController;
 
 	@Before
@@ -31,6 +33,9 @@ public class BorrowBookControllerTest {
 		mockBindingResult = mock(BindingResult.class);
 		mockRepository = mock(BookRepository.class);
 		booksController = new BorrowBookController(mockRepository);
+		borrowFormData = new BookBorrowFormData();
+		borrowFormData.setIsbn("90-70002-34-5");
+		borrowFormData.setEmail("test@codecentric.de");
 
 		modelMap = new ModelMap();
 	}
@@ -45,8 +50,6 @@ public class BorrowBookControllerTest {
 
 	@Test
 	public void shouldReturnErrorValidatorReturnsErrors() {
-		BookBorrowFormData borrowFormData = new BookBorrowFormData(
-				"90-70002-34-5", "test@codecentric.de");
 		when(mockBindingResult.hasErrors()).thenReturn(true);
 
 		String path = booksController.processSubmit(modelMap,
@@ -58,9 +61,6 @@ public class BorrowBookControllerTest {
 
 	@Test
 	public void shouldBorrowBook() {
-		BookBorrowFormData borrowFormData = new BookBorrowFormData(
-				"90-70002-34-5", "test@codecentric.de");
-
 		when(mockBindingResult.hasErrors()).thenReturn(false);
 		Book testBook = new Book("Test", "Test", "Test", "Test", 2010);
 		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(
@@ -77,9 +77,6 @@ public class BorrowBookControllerTest {
 
 	@Test
 	public void shouldReturnErrorIfNoBookIsBorrowable() {
-		BookBorrowFormData borrowFormData = new BookBorrowFormData(
-				"90-70002-34-5", "test@codecentric.de");
-
 		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(null);
 
 		String path = booksController.processSubmit(modelMap,

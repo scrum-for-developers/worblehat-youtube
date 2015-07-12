@@ -1,32 +1,21 @@
 package de.codecentric.psd.worblehat.web.command;
 
+import de.codecentric.psd.worblehat.web.validation.ISBN;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Form data object from the borrow view.
  */
 public class BookBorrowFormData {
 
+	@NotEmpty(message = "{empty.borrowCmd.isbn}") 
+	@ISBN(message = "{notvalid.borrowCmd.isbn}")
 	private String isbn;
+
+	@NotEmpty(message = "{empty.borrowCmd.email}")
+	@Email(message = "{notvalid.borrowCmd.email}")
 	private String email;
-
-	/**
-	 * Empty constructor, required by Spring Framework.
-	 */
-	public BookBorrowFormData() {
-		super();
-	}
-
-	/**
-	 * Constructor for testing.
-	 * 
-	 * @param isbn
-	 *            the isbn
-	 * @param email
-	 *            the user email address
-	 */
-	public BookBorrowFormData(String isbn, String email) {
-		this.isbn = isbn;
-		this.email = email;
-	}
 
 	public String getIsbn() {
 		return isbn;
