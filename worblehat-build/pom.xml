@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,7 +10,7 @@
 	</parent>
 
 	<groupId>de.codecentric.psd</groupId>
-	<artifactId>worblehat-build</artifactId>	
+	<artifactId>worblehat-build</artifactId>
 	<name>worblehat-build</name>
 	<packaging>pom</packaging>
 
@@ -18,8 +18,9 @@
 		<java.version>1.7</java.version>
 		<psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
 		<psd.dbserver.username>worblehat</psd.dbserver.username>
-		<psd.dbserver.password>worblehat</psd.dbserver.password> <!-- Jacoco config -->
- 	</properties>
+		<psd.dbserver.password>worblehat</psd.dbserver.password>
+		<!-- Jacoco config -->
+	</properties>
 
 	<ciManagement>
 		<system>jenkins</system>
@@ -30,20 +31,20 @@
 			<id>psd-teamserver-website</id>
 			<url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
 		</site>
-	</distributionManagement>	
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>			
+			<artifactId>commons-lang</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>oro</groupId>
-			<artifactId>oro</artifactId>			
+			<artifactId>oro</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>
-			<artifactId>commons-validator</artifactId>				
+			<artifactId>commons-validator</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-collections</groupId>
@@ -60,13 +61,6 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 		</dependency>
 	</dependencies>
-
-
-	<repositories>
-	</repositories>
-
-	<pluginRepositories>
-	</pluginRepositories>
 
 	<build>
 		<pluginManagement>
@@ -106,7 +100,7 @@
 				<configuration>
 					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 				</configuration>
-		</plugin>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changes-plugin</artifactId>
@@ -135,49 +129,49 @@
 		</profile>
 		<profile>
 			<id>jenkins</id>
-				<properties>
-					<psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
-					<psd.dbserver.username>worblehat</psd.dbserver.username>
-					<psd.dbserver.password>worblehat</psd.dbserver.password>
-					<sonar.host.url>${env.SONAR_URL}</sonar.host.url>
-					<sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
-					<sonar.jdbc.username>sonar</sonar.jdbc.username>
-					<sonar.jdbc.password>123qwe</sonar.jdbc.password>
-				</properties>
+			<properties>
+				<psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
+				<psd.dbserver.username>worblehat</psd.dbserver.username>
+				<psd.dbserver.password>worblehat</psd.dbserver.password>
+				<sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+				<sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
+				<sonar.jdbc.username>sonar</sonar.jdbc.username>
+				<sonar.jdbc.password>123qwe</sonar.jdbc.password>
+			</properties>
 		</profile>
 
-                <profile>
-                    <id>coverage</id>
-                    <build>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.jacoco</groupId>
-                            <artifactId>jacoco-maven-plugin</artifactId>
-                            <version>0.7.2.201409121644</version>
-                            <executions>
-                                <!-- Prepares the property pointing to the JaCoCo
-                                    runtime agent which is passed as VM argument when Maven the Surefire plugin
-                                    is executed. -->
-                                <execution>
-                                    <id>pre-unit-test</id>
-                                    <goals>
-                                        <goal>prepare-agent</goal>
-                                    </goals>
-                                </execution>
+		<profile>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.2.201409121644</version>
+						<executions>
+							<!-- Prepares the property pointing to the JaCoCo
+									runtime agent which is passed as VM argument when Maven the Surefire plugin
+									is executed. -->
+							<execution>
+								<id>pre-unit-test</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
 
-                                <!-- Ensures that the code coverage report for
-                                    unit tests is created after unit tests have been run. -->
-                                <execution>
-                                    <id>post-unit-test</id>
-                                    <phase>test</phase>
-                                    <goals>
-                                        <goal>report</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </build>
-            </profile>
+							<!-- Ensures that the code coverage report for
+									unit tests is created after unit tests have been run. -->
+							<execution>
+								<id>post-unit-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
