@@ -3,6 +3,12 @@ package de.codecentric.psd.worblehat.web.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
+import de.codecentric.psd.worblehat.domain.BookRepository;
+import de.codecentric.psd.worblehat.domain.NoBookBorrowableException;
+import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
+import de.codecentric.psd.worblehat.web.validator.ValidateBorrowBook;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -11,13 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
-import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.NoBookBorrowableException;
-import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
-import de.codecentric.psd.worblehat.web.validator.ValidateBorrowBook;
 
 /**
  * Controller for BorrowingBook

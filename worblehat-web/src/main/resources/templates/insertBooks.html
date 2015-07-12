@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+<title>Add Book - Worblehat Bookmanager</title>
+</head>
+<body>
+	<h1>Add Book</h1>
+
+	<form th:object="${bookDataFormData}" method="POST">
+			Title:<input type="text" th:field="*{title}" />
+		<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+		<br />
+			Edition:<input type="text" th:field="*{edition}" />
+		<span th:if="${#fields.hasErrors('edition')}" th:errors="*{edition}"></span>
+		<br />
+			ISBN:<input type="text" th:field="*{isbn}" />
+		<span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+		<br />
+			Author:<input type="text" th:field="*{author}" />
+		<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+		<br />
+			Year:<input type="text" th:field="*{year}" />
+		<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+		<br />
+		<input type="submit" id="addBook" value="Add Book" />
+		<hr/>
+		<a th:href="@{/}">Back to Home</a>
+	</form>
+
+
+</body>
+</html>
