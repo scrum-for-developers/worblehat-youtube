@@ -1,6 +1,5 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import javax.inject.Inject;
 import java.util.List;
 
 import de.codecentric.psd.worblehat.domain.Book;
@@ -10,6 +9,7 @@ import de.codecentric.psd.worblehat.web.command.BookDataFormData;
 import de.codecentric.psd.worblehat.web.validator.ValidateAddBook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,7 +33,7 @@ public class InsertBookController {
 
 	private final ValidateAddBook validateAddBook = new ValidateAddBook();
 
-	@Inject
+	@Autowired
 	public InsertBookController(BookFactory bookFactory, BookRepository bookRepository) {
 		this.bookFactory = bookFactory;
 		this.bookRepository = bookRepository;

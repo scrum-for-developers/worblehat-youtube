@@ -1,6 +1,5 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import de.codecentric.psd.worblehat.domain.Book;
@@ -9,6 +8,7 @@ import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.domain.NoBookBorrowableException;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import de.codecentric.psd.worblehat.web.validator.ValidateBorrowBook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -32,7 +32,7 @@ public class BorrowBookController {
 	private BookRepository bookRepository;
 	private ValidateBorrowBook validator = new ValidateBorrowBook();
 
-	@Inject
+	@Autowired
 	public BorrowBookController(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
