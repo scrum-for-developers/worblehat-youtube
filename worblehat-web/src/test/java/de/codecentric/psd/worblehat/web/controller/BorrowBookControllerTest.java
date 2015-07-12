@@ -1,8 +1,8 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -86,8 +86,7 @@ public class BorrowBookControllerTest {
 		BookBorrowFormData borrowFormData = new BookBorrowFormData(
 				"90-70002-34-5", "test@codecentric.de");
 
-		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenThrow(
-				new NoBookBorrowableException("90-70002-34-5"));
+		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(null);
 
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);

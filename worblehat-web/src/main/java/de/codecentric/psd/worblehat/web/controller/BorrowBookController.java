@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
 import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.NoBookBorrowableException;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import de.codecentric.psd.worblehat.web.validator.ValidateBorrowBook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +48,14 @@ public class BorrowBookController {
 			modelMap.put("borrowFormData", cmd);
 			return "/borrow";
 		}
-		Book book;
-		try {
-			book = bookRepository.findBorrowableBook(cmd.getIsbn());
-			book.borrow(cmd.getEmail());
-
-		} catch (NoBookBorrowableException e) {
+		Book book = bookRepository.findBorrowableBook(cmd.getIsbn());
+		if(book == null) {
 			result.rejectValue("isbn", "notBorrowable");
 			modelMap.put("borrowFormData", cmd);
 			return "/borrow";
-
+		}
+		try {
+			book.borrow(cmd.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
 			result.reject("internalError");
 			modelMap.put("borrowFormData", cmd);
