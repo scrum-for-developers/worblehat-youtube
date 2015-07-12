@@ -6,12 +6,12 @@
 <body>
 	<h1>Borrow Book</h1>
 
-	<form action="#" th:object="${borrowFormData}" method="POST">
-			ISBN:<input id="isbn" type="text" th:field="*{isbn}" path="isbn"/>
-		<errors path="isbn" />
+	<form th:object="${borrowFormData}" method="POST">
+		ISBN:<input id="isbn" type="text" th:field="*{isbn}" />
+		<span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
 		<br />
-			Email:<input id="email" type="text" th:field="*{email}" path="email" />
-		<errors path="email" />
+		Email:<input id="email" type="text" th:field="*{email}" />
+		<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 		<br />
 		<input type="submit" id="borrowBook" value="Borrow Book" />
 		<hr />

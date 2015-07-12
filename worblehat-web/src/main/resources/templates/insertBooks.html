@@ -6,21 +6,20 @@
 	<h1>Add Book</h1>
 
 	<form th:object="${bookDataFormData}" method="POST">
-			Title:<input id="title" type="text" th:field="*{title}" path="title" />
-		<errors path="title" />
+			Title:<input type="text" th:field="*{title}" />
+		<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
 		<br />
-			Edition:<input id="edition" type="text" th:field="*{edition}" path="edition" />
-		<errors path="edition" />
+			Edition:<input type="text" th:field="*{edition}" />
+		<span th:if="${#fields.hasErrors('edition')}" th:errors="*{edition}"></span>
 		<br />
-			ISBN:<input id="isbn" type="text" th:field="*{isbn}" path="isbn" />
-		<errors path="isbn" />
+			ISBN:<input type="text" th:field="*{isbn}" />
+		<span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
 		<br />
-			Author:<input id="author" type="text" th:field="*{author}" path="author" />
-		<errors path="author" />
+			Author:<input type="text" th:field="*{author}" />
+		<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
 		<br />
-			Year:<input id="year" type="text" th:field="*{year}" path="year" />
-		<errors path="year" />
-
+			Year:<input type="text" th:field="*{year}" />
+		<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
 		<br />
 		<input type="submit" id="addBook" value="Add Book" />
 		<hr/>
