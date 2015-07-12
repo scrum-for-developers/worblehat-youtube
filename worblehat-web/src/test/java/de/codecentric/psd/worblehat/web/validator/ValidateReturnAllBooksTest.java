@@ -12,7 +12,7 @@ import org.springframework.validation.Errors;
 
 public class ValidateReturnAllBooksTest {
 
-	private static final String VALID_EMAIL = "valid.user@worblehat.local";
+	private static final String VALID_EMAIL = "valid.user@worblehat.com";
 	private ValidateReturnAllBooks validateReturnAllBooks;
 	private ReturnAllBooksFormData cmd;
 

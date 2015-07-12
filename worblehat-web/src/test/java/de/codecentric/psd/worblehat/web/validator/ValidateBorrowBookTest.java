@@ -16,7 +16,7 @@ public class ValidateBorrowBookTest {
 
 	private static final String INVALID_ISBN = "978-3492285100-22";
 	private static final String VALID_ISBN = "90-70002-34-5";
-	private static final String VALID_EMAIL = "valid.user@worblehat.local";
+	private static final String VALID_EMAIL = "valid.user@worblehat.com";
 
 	private ValidateBorrowBook validateAddBook;
 
