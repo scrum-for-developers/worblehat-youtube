@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Show all Books</title>
+</head>
+<body>
+	<table>
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Year</th>
+			<th>Edition</th>
+			<th>ISBN</th>
+			<th>Borrower</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="book : ${books}">
+			<td th:text="${book.title}">Harry Potter</td>
+			<td th:text="${book.author}">J.K. Rowling</td>
+			<td th:text="${book.year}">2002</td>
+			<td th:text="${book.edition}">1st</td>
+			<td th:text="${book.isbn}">123456</td>
+			<td th:text="${book.currentBorrowing?.borrowerEmailAddress}"></td>
+		</tr>
+	</tbody>
+	</table>
+	<hr />
+	<a th:href="@{/}">Back to Home</a>
+</body>
+</html>

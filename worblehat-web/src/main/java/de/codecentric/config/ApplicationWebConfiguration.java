@@ -12,25 +12,19 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class ApplicationWebConfiguration extends WebMvcConfigurerAdapter {
 
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//    	super.addViewControllers(registry);
-//    	registry.addViewController("/").setViewName("redirect:/home");
-//    }
-    
-    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US);
-        return slr;
-    }
-    
-    @Bean
-    public ReloadableResourceBundleMessageSource messageSource(){
-    	ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    	messageSource.setUseCodeAsDefaultMessage(true);
-    	messageSource.setBasename("classpath:messages");
-    	return messageSource;
-    }
-    
+	@Bean
+	public LocaleResolver localeResolver() {
+		SessionLocaleResolver slr = new SessionLocaleResolver();
+		slr.setDefaultLocale(Locale.US);
+		return slr;
+	}
+
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setUseCodeAsDefaultMessage(true);
+		messageSource.setBasename("classpath:messages");
+		return messageSource;
+	}
+
 }

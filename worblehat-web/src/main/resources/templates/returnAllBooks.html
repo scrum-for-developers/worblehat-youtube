@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Return All Books - Worblehat Bookmanager</title>
+</head>
+<body>
+	<h1>Return all Books</h1>
+
+	<form th:object="${returnAllBookFormData}" method="POST">
+		 Email Address:<input id="emailAddress" type="text" th:field="*{emailAddress}" path="emailAddress" />
+		<errors path="emailAddress" />
+		<br />
+		<input type="submit" id="returnAllBooks" value="Return All Books" />
+
+	</form>
+
+	<hr />
+	<a th:href="@{/}">Back to Home</a>
+</body>
+</html>
