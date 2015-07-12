@@ -1,7 +1,7 @@
 package de.codecentric.psd.worblehat.web.validator;
 
-import org.apache.commons.validator.EmailValidator;
-import org.apache.commons.validator.ISBNValidator;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -10,9 +10,6 @@ import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 
 /**
  * Validation for adding a book
- * 
- * @author mahmut.can
- * 
  */
 public class ValidateBorrowBook implements Validator {
 
@@ -48,8 +45,7 @@ public class ValidateBorrowBook implements Validator {
 			BookBorrowFormData cmd) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "isbn", "empty");
 		if (!errors.hasFieldErrors("isbn")) {
-			ISBNValidator isbnValidator = new ISBNValidator();
-			if (!isbnValidator.isValid(cmd.getIsbn())) {
+			if (!ISBNValidator.getInstance().isValid(cmd.getIsbn())) {
 				errors.rejectValue("isbn", "notvalid");
 			}
 		}

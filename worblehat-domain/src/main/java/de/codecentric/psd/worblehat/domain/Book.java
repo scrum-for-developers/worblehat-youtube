@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: Book
- * 
  */
 @Entity
 @NamedQueries({

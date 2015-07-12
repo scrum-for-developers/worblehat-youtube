@@ -1,23 +1,20 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookRepository;
+import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
-import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.NoBookBorrowableException;
-import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 
 public class BorrowBookControllerTest {
 
@@ -47,8 +44,7 @@ public class BorrowBookControllerTest {
 	}
 
 	@Test
-	public void shouldReturnErrorValidatorReturnsErrors()
-			throws NoBookBorrowableException, BookAlreadyBorrowedException {
+	public void shouldReturnErrorValidatorReturnsErrors() {
 		BookBorrowFormData borrowFormData = new BookBorrowFormData(
 				"90-70002-34-5", "test@codecentric.de");
 		when(mockBindingResult.hasErrors()).thenReturn(true);
@@ -61,8 +57,7 @@ public class BorrowBookControllerTest {
 	}
 
 	@Test
-	public void shouldBorrowBook() throws NoBookBorrowableException,
-			BookAlreadyBorrowedException {
+	public void shouldBorrowBook() {
 		BookBorrowFormData borrowFormData = new BookBorrowFormData(
 				"90-70002-34-5", "test@codecentric.de");
 
@@ -81,13 +76,11 @@ public class BorrowBookControllerTest {
 	}
 
 	@Test
-	public void shouldReturnErrorIfNoBookIsBorrowable()
-			throws NoBookBorrowableException, BookAlreadyBorrowedException {
+	public void shouldReturnErrorIfNoBookIsBorrowable() {
 		BookBorrowFormData borrowFormData = new BookBorrowFormData(
 				"90-70002-34-5", "test@codecentric.de");
 
-		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenThrow(
-				new NoBookBorrowableException("90-70002-34-5"));
+		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(null);
 
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);

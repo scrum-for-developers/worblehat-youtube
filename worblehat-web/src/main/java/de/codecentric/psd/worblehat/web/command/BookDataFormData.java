@@ -1,8 +1,7 @@
 package de.codecentric.psd.worblehat.web.command;
 
 /**
- * @author mahmut.can
- * 
+ * This class represent the form data of the add book form.
  */
 public class BookDataFormData {
 

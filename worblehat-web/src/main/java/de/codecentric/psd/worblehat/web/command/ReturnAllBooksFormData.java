@@ -2,9 +2,6 @@ package de.codecentric.psd.worblehat.web.command;
 
 /**
  * This class represent the form data of the return book form.
- * 
- * @author psd
- * 
  */
 public class ReturnAllBooksFormData {
 

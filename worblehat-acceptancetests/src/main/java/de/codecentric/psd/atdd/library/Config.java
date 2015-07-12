@@ -7,9 +7,6 @@ import org.openqa.selenium.Platform;
 
 /**
  * Reads config parameters from properties file. The properties are by maven during the build process.
- *  
- * @author aek
- *
  */
 public class Config {
 	private static final String BUNDLE_NAME = "de.codecentric.psd.atdd.library.config"; //$NON-NLS-1$

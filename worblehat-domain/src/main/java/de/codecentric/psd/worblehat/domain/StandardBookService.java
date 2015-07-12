@@ -8,23 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The domain service class for book operations.
- * 
- * @author psd
- * 
  */
 @Service
 @Transactional
 public class StandardBookService implements BookService {
 
-	@Autowired
 	private BookRepository bookRepository;
 
+	@Autowired
 	public StandardBookService(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
-	}
-
-	public StandardBookService() {
-		super();
 	}
 
 	@Override
@@ -33,8 +26,7 @@ public class StandardBookService implements BookService {
 				.findAllBorrowBooksByBorrower(string);
 		for (Book book : borrowBooks) {
 			book.returnBook();
-
 		}
-
 	}
+
 }
