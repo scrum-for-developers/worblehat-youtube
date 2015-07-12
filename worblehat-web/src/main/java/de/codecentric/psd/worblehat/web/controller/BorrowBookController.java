@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Controller for BorrowingBook
  */
-@Transactional
 @RequestMapping("/borrow")
 @Controller
 public class BorrowBookController {
@@ -32,10 +31,6 @@ public class BorrowBookController {
 	@Autowired
 	public BorrowBookController(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
-	}
-
-	public BorrowBookController() {
-		// needed for CGLIB proxy creation as long as this class is declared with @Transactional
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
