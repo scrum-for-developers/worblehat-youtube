@@ -2,8 +2,6 @@ package de.codecentric.psd.worblehat.domain;
 
 /**
  * Exception for borrowing a book
- * @author mahmut.can
- *
  */
 public class BookAlreadyBorrowedException extends Exception {
 

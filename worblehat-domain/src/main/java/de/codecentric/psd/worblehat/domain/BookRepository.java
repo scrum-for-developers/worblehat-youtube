@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repo for Book
- * 
- * @author mahmut.can
- * 
  */
 @Repository
 @Transactional

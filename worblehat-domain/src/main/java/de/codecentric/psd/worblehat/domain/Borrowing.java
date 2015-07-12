@@ -12,9 +12,6 @@ import javax.persistence.TemporalType;
 
 /**
  * Borrowing Entity
- * 
- * @author mahmut.can
- * 
  */
 @Entity
 public class Borrowing implements Serializable {

@@ -4,11 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 
  * A Factory for Book Enitty
- * 
- * @author mahmut.can
- * 
  */
 @Service
 public class BookFactory {

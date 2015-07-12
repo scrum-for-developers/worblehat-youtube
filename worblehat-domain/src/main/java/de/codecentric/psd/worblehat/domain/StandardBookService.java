@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The domain service class for book operations.
- * 
- * @author psd
- * 
  */
 @Service
 @Transactional

@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller class for the book table result.
- * 
- * @author psd
- * 
  */
-
 @Controller
 @RequestMapping("/bookList")
 public class BookListController {

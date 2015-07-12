@@ -2,9 +2,6 @@ package de.codecentric.psd.worblehat.domain;
 
 /**
  * Business exception that is thrown in case no book is available.
- * 
- * @author psd
- * 
  */
 public class NoBookBorrowableException extends Exception {
 

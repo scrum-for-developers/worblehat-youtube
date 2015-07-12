@@ -2,9 +2,6 @@ package de.codecentric.psd.worblehat.web.command;
 
 /**
  * Form data object from the borrow view.
- * 
- * @author psd
- * 
  */
 public class BookBorrowFormData {
 

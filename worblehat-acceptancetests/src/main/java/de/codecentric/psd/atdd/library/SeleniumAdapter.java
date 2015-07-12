@@ -19,9 +19,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Itegrates Selenium into the tests.
- * 
- * @author aek
- *
  */
 public class SeleniumAdapter {
 	private WebDriver driver;

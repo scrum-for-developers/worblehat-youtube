@@ -10,9 +10,6 @@ import de.codecentric.psd.worblehat.web.command.BookDataFormData;
 
 /**
  * Validation for adding a book
- * 
- * @author mahmut.can
- * 
  */
 public class ValidateAddBook implements Validator {
 

@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for BorrowingBook
- * 
- * @author mahmut.can
- * 
  */
 @Transactional
 @RequestMapping("/borrow")

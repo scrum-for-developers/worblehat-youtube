@@ -8,11 +8,7 @@ import org.springframework.validation.Validator;
 import de.codecentric.psd.worblehat.web.command.ReturnAllBooksFormData;
 
 /**
- * 
  * Validates email address when borrowed books are returned.
- * 
- * @author psd
- * 
  */
 public class ValidateReturnAllBooks implements Validator {
 
