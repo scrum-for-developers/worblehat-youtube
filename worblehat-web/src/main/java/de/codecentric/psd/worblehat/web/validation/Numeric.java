@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Numeric {
 
-	String message() default "{com.mycompany.constraints.checkcase}";
+	String message() default "{de.codecentric.psd.worblehat.web.validation.Numeric}";
 
 	Class<?>[] groups() default {};
 

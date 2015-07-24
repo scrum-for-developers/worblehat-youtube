@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ISBN {
 
-	String message() default "{}";
+	String message() default "{de.codecentric.psd.worblehat.web.validation.ISBN}";
 
 	Class<?>[] groups() default {};
 
