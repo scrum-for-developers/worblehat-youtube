@@ -26,7 +26,7 @@ public class BookListController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(ModelMap modelMap) {
-		List<Book> books = bookRepository.findAllBooks();
+		List<Book> books = bookRepository.findAll();
 		modelMap.addAttribute("books", books);
 		return "bookList";
 	}

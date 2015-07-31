@@ -18,8 +18,8 @@
 			Author:<input type="text" th:field="*{author}" />
 		<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
 		<br />
-			Year:<input type="text" th:field="*{year}" />
-		<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+			Year:<input type="text" th:field="*{yearOfPublication}" />
+		<span th:if="${#fields.hasErrors('yearOfPublication')}" th:errors="*{yearOfPublication}"></span>
 		<br />
 		<input type="submit" id="addBook" value="Add Book" />
 		<hr/>

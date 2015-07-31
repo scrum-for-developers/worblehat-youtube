@@ -7,10 +7,10 @@
 			<column name="id" autoIncrement="true" type="bigint(20)">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="borrowDate" type="date">
+			<column name="borrow_date" type="date">
 				<constraints nullable="true" />
 			</column>
-			<column name="borrowerEmailAddress" type="varchar(255)">
+			<column name="borrower_email_address" type="varchar(255)">
 				<constraints nullable="true" />
 			</column>
 		</createTable>
@@ -33,63 +33,70 @@
 			<column name="isbn" type="varchar(255)">
 				<constraints nullable="true" />
 			</column>
-			<column name="year" type="int(4)">
+			<column name="year_of_publication" type="int(4)">
 				<constraints nullable="true" />
 			</column>
-			<column name="emailAddress" type="varchar(255)">
+			<column name="email_address" type="varchar(255)">
 				<constraints nullable="true" />
 			</column>
-			<column name="currentBorrowing_id" type="bigint(20)">
+			<column name="current_borrowing_id" type="bigint(20)">
 				<constraints nullable="true" />
 			</column>
 		</createTable>
 		<addForeignKeyConstraint constraintName="FK_BORROWING"
-			referencedTableName="Borrowing" baseColumnNames="currentBorrowing_id"
+			referencedTableName="Borrowing" baseColumnNames="current_borrowing_id"
 			baseTableName="Book" referencedColumnNames="id" />
 	</changeSet>
 
 	<changeSet id="1.0-testdata" author="daniel.arndt">
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und der Stein der Weisen" />
+			<column name="title" value="Harry Potter and the Philosopher's Stone" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551551677" />
-			<column name="year" value="1998" />
+			<column name="isbn" value="0747532699" />
+			<column name="year_of_publication" value="1997" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und die Kammer des Schreckens" />
+			<column name="title" value="Harry Potter and the Chamber of Secrets" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551551685" />
-			<column name="year" value="1999" />
+			<column name="isbn" value="0747538492" />
+			<column name="year_of_publication" value="1998" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und der Gefangene von Askaban" />
+			<column name="title" value="Harry Potter and the Prisoner of Azkaban" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551551693" />
-			<column name="year" value="1999" />
+			<column name="isbn" value="0747542155" />
+			<column name="year_of_publication" value="1999" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und der Feuerkelch" />
+			<column name="title" value="Harry Potter and the Goblet of Fire" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551551936" />
-			<column name="year" value="2000" />
+			<column name="isbn" value="074754624X" />
+			<column name="year_of_publication" value="2000" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und der Orden des Phönix" />
+			<column name="title" value="Harry Potter and the Order of the Phoenix" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551555559" />
-			<column name="year" value="2003" />
+			<column name="isbn" value="0747551006" />
+			<column name="year_of_publication" value="2003" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und der Halbblutprinz" />
+			<column name="title" value="Harry Potter and the Half-Blood Prince" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="3551354065" />
-			<column name="year" value="2010" />
+			<column name="isbn" value="0747581088" />
+			<column name="year_of_publication" value="2005" />
 		</insert>
 		<insert tableName="Book">
-			<column name="title" value="Harry Potter und die Heiligtümer des Todes" />
+			<column name="title" value="Harry Potter and the Deathly Hallows" />
+			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
-			<column name="isbn" value="355155577X" />
-			<column name="year" value="2010" />
+			<column name="isbn" value="0545010225" />
+			<column name="year_of_publication" value="2007" />
 		</insert>
 	</changeSet>
 

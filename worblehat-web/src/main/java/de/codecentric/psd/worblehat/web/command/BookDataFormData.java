@@ -17,10 +17,10 @@ public class BookDataFormData {
 	@Numeric(message = "{notvalid.bookDataFormData.edition}")
 	private String edition;
 
-	@NotEmpty(message = "{empty.bookDataFormData.year}")
-	@Numeric(message = "{notvalid.bookDataFormData.year}")
-	@Length(message = "{invalid.length.bookDataFormData.year}", min = 4, max = 4)
-	private String year;
+	@NotEmpty(message = "{empty.bookDataFormData.yearOfPublication}")
+	@Numeric(message = "{notvalid.bookDataFormData.yearOfPublication}")
+	@Length(message = "{invalid.length.bookDataFormData.yearOfPublication}", min = 4, max = 4)
+	private String yearOfPublication;
 
 	@NotEmpty(message = "{empty.bookDataFormData.isbn}")
 	@ISBN(message = "{notvalid.bookDataFormData.isbn}")
@@ -29,12 +29,12 @@ public class BookDataFormData {
 	@NotEmpty(message = "{empty.bookDataFormData.author}")
 	private String author;
 
-	public String getYear() {
-		return year;
+	public String getYearOfPublication() {
+		return yearOfPublication;
 	}
 
-	public void setYear(String year) {
-		this.year = year;
+	public void setYearOfPublication(String yearOfPublication) {
+		this.yearOfPublication = yearOfPublication;
 	}
 
 	public String getIsbn() {
@@ -72,7 +72,7 @@ public class BookDataFormData {
 	@Override
 	public String toString() {
 		return "BookDataFormData [title=" + title + ", edition=" + edition
-				+ ", year=" + year + ", isbn=" + isbn + ", author=" + author
+				+ ", yearOfPublication=" + yearOfPublication + ", isbn=" + isbn + ", author=" + author
 				+ "]";
 	}
 

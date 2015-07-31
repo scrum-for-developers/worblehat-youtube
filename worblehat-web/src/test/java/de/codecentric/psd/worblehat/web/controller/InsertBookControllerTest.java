@@ -47,7 +47,7 @@ public class InsertBookControllerTest {
 		cmd.setAuthor("Horst Tester");
 		cmd.setEdition("2");
 		cmd.setTitle("Test with JUnit");
-		cmd.setYear("1999");
+		cmd.setYearOfPublication("1999");
 		BindingResult mockBindingResult = mock(BindingResult.class);
 		when(mockBindingResult.hasErrors()).thenReturn(false);
 		ModelMap modelMap = new ModelMap();
