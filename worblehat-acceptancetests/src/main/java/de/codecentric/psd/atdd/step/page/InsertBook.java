@@ -72,7 +72,7 @@ public class InsertBook {
 	}
 
 	private void setYear(String year) {
-		typeIntoField("year", year);
+		typeIntoField("yearOfPublication", year);
 	}
 
 	private void setAuthor(String author) {

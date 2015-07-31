@@ -42,6 +42,10 @@
 			<artifactId>hsqldb</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>de.codecentric.psd</groupId>
 			<artifactId>worblehat-domain</artifactId>
 			<version>${project.version}</version>

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.codecentric.psd</groupId>
 		<artifactId>worblehat-build</artifactId>
-		<version>1.1.0-SNAPSHOT</version>
+		<version>2.1.0-SNAPSHOT</version>
 		<relativePath>../worblehat-build</relativePath>
 	</parent>
 
@@ -55,7 +55,7 @@
 			<id>local</id>
 			<properties>
 				<BASE_URL>http://localhost:8080</BASE_URL>
-				<CONTEXT>worblehat-web</CONTEXT>
+				<CONTEXT>worblehat</CONTEXT>
 				<DB_URL>jdbc:mysql://localhost/worblehat</DB_URL>
 				<DB_USER>worblehat</DB_USER>
 				<DB_PASSWORD>worblehat</DB_PASSWORD>
@@ -161,12 +161,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jbehave.core.version>3.6.6</jbehave.core.version>
 		<jbehave.site.version>3.1.1</jbehave.site.version>
-		<selenium.version>2.44.0</selenium.version>
+		<selenium.version>2.46.0</selenium.version>
 		<embeddables>**/*Stories.java</embeddables>
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
 		<BROWSER_PROFILE>firefox</BROWSER_PROFILE>
 		<BASE_URL>localhost:8080</BASE_URL>
-		<CONTEXT>/worblehat-web</CONTEXT>
+		<CONTEXT>/worblehat</CONTEXT>
 	</properties>
 </project>
