@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
 	<changeSet id="1.0-borrowing" author="daniel.arndt">
-		<createTable tableName="Borrowing">
+		<createTable tableName="borrowing">
 			<column name="id" autoIncrement="true" type="bigint(20)">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -17,7 +17,7 @@
 	</changeSet>
 
 	<changeSet id="1.0-book" author="daniel.arndt">
-		<createTable tableName="Book">
+		<createTable tableName="book">
 			<column name="id" autoIncrement="true" type="bigint(20)">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -44,54 +44,54 @@
 			</column>
 		</createTable>
 		<addForeignKeyConstraint constraintName="FK_BORROWING"
-			referencedTableName="Borrowing" baseColumnNames="current_borrowing_id"
-			baseTableName="Book" referencedColumnNames="id" />
+			referencedTableName="borrowing" baseColumnNames="current_borrowing_id"
+			baseTableName="book" referencedColumnNames="id" />
 	</changeSet>
 
 	<changeSet id="1.0-testdata" author="daniel.arndt">
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Philosopher's Stone" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="0747532699" />
 			<column name="year_of_publication" value="1997" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Chamber of Secrets" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="0747538492" />
 			<column name="year_of_publication" value="1998" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Prisoner of Azkaban" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="0747542155" />
 			<column name="year_of_publication" value="1999" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Goblet of Fire" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="074754624X" />
 			<column name="year_of_publication" value="2000" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Order of the Phoenix" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="0747551006" />
 			<column name="year_of_publication" value="2003" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Half-Blood Prince" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
 			<column name="isbn" value="0747581088" />
 			<column name="year_of_publication" value="2005" />
 		</insert>
-		<insert tableName="Book">
+		<insert tableName="book">
 			<column name="title" value="Harry Potter and the Deathly Hallows" />
 			<column name="author" value="J. K. Rowling" />
 			<column name="edition" value="" />
