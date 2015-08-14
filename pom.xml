@@ -14,8 +14,7 @@
   <version>2.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <modules>    
-    <module>worblehat-build</module>
+  <modules>
     <module>worblehat-domain</module>
     <module>worblehat-web</module>
   </modules>
@@ -23,8 +22,23 @@
   <name>worblehat</name>
 
   <properties>
+    <java.version>1.7</java.version>
+    <psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
+    <psd.dbserver.username>worblehat</psd.dbserver.username>
+    <psd.dbserver.password>worblehat</psd.dbserver.password>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <ciManagement>
+    <system>jenkins</system>
+    <url>${env.JENKINS_URL}</url>
+  </ciManagement>
+  <distributionManagement>
+    <site>
+      <id>psd-teamserver-website</id>
+      <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+    </site>
+  </distributionManagement>
 
   <dependencyManagement>
     <dependencies>
@@ -76,4 +90,117 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.2</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.liquibase</groupId>
+          <artifactId>liquibase-maven-plugin</artifactId>
+          <version>3.3.2</version>
+          <configuration>
+            <logging>info</logging>
+            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.8</version>
+        <!--
+          Fixes build warning
+          [WARNING] The repository url 'http://url.to/repository' is invalid - Repository 'repository-id' will be blacklisted.
+          see http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin
+        -->
+        <configuration>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.11</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <profiles>
+    <profile>
+      <id>include-acceptancetests</id>
+      <activation>
+        <property>
+          <name>include-acceptancetests</name>
+        </property>
+      </activation>
+      <modules>
+        <module>../worblehat-acceptancetests</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>jenkins</id>
+      <properties>
+        <psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
+        <psd.dbserver.username>worblehat</psd.dbserver.username>
+        <psd.dbserver.password>worblehat</psd.dbserver.password>
+        <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+        <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
+        <sonar.jdbc.username>sonar</sonar.jdbc.username>
+        <sonar.jdbc.password>123qwe</sonar.jdbc.password>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>coverage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.2.201409121644</version>
+            <executions>
+              <!-- Prepares the property pointing to the JaCoCo
+                  runtime agent which is passed as VM argument when Maven the Surefire plugin
+                  is executed. -->
+              <execution>
+                <id>pre-unit-test</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+
+              <!-- Ensures that the code coverage report for
+                  unit tests is created after unit tests have been run. -->
+              <execution>
+                <id>post-unit-test</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
