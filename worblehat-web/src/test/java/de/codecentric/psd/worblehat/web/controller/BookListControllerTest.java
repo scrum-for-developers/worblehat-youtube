@@ -43,6 +43,7 @@ public class BookListControllerTest {
 
 		bookListController.setupForm(modelMap);
 
+		@SuppressWarnings("unchecked") // we know that modelMap values are of type List<Book>
 		List<Book> books = (List<Book>) modelMap.get("books");
 		assertThat(books.size(), is(1));
 		assertThat(books.get(0), is(equalTo(testBook)));
