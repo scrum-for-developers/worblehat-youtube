@@ -1,10 +1,10 @@
-*/target/
-*/bin/
-*/.project
-*/.classpath
-*/.metadata
-*/local.properties
-*/.settings/
+target/
+bin/
+.project
+.classpath
+.metadata
+local.properties
+.settings/
 *.versionsBackup
 *.idea
 *.iml
