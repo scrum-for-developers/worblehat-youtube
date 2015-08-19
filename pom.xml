@@ -40,6 +40,14 @@
     </site>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>gemfire-repository</id>
+      <name>Gemfire Repository</name>
+      <url>http://dist.gemstone.com/maven/release</url>
+    </repository>
+  </repositories>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
