@@ -11,7 +11,7 @@
 
 	<name>worblehat-web</name>
 	<artifactId>worblehat-web</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<properties>
 		<start-class>de.codecentric.Application</start-class>
