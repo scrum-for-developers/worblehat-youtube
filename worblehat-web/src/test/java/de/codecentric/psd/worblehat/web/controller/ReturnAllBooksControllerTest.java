@@ -48,7 +48,7 @@ public class ReturnAllBooksControllerTest {
 		formData.setEmailAddress("email@email.de");
 		String page = controller.returnAllBooks(
 				formData, mockBindingResult);
-		assertThat(page, is("/home"));
+		assertThat(page, is("home"));
 		verify(mockBindingResult).hasErrors();
 		verify(bookService).returnAllBooksByBorrower("email@email.de");
 	}
@@ -58,7 +58,7 @@ public class ReturnAllBooksControllerTest {
 		when(mockBindingResult.hasErrors()).thenReturn(true);
 		String page = controller.returnAllBooks(
 				new ReturnAllBooksFormData(), mockBindingResult);
-		assertThat(page, is("/returnAllBooks"));
+		assertThat(page, is("returnAllBooks"));
 		verify(mockBindingResult).hasErrors();
 	}
 }

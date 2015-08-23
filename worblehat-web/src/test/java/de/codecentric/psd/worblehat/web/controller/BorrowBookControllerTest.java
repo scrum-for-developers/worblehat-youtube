@@ -55,7 +55,7 @@ public class BorrowBookControllerTest {
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);
 
-		assertThat(path, is("/borrow"));
+		assertThat(path, is("borrow"));
 		assertEquals(borrowFormData, modelMap.get("borrowFormData"));
 	}
 
@@ -69,7 +69,7 @@ public class BorrowBookControllerTest {
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);
 
-		assertThat(path, is("/home"));
+		assertThat(path, is("home"));
 		assertThat(testBook.getCurrentBorrowing().getBorrowerEmailAddress(), is("test@codecentric.de"));
 
 		verify(mockBindingResult).hasErrors();
@@ -82,7 +82,7 @@ public class BorrowBookControllerTest {
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);
 
-		assertThat(path, is("/borrow"));
+		assertThat(path, is("borrow"));
 		assertEquals(borrowFormData, modelMap.get("borrowFormData"));
 		verify(mockBindingResult).rejectValue("isbn", "notBorrowable");
 	}

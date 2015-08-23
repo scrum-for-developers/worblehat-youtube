@@ -56,7 +56,7 @@ public class InsertBookControllerTest {
 
 		verify(bookFactory).createBook("Test with JUnit", "Horst Tester", "2",
 				"ISBN-123132-21", 1999);
-		assertThat(path, is("/bookList"));
+		assertThat(path, is("bookList"));
 		assertEquals(cmd, modelMap.get("bookDataFormData"));
 	}
 }

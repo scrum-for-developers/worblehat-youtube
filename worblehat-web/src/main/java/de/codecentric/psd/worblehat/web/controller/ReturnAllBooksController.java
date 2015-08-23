@@ -36,10 +36,10 @@ public class ReturnAllBooksController {
 			@ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return "/returnAllBooks";
+			return "returnAllBooks";
 		} else {
 			bookService.returnAllBooksByBorrower(formData.getEmailAddress());
-			return "/home";
+			return "home";
 		}
 	}
 

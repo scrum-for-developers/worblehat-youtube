@@ -49,7 +49,7 @@ public class InsertBookController {
 
 		modelMap.put("bookDataFormData", cmd);
 		if (result.hasErrors()) {
-			return "/insertBooks";
+			return "insertBooks";
 		} else {
 			bookFactory.createBook(cmd.getTitle(), cmd.getAuthor(),
 					cmd.getEdition(), cmd.getIsbn(),
@@ -59,7 +59,7 @@ public class InsertBookController {
 			List<Book> books = bookRepository.findAllBooks();
 			modelMap.addAttribute("books", books);
 
-			return "/bookList";
+			return "bookList";
 		}
 	}
 

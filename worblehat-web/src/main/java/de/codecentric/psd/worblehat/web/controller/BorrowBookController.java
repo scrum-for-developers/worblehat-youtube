@@ -44,27 +44,27 @@ public class BorrowBookController {
 
 		if (result.hasErrors()) {
 			modelMap.put("borrowFormData", cmd);
-			return "/borrow";
+			return "borrow";
 		}
 		Book book = bookRepository.findBorrowableBook(cmd.getIsbn());
 		if(book == null) {
 			result.rejectValue("isbn", "notBorrowable");
 			modelMap.put("borrowFormData", cmd);
-			return "/borrow";
+			return "borrow";
 		}
 		try {
 			book.borrow(cmd.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
 			result.reject("internalError");
 			modelMap.put("borrowFormData", cmd);
-			return "/borrow";
+			return "borrow";
 		}
 
-		return "/home";
+		return "home";
 	}
 
 	@ExceptionHandler(Exception.class)
 	public String handleErrors(Exception ex, HttpServletRequest request) {
-		return "/home";
+		return "home";
 	}
 }
