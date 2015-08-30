@@ -1,32 +1,44 @@
 # Worblehat
 
-## Installation and Upgrade Guide
+Worblehat is a training application for the [Scrum for Developers](https://github.com/scrum-for-developers) training
+held by [codecentric AG](https://www.codecentric.de/).
 
-1. Upgrade to latest version
-2. Initial setup
-3. Requirements
+## Requirements
+* JDK 7+
+* Apache Maven (https://maven.apache.org)
+* Docker (for running acceptance tests, https://www.docker.com)
 
-### 1. Upgrade to latest version of worblehat
+## Running acceptance tests
 
-1. Shutdown Tomcat
-2. Upgrade database scheme
- * Run the following command in worblehat-build
- * `$ mvn liquibase:update`
-3. Deploy new worblehat.war to Tomcat
-4. Restart Tomcat
+The acceptance tests currently don't work with the in-memory data base,
+which is provided by Spring Boot. For this reason you need to start a
+real data base. The acceptance test build will use the data base directly
+to insert test data.
 
-### II ) Initial setup
+1. Setup the database
+  * Run the `docker-db.sh` script in the worblehat-web directory. It will
+    start a MySQL docker container and expose port 3306 for you. Depending
+    on your operating system you can access the data base via `localhost:3006`
+    (Linux) or <DOCKER-HOST-IP>:3306 (MacOS + boot2docker).
+1. Configure worblehat to use the MySQL data base
+  * Uncomment the data base connection configuration in
+    `worblehat-web/src/main/resources/application.properties`
+  * Depending on your operating system you may have to modify the
+    `spring.datasource.url` property to the URL your docker MySQL data base it
+    running at.
+  * Start the application.
+1. Configure the acceptance test build to use the MySQL data base
+  * Change the `DB_URL` property in the `local` profile in
+    `worblehat-acceptancetests/pom.xml` to the URL your docker MySQL data base
+    it running at (if necessary).
+1. Run acceptance tests by calling `$ mvn -Plocal clean verify` in the
+   `worblehat-acceptancetests` directory.
 
-1. Setup database scheme
-  * Run the following command in worblehat-build:
+## Howto Release
 
-      `$ mysql -uroot < ddl/initdb.sql`
+To release for example version 1.2 follow these steps:
 
-  * Run the following command in worblehat-build
-
-      `$ mvn liquibase:update`
-2. Deploy worblehat.war to Tomcat
-
-### III) Requirements
-* MySQL Default Setup, running on port 3306, root User without password
-* Tomcat 6+
+1. Set next development version: `mvn -Pinclude-acceptancetests versions:set -DnewVersion=1.2 -DgenerateBackupPoms=false`
+1. Create a tag and push the tag back to the team repository
+1. Let jenkins build the release and deploy it to the test and production environments
+1. Bump the version for the next development iteration: `mvn -Pinclude-acceptancetests versions:set -DnewVersion=1.3-SNAPSHOT -DgenerateBackupPoms=false`
