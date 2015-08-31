@@ -171,7 +171,7 @@
         </property>
       </activation>
       <modules>
-        <module>../worblehat-acceptancetests</module>
+        <module>worblehat-acceptancetests</module>
       </modules>
     </profile>
     <profile>
