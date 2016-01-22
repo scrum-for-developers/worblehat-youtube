@@ -22,6 +22,8 @@ to insert test data.
     start a MySQL docker container and expose port 3306 for you. Depending
     on your operating system you can access the data base via `localhost:3006`
     (Linux) or <DOCKER-HOST-IP>:3306 (MacOS + boot2docker).
+    
+    Notice: To find out your DOCKER-HOST-IP execute `docker-machine env default`
 1. Configure worblehat to use the MySQL data base
   * Uncomment the data base connection configuration in
     `worblehat-web/src/main/resources/application.properties`
