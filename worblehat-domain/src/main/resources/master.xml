@@ -3,5 +3,5 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-	<include file="de/codecentric/psd/worblehat/domain/1.0-changelog.xml" />
+	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.0/001-initialize-db.sql" />
 </databaseChangeLog> 
