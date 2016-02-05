@@ -93,17 +93,7 @@
 		</plugins>
 	</build>
 	<profiles>
-		<profile>
-			<id>local</id>
-			<properties>
-				<BASE_URL>http://localhost:8080</BASE_URL>
-				<CONTEXT>worblehat</CONTEXT>
-				<DB_URL>jdbc:mysql://localhost/worblehat</DB_URL>
-				<DB_USER>worblehat</DB_USER>
-				<DB_PASSWORD>worblehat</DB_PASSWORD>
-				<BROWSER>${BROWSER_PROFILE}</BROWSER>
-			</properties>
-		</profile>
+
 		<profile>
 			<id>jenkins</id>
 			<activation>
@@ -203,7 +193,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jbehave.core.version>3.6.6</jbehave.core.version>
 		<jbehave.site.version>3.1.1</jbehave.site.version>
-		<selenium.version>2.46.0</selenium.version>
+		<selenium.version>2.50.1</selenium.version>
 		<embeddables>**/*Stories.java</embeddables>
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
