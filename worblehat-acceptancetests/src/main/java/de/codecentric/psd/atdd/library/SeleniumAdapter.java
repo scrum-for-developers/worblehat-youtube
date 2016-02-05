@@ -34,24 +34,24 @@ public class SeleniumAdapter {
 		if (seleniumProvider.equalsIgnoreCase("local")) {
 			driver = new FirefoxDriver();
 		} else {
-			DesiredCapabilities capabillities = null;
+			DesiredCapabilities capabilities = null;
 			String browser = Config.getBrowser();
 			if (browser.equalsIgnoreCase("firefox")) {
-				capabillities = DesiredCapabilities.firefox();
+				capabilities = DesiredCapabilities.firefox();
 			} else if (browser.equalsIgnoreCase("ie")) {
-				capabillities = DesiredCapabilities.internetExplorer();
+				capabilities = DesiredCapabilities.internetExplorer();
 			} else if (browser.equalsIgnoreCase("chrome")) {
-				 capabillities = DesiredCapabilities.chrome();
+				 capabilities = DesiredCapabilities.chrome();
 			}
-			capabillities.setCapability("version", Config.getBrowserVersion());
-			capabillities.setCapability("platform", Config.getBrowserOS());
-			capabillities.setCapability("name", Config.getTestDescription());
-			capabillities.setCapability("public", true);
-			capabillities.setCapability("restricted-public-info", true);
+			capabilities.setCapability("version", Config.getBrowserVersion());
+			capabilities.setCapability("platform", Config.getBrowserOS());
+			capabilities.setCapability("name", Config.getTestDescription());
+			capabilities.setCapability("public", true);
+			capabilities.setCapability("restricted-public-info", true);
 			
 			driver = new RemoteWebDriver(
 					new URL("http://"+Config.getSauceAccount()+":"+Config.getSauceKey() + "@" +
-							Config.getSeleniumServer()), capabillities);
+							Config.getSeleniumServer()), capabilities);
 			if (driver==null) {
 				throw new RuntimeException("Could not create RemoteWebDriver with desired capabilities.\n" +
 						"browser: "+browser+"\n" +
