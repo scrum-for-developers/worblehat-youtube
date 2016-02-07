@@ -2,6 +2,7 @@ package de.codecentric.psd.worblehat.domain;
 
 import java.util.List;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,17 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class StandardBookService implements BookService {
 
-	private BookRepository bookRepository;
-
 	@Autowired
 	public StandardBookService(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
 
+	private BookRepository bookRepository;
+
 	@Override
 	public void returnAllBooksByBorrower(String string) {
-		List<Book> borrowBooks = bookRepository
-				.findAllBorrowBooksByBorrower(string);
+		QBook qbook = QBook.book;
+		BooleanExpression booksByBorrower = qbook.currentBorrowing.borrowerEmailAddress.eq(string);
+		List<Book> borrowBooks = (List<Book>) bookRepository.findAll(booksByBorrower);
 		for (Book book : borrowBooks) {
 			book.returnBook();
 		}

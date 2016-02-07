@@ -3,9 +3,8 @@ package de.codecentric.psd.worblehat.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
-import de.codecentric.psd.worblehat.domain.BookRepository;
+import com.mysema.query.types.expr.BooleanExpression;
+import de.codecentric.psd.worblehat.domain.*;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,9 @@ public class BorrowBookController {
 			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
-		Book book = bookRepository.findBorrowableBook(cmd.getIsbn());
+		QBook qBook = QBook.book;
+		BooleanExpression bookWithISDN = qBook.isbn.eq(cmd.getIsbn());
+		Book book = (Book) bookRepository.findOne(bookWithISDN);
 		if(book == null) {
 			result.rejectValue("isbn", "notBorrowable");
 			modelMap.put("borrowFormData", cmd);

@@ -56,7 +56,7 @@ public class InsertBookController {
 					Integer.parseInt(cmd.getYearOfPublication()));
 			LOG.debug("new book instance is created: " + cmd.getIsbn());
 
-			List<Book> books = bookRepository.findAllBooks();
+			List<Book> books = bookRepository.findAll();
 			modelMap.addAttribute("books", books);
 
 			return "bookList";

@@ -39,7 +39,7 @@ public class BookListControllerTest {
 	@Test
 	public void shouldShowAllBooks() {
 		Book testBook = new Book("Test", "Test", "Test", "Test", 2010);
-		when(mockRepository.findAllBooks()).thenReturn(Collections.singletonList(testBook));
+		when(mockRepository.findAll()).thenReturn(Collections.singletonList(testBook));
 
 		bookListController.setupForm(modelMap);
 

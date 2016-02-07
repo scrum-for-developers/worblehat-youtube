@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.QBook;
 import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import org.junit.Before;
@@ -63,8 +64,8 @@ public class BorrowBookControllerTest {
 	public void shouldBorrowBook() {
 		when(mockBindingResult.hasErrors()).thenReturn(false);
 		Book testBook = new Book("Test", "Test", "Test", "Test", 2010);
-		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(
-				testBook);
+
+		when(mockRepository.findOne(QBook.book.isbn.eq("90-70002-34-5"))).thenReturn(testBook);
 
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);
@@ -77,7 +78,7 @@ public class BorrowBookControllerTest {
 
 	@Test
 	public void shouldReturnErrorIfNoBookIsBorrowable() {
-		when(mockRepository.findBorrowableBook("90-70002-34-5")).thenReturn(null);
+		when(mockRepository.findOne(QBook.book.isbn.eq("90-70002-34-5"))).thenReturn(null);
 
 		String path = booksController.processSubmit(modelMap,
 				borrowFormData, mockBindingResult);
