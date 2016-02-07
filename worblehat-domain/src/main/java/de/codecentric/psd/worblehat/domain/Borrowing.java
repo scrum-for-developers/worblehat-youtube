@@ -3,12 +3,7 @@ package de.codecentric.psd.worblehat.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  * Borrowing Entity
@@ -27,6 +22,9 @@ public class Borrowing implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date borrowDate;
 
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Book borrowedBook;
+
 	public String getBorrowerEmailAddress() {
 		return borrowerEmailAddress;
 	}
@@ -35,8 +33,17 @@ public class Borrowing implements Serializable {
 		return borrowDate;
 	}
 
-	Borrowing(String borrowerEmailAddress, Date borrowDate) {
+	/**
+	 * @param book
+	 * The borrowed book
+	 * @param borrowerEmailAddress
+	 * The borrowers e-mail Address
+	 * @param borrowDate
+	 * The borrow date
+     */
+	public Borrowing(Book book, String borrowerEmailAddress, Date borrowDate) {
 		super();
+		this.borrowedBook = book;
 		this.borrowerEmailAddress = borrowerEmailAddress;
 		this.borrowDate = borrowDate;
 	}

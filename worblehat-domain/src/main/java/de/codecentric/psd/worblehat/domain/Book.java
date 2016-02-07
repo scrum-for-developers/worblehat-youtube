@@ -16,10 +16,6 @@ import javax.persistence.OneToOne;
  * Entity implementation class for Entity: Book
  */
 @Entity
-@NamedQueries({
-		@NamedQuery(name = "findBorrowableBookByISBN", query = "from Book where isbn=:isbn and currentBorrowing is null"),
-		@NamedQuery(name = "findAllBorrowedBooksByEmail", query = "select book from Book as book where book.currentBorrowing.borrowerEmailAddress = :email"),
-		@NamedQuery(name = "findAllBooks", query = "from Book order by title") })
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,9 +29,6 @@ public class Book implements Serializable {
 	private String edition;
 	private String isbn;
 	private int yearOfPublication;
-
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Borrowing currentBorrowing;
 
 	/**
 	 * Empty constructor needed by Hibernate.
@@ -90,34 +83,6 @@ public class Book implements Serializable {
 
 	public int getYearOfPublication() {
 		return yearOfPublication;
-	}
-
-	public Borrowing getCurrentBorrowing() {
-		return currentBorrowing;
-	}
-
-	/**
-	 * Borrow this book.
-	 * 
-	 * @param borrowerEmailAddress
-	 *            the user that borrows the book
-	 * @throws BookAlreadyBorrowedException
-	 *             if this current book is already borrowed
-	 */
-	public void borrow(String borrowerEmailAddress)
-			throws BookAlreadyBorrowedException {
-		if (currentBorrowing != null) {
-			throw new BookAlreadyBorrowedException("book is already borrowed");
-		} else {
-			currentBorrowing = new Borrowing(borrowerEmailAddress, new Date());
-		}
-	}
-
-	/**
-	 * Return the book.
-	 */
-	public void returnBook() {
-		this.currentBorrowing = null;
 	}
 
 }

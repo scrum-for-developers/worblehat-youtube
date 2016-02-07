@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class BorrowBookController {
 
-	private BookRepository bookRepository;
+	private BookService bookService;
 
 	@Autowired
-	public BorrowBookController(BookRepository bookRepository) {
-		this.bookRepository = bookRepository;
+	public BorrowBookController(BookService bookService) {
+		this.bookService= bookService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -45,22 +45,19 @@ public class BorrowBookController {
 			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
-		QBook qBook = QBook.book;
-		BooleanExpression bookWithISDN = qBook.isbn.eq(cmd.getIsbn());
-		Book book = (Book) bookRepository.findOne(bookWithISDN);
+		Book book = bookService.findBookByIsbn(cmd.getIsbn());
 		if(book == null) {
 			result.rejectValue("isbn", "notBorrowable");
 			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
 		try {
-			book.borrow(cmd.getEmail());
+			bookService.borrowBook(book, cmd.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
 			result.reject("internalError");
 			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
-
 		return "home";
 	}
 

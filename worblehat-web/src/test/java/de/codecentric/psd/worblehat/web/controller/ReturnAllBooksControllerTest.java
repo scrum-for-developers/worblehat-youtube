@@ -17,48 +17,4 @@ import org.springframework.validation.BindingResult;
 
 public class ReturnAllBooksControllerTest {
 
-	private ReturnAllBooksController controller;
-
-	private ModelMap modelMap;
-
-	private BookService bookService;
-
-	private BindingResult mockBindingResult;
-
-	@Before
-	public void setUp() {
-		mockBindingResult = mock(BindingResult.class);
-		bookService = mock(BookService.class);
-		controller = new ReturnAllBooksController(bookService);
-		modelMap = new ModelMap();
-	}
-
-	@Test
-	public void shouldPrepareView() {
-		controller.prepareView(modelMap);
-		ReturnAllBooksFormData object = (ReturnAllBooksFormData) modelMap
-				.get("returnAllBookFormData");
-		assertThat(object, not(nullValue()));
-	}
-
-	@Test
-	public void shouldReturnAllBook() {
-		when(mockBindingResult.hasErrors()).thenReturn(false);
-		ReturnAllBooksFormData formData = new ReturnAllBooksFormData();
-		formData.setEmailAddress("email@email.de");
-		String page = controller.returnAllBooks(
-				formData, mockBindingResult);
-		assertThat(page, is("home"));
-		verify(mockBindingResult).hasErrors();
-		verify(bookService).returnAllBooksByBorrower("email@email.de");
-	}
-
-	@Test
-	public void shouldNotReturnAllBook() {
-		when(mockBindingResult.hasErrors()).thenReturn(true);
-		String page = controller.returnAllBooks(
-				new ReturnAllBooksFormData(), mockBindingResult);
-		assertThat(page, is("returnAllBooks"));
-		verify(mockBindingResult).hasErrors();
-	}
 }
