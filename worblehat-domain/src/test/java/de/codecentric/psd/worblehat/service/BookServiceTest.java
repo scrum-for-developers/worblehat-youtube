@@ -2,17 +2,18 @@ package de.codecentric.psd.worblehat.service;
 
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.mysema.query.jpa.impl.JPAQuery;
 import de.codecentric.psd.worblehat.domain.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.persistence.EntityManager;
 
 public class BookServiceTest {
 
@@ -24,13 +25,16 @@ public class BookServiceTest {
 
 	private Book testBook;
 
+	private EntityManager entityManager;
+
 	private static final String BORROWER_EMAIL = "someone@codecentric.de";
 
 	@Before
 	public void setup() throws Exception {
 		borrowingRepository = mock(BorrowingRepository.class);
 		bookRepository = mock(BookRepository.class);
-		bookService = new StandardBookService(borrowingRepository, bookRepository);
+		entityManager = mock(EntityManager.class);
+		bookService = new StandardBookService(borrowingRepository, bookRepository, entityManager);
 	}
 
 	@Test

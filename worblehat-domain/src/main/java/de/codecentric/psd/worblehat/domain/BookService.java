@@ -1,6 +1,6 @@
 package de.codecentric.psd.worblehat.domain;
 
-import de.codecentric.psd.worblehat.domain.dto.BookListDTO;
+import de.codecentric.psd.worblehat.domain.dto.BookWithBorrowerDTO;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface BookService {
 
 	List<Book> findAllBooks();
 
-	List<BookListDTO> findBooksWithBorrower();
+	List<BookWithBorrowerDTO> findBooksWithBorrower();
 
 	void createBook(String title, String author, String edition, String isbn, int yearOfPublication);
 }

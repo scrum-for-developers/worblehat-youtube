@@ -3,10 +3,8 @@ package de.codecentric.psd.worblehat.web.controller;
 import javax.validation.Valid;
 import java.util.List;
 
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookFactory;
-import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.domain.BookService;
+import de.codecentric.psd.worblehat.domain.dto.BookWithBorrowerDTO;
 import de.codecentric.psd.worblehat.web.command.BookDataFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +52,7 @@ public class InsertBookController {
 					Integer.parseInt(cmd.getYearOfPublication()));
 			LOG.debug("new book instance is created: " + cmd.getIsbn());
 
-			List<Book> books = bookService.findAllBooks();
+			List<BookWithBorrowerDTO> books = bookService.findBooksWithBorrower();
 			modelMap.addAttribute("books", books);
 
 			return "bookList";

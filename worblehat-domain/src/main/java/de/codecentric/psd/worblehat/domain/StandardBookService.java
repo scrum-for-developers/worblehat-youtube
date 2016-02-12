@@ -1,11 +1,14 @@
 package de.codecentric.psd.worblehat.domain;
 
+import com.mysema.query.Tuple;
+import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
-import de.codecentric.psd.worblehat.domain.dto.BookListDTO;
+import de.codecentric.psd.worblehat.domain.dto.BookWithBorrowerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,14 +21,18 @@ import java.util.List;
 public class StandardBookService implements BookService {
 
     @Autowired
-    public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
+    public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository,
+                               EntityManager entityManager) {
         this.borrowingRepository = borrowingRepository;
         this.bookRepository = bookRepository;
+        this.entityManager = entityManager;
     }
 
     private BorrowingRepository borrowingRepository;
 
     private BookRepository bookRepository;
+
+    private EntityManager entityManager;
 
     @Override
     public void returnAllBooksByBorrower(String string) {
@@ -60,20 +67,30 @@ public class StandardBookService implements BookService {
     }
 
     @Override
-    public List<BookListDTO> findBooksWithBorrower() {
-        List<Book> books = bookRepository.findAll();
-        List<BookListDTO> bookListDTOs = new ArrayList<>();
-        for (Book book : books){
-            Borrowing borrowing = (Borrowing)borrowingRepository.findOne(QBorrowing.borrowing.borrowedBook.eq(book));
-            BookListDTO bookListDTO;
-            if (borrowing != null){
-                bookListDTO = BookListDTO.createBookListDTO(book, borrowing.getBorrowerEmailAddress());
-            }else{
-                bookListDTO = BookListDTO.createBookListDTO(book, null);
-            }
-            bookListDTOs.add(bookListDTO);
+    public List<BookWithBorrowerDTO> findBooksWithBorrower() {
+        QBook book = QBook.book;
+        QBorrowing borrowing = QBorrowing.borrowing;
+
+        List<Tuple> result = new JPAQuery(entityManager).from(borrowing).rightJoin(borrowing.borrowedBook, book)
+                .list(book.title, book.author, book.edition, book.isbn, book.yearOfPublication, borrowing.borrowerEmailAddress);
+
+        List<BookWithBorrowerDTO> booksWithBorrowerDTOs = new ArrayList<>();
+        for (Tuple tuple : result){
+            BookWithBorrowerDTO bookWithBorrowerDTO = mapTupleToBookWithBorrowerDTO(book, borrowing, tuple);
+            booksWithBorrowerDTOs.add(bookWithBorrowerDTO);
         }
-        return bookListDTOs;
+        return booksWithBorrowerDTOs;
+    }
+
+    private BookWithBorrowerDTO mapTupleToBookWithBorrowerDTO(QBook book, QBorrowing borrowing, Tuple tuple) {
+        BookWithBorrowerDTO bookWithBorrowerDTO = new BookWithBorrowerDTO();
+        bookWithBorrowerDTO.setAuthor(tuple.get(book.author));
+        bookWithBorrowerDTO.setTitle(tuple.get(book.title));
+        bookWithBorrowerDTO.setEdition(tuple.get(book.edition));
+        bookWithBorrowerDTO.setIsbn(tuple.get(book.isbn));
+        bookWithBorrowerDTO.setYearOfPublication(tuple.get(book.yearOfPublication));
+        bookWithBorrowerDTO.setBorrower(tuple.get(borrowing.borrowerEmailAddress));
+        return bookWithBorrowerDTO;
     }
 
     @Override

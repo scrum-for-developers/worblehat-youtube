@@ -2,7 +2,7 @@ package de.codecentric.psd.worblehat.domain.dto;
 
 import de.codecentric.psd.worblehat.domain.Book;
 
-public class BookListDTO {
+public class BookWithBorrowerDTO {
 
     private String title;
     private String author;
@@ -10,17 +10,6 @@ public class BookListDTO {
     private String isbn;
     private int yearOfPublication;
     private String borrower;
-
-    public static BookListDTO createBookListDTO(Book book, String borrower){
-        BookListDTO bookListDTO = new BookListDTO();
-        bookListDTO.title = book.getTitle();
-        bookListDTO.author = book.getAuthor();
-        bookListDTO.edition = book.getEdition();
-        bookListDTO.isbn = book.getIsbn();
-        bookListDTO.yearOfPublication = book.getYearOfPublication();
-        bookListDTO.borrower = borrower;
-        return bookListDTO;
-    }
 
     public String getTitle() {
         return title;

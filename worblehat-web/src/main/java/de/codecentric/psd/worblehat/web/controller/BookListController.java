@@ -2,10 +2,8 @@ package de.codecentric.psd.worblehat.web.controller;
 
 import java.util.List;
 
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.dto.BookListDTO;
+import de.codecentric.psd.worblehat.domain.dto.BookWithBorrowerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,7 +26,7 @@ public class BookListController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(ModelMap modelMap) {
-		List<BookListDTO> books = bookService.findBooksWithBorrower();
+		List<BookWithBorrowerDTO> books = bookService.findBooksWithBorrower();
 		modelMap.addAttribute("books", books);
 		return "bookList";
 	}
