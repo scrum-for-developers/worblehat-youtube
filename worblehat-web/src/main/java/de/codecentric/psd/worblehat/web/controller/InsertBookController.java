@@ -1,10 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import javax.validation.Valid;
-import java.util.List;
-
+import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.dto.BookWithBorrowerDTO;
 import de.codecentric.psd.worblehat.web.command.BookDataFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Handles requests for the application home page.
@@ -52,7 +52,7 @@ public class InsertBookController {
 					Integer.parseInt(cmd.getYearOfPublication()));
 			LOG.debug("new book instance is created: " + cmd.getIsbn());
 
-			List<BookWithBorrowerDTO> books = bookService.findBooksWithBorrower();
+			List<Book> books = bookService.findAllBooks();
 			modelMap.addAttribute("books", books);
 
 			return "bookList";

@@ -1,16 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: Book
@@ -29,6 +20,9 @@ public class Book implements Serializable {
 	private String edition;
 	private String isbn;
 	private int yearOfPublication;
+
+	@OneToOne(mappedBy = "borrowedBook")
+	private Borrowing borrowing;
 
 	/**
 	 * Empty constructor needed by Hibernate.
@@ -84,5 +78,7 @@ public class Book implements Serializable {
 	public int getYearOfPublication() {
 		return yearOfPublication;
 	}
+
+	public String getBorrowerEmail() { return borrowing == null ? "" : borrowing.getBorrowerEmailAddress(); }
 
 }

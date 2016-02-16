@@ -1,10 +1,8 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import com.mysema.query.types.expr.BooleanExpression;
-import de.codecentric.psd.worblehat.domain.*;
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
+import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.command.BookBorrowFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * Controller for BorrowingBook

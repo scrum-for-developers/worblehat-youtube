@@ -1,9 +1,9 @@
 package de.codecentric.psd.worblehat.web.validation;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
-import org.apache.commons.lang.StringUtils;
 
 public class NumericConstraintValidator implements ConstraintValidator<Numeric, String> {
 
