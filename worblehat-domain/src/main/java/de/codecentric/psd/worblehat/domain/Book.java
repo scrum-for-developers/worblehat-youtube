@@ -1,25 +1,12 @@
 package de.codecentric.psd.worblehat.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: Book
  */
 @Entity
-@NamedQueries({
-		@NamedQuery(name = "findBorrowableBookByISBN", query = "from Book where isbn=:isbn and currentBorrowing is null"),
-		@NamedQuery(name = "findAllBorrowedBooksByEmail", query = "select book from Book as book where book.currentBorrowing.borrowerEmailAddress = :email"),
-		@NamedQuery(name = "findAllBooks", query = "from Book order by title") })
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,8 +21,8 @@ public class Book implements Serializable {
 	private String isbn;
 	private int yearOfPublication;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Borrowing currentBorrowing;
+	@OneToOne(mappedBy = "borrowedBook")
+	private Borrowing borrowing;
 
 	/**
 	 * Empty constructor needed by Hibernate.
@@ -92,32 +79,6 @@ public class Book implements Serializable {
 		return yearOfPublication;
 	}
 
-	public Borrowing getCurrentBorrowing() {
-		return currentBorrowing;
-	}
-
-	/**
-	 * Borrow this book.
-	 * 
-	 * @param borrowerEmailAddress
-	 *            the user that borrows the book
-	 * @throws BookAlreadyBorrowedException
-	 *             if this current book is already borrowed
-	 */
-	public void borrow(String borrowerEmailAddress)
-			throws BookAlreadyBorrowedException {
-		if (currentBorrowing != null) {
-			throw new BookAlreadyBorrowedException("book is already borrowed");
-		} else {
-			currentBorrowing = new Borrowing(borrowerEmailAddress, new Date());
-		}
-	}
-
-	/**
-	 * Return the book.
-	 */
-	public void returnBook() {
-		this.currentBorrowing = null;
-	}
+	public String getBorrowerEmail() { return borrowing == null ? "" : borrowing.getBorrowerEmailAddress(); }
 
 }

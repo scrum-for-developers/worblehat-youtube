@@ -1,22 +1,19 @@
 package de.codecentric.psd.worblehat.service;
 
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.StandardBookService;
+import de.codecentric.psd.worblehat.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 public class BookServiceTest {
+
+	private BorrowingRepository borrowingRepository;
 
 	private BookRepository bookRepository;
 
@@ -24,24 +21,25 @@ public class BookServiceTest {
 
 	private Book testBook;
 
+
+	private static final String BORROWER_EMAIL = "someone@codecentric.de";
+
 	@Before
 	public void setup() throws Exception {
+		borrowingRepository = mock(BorrowingRepository.class);
 		bookRepository = mock(BookRepository.class);
-		bookService = new StandardBookService(bookRepository);
-		testBook = new Book("MyTitle", "MyAuthor", "2007", "ISBN-123132-21",
-				2009);
-		testBook.borrow("test@test.de");
+		bookService = new StandardBookService(borrowingRepository, bookRepository);
 	}
 
 	@Test
 	public void shouldReturnAllBooksOfOnePerson() {
-		List<Book> result = Collections.singletonList(testBook);
-		when(bookRepository.findAllBorrowBooksByBorrower(anyString()))
-				.thenReturn(result);
-
-		bookService.returnAllBooksByBorrower("test@test.de");
-
-		assertNull(testBook.getCurrentBorrowing());
+		Book testBook = new Book("title", "author", "edition", "isbn", 2016);
+		Borrowing borrowing = new Borrowing(testBook, BORROWER_EMAIL, new Date());
+		List<Borrowing> result = Collections.singletonList(borrowing);
+		when(borrowingRepository.findBooksByBorrower(BORROWER_EMAIL))
+		.thenReturn(result);
+		bookService.returnAllBooksByBorrower(BORROWER_EMAIL);
+		verify(borrowingRepository).delete(borrowing);
 	}
 
 }
