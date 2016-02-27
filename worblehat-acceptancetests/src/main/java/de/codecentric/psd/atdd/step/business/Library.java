@@ -4,57 +4,53 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
+import de.codecentric.psd.worblehat.domain.BookService;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 
-import com.google.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import de.codecentric.psd.atdd.library.DatabaseAdapter;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Library {
 	
-	public DatabaseAdapter database;
+	private BookService bookService;
 
-	@Inject
-	public Library(DatabaseAdapter database) {
-		this.database = database;
+	@Autowired
+	public Library(BookService bookService){
+		this.bookService = bookService;
 	}
-	
+
 	// *******************
 	// *** G I V E N *****
 	// *******************
 	
 	@Given("an empty library")
-	public void emptyLibrary() throws SQLException{ 
-		database.emptyTable("book");
-		database.emptyTable("borrowing");
+	public void emptyLibrary() throws SQLException{
+		bookService.deleteAllBooks();
 	}
 	
 	@Given("a library with only a single unborrowed book with <isbn>")
 	public void createSingleBook(@Named("isbn") String isbn) throws SQLException{
 		emptyLibrary();
-		database.execute("INSERT INTO book(id,title,author,edition,isbn,year_of_publication) VALUES " +
-				"(0, 'Title', 'Author', '1', '"+isbn+"', 2011)");
+		bookService.createBook("Title", "Author", "1", isbn, 2011);
 	}
 	
 	@Given("a user <user> has borrowed books <isbns>")
-	public void createListOfBorrowedBooks(@Named("user") String user, @Named("isbns") String isbns) throws SQLException{
+	public void createListOfBorrowedBooks(@Named("user") String user, @Named("isbns") String isbns) throws SQLException, BookAlreadyBorrowedException {
 		List<String> isbnList = getListOfItems(isbns);
 		for (String isbn : isbnList) {
-			database.execute("INSERT INTO book(title,author,edition,isbn,year_of_publication) VALUES " +
-					"('Title', 'Author', '1', '"+isbn+"', 2011)");
-			String bookId = database.getResult("SELECT  LAST_INSERT_ID()");
-			database.execute("INSERT INTO borrowing(borrow_date, borrower_email_address) VALUES " +
-					"(CURDATE(), '"+user+"')");
-			String borrowingId = database.getResult("SELECT  LAST_INSERT_ID()");
-			database.execute("UPDATE book SET current_borrowing_id = "+borrowingId+" WHERE id = "+bookId);
-			
+			Book book = bookService.createBook("Title", "Author", "1", isbn, 2011);
+			bookService.borrowBook(book, user);
 		}
 	}
 
 	@Given("a user <user2> has borrowed books <isbns2>")
-	public void createListOfBorrowedBooks2(@Named("user2") String user, @Named("isbns2") String isbns) throws SQLException{
+	public void createListOfBorrowedBooks2(@Named("user2") String user, @Named("isbns2") String isbns) throws SQLException, BookAlreadyBorrowedException {
 		createListOfBorrowedBooks(user, isbns);
 	}
 	
@@ -74,19 +70,26 @@ public class Library {
 	@Then("the library contains only the book with <isbn>")
 	public void shouldContainOnlyOneBook(@Named("isbn") String isbn) throws SQLException {
 		waitForServerResponse();
-		database.shouldReturnExactlyOne("SELECT * FROM book WHERE isbn = '" + isbn + "'");
+
+		List<Book> books = bookService.findAllBooks();
+		assertThat(books.size(), is(1));
+		assertThat(books.get(0).getIsbn(), is(isbn));
 	}
 
 	@Then("the library contains a no book with an <attribute> of <value>")
 	public void thenTheDatabaseContainsANoEntryForBookisbn(@Named("attribute") String attribute,
 			@Named("value") String value) throws SQLException{
 		waitForServerResponse();
-		database.shouldReturnNothing("SELECT * FROM book WHERE " + getColumnForAttribute(attribute) + " = '" + value + "'");
+		List<Book> books= getBooksForAttribute(attribute, value);
+		assertThat(books.size(), is(0));
 	}
+
 
 	@Then("the book <isbn> is not available for borrowing anymore")
 	public void shouldNotBeAvailableForBorrowing(@Named("isbn") String isbn) throws SQLException{
 		waitForServerResponse();
+		bookService.bo
+
 		database.shouldReturnNothing("SELECT * FROM book WHERE isbn = '"+isbn+"' AND current_borrowing_id is null");
 	}
 
@@ -128,13 +131,13 @@ public class Library {
 	// *** U T I L ***** 
 	// *****************
 
-	private String getColumnForAttribute(String attribute) {
+	private List<Book> getBooksForAttribute(String attribute, String value) {
 		if (attribute.equals("ISBN"))
-			return "isbn";
+			return bookService.findBooksByIsbn(value);
 		if (attribute.equals("Author"))
-			return "author";
+			return bookService.findBooksByAuthor(value);
 		if (attribute.equals("Edition"))
-			return "edition";
+			return bookService.findBooksByEdition(value);
 		return null;
 	}
 

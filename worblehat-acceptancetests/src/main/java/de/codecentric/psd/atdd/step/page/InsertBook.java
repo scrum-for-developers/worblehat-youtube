@@ -3,25 +3,24 @@ package de.codecentric.psd.atdd.step.page;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
+import de.codecentric.psd.atdd.adapter.wrapper.Page;
+import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-import com.google.inject.Inject;
-
-import de.codecentric.psd.atdd.library.Config;
-import de.codecentric.psd.atdd.library.SeleniumAdapter;
+import de.codecentric.psd.atdd.adapter.Config;
+import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class InsertBook {
 
-	private WebDriver driver;
+	private SeleniumAdapter seleniumAdapter;
 
-	@Inject
-	public InsertBook(SeleniumAdapter selenium) {
-		driver = selenium.getDriver();
+	@Autowired
+	public InsertBook(SeleniumAdapter seleniumAdapter) {
+		this.seleniumAdapter = seleniumAdapter;
 	}
 
 	// *******************
@@ -32,20 +31,23 @@ public class InsertBook {
 	// *** W H E N *****
 	// *****************
 
-	@When("a book with ISBN <isbn> is added")
-	public void whenABookWithISBNisbnIsAdded(@Named("isbn") String isbn) {
+	@When("a librarian adds a book with title <title>, author <author>, edition <edition>, year <year> and isbn <isbn>")
+	public void whenABookWithISBNisbnIsAdded(@Named("title") String title,
+											 @Named("author")String author,
+											 @Named("edition") String edition,
+											 @Named("year") String year,
+											 @Named("isbn") String isbn) {
 		openInsertBooksPage();
-		fillInsertBookForm("Title", "2", isbn, "Author", "2002");
+		fillInsertBookForm(title, author, edition, isbn, year);
 		submitForm();
 	}
 
 	@When("the librarian tries to add a book with an <attribute> of <value>")
 	public void addABook(@Named("attribute") String attribute,
 			@Named("value") String value) {
-		openInsertBooksPage();
-		fillInsertBookForm("Title", "1", "123456789X", "Author", "2002");
-		typeIntoField(getIdForAttribute(attribute), value);
-		submitForm();
+		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
+		seleniumAdapter.typeIntoField(getIdForAttribute(attribute), value);
+		seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
 	}
 
 	// *****************
@@ -63,39 +65,13 @@ public class InsertBook {
 	// *****************
 
 
-	private void setTitle(String titel) {
-		typeIntoField("title", titel);
-	}
-
-	private void setEdition(String edition) {
-		typeIntoField("edition", edition);
-	}
-
-	private void setYear(String year) {
-		typeIntoField("yearOfPublication", year);
-	}
-
-	private void setAuthor(String author) {
-		typeIntoField("author", author);
-	}
-
-	private void setIsbn(String isbn) {
-		typeIntoField("isbn", isbn);
-	}
-
-	private void typeIntoField(String id, String value) {
-		WebElement element = driver.findElement(By.id(id));
-		element.clear();
-		element.sendKeys(value);
-	}
-
-	private void fillInsertBookForm(String titel, String edition, String isbn,
-			String author, String year) {
-		setTitle(titel);
-		setEdition(edition);
-		setIsbn(isbn);
-		setAuthor(author);
-		setYear(year);
+	private void fillInsertBookForm(String title, String author, String edition, String isbn,
+			 String year) {
+		seleniumAdapter.typeIntoField("title", title);
+		seleniumAdapter.typeIntoField("edition", edition);
+		seleniumAdapter.typeIntoField("isbn", isbn);
+		seleniumAdapter.typeIntoField("author", author);
+		seleniumAdapter.typeIntoField("yearOfPublication", year);
 	}
 
 	private void submitForm() {
@@ -103,8 +79,13 @@ public class InsertBook {
 	}
 
 	private void openInsertBooksPage() {
+		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
 		driver.get(Config.getApplicationURL() + "/"
 				+ Config.getApplicationContext() + "/insertBooks");
+	}
+
+	private void openBookListPage() {
+		);
 	}
 
 	private String getIdForAttribute(String attribute) {

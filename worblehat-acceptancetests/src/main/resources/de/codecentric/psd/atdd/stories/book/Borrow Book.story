@@ -8,14 +8,14 @@ I want to borrow an interesting book.
 
 Scenario:
 
-Given a library with only a single unborrowed book with <isbn>
+Given a library, containing a book with isbn <isbn>
 
-When user <user> borrows the book <isbn>
-
-Then the book <isbn> is not available for borrowing anymore
-And the user <user> has borrowed the book <isbn>
+When user <borrower> borrows the book <isbn>
+Then the booklist lists the user <borrower> as borrower for the book with title <title>, author <author>, edition <edition>, year <year> and isbn <isbn>
+And I get an error message <message> when the borrower <borrower> tries to borrow the book with isbn <isbn> again
 
 Examples:
- 
-| isbn       | user         |
-| 1234567962 | user@test.ca |
+
+| isbn       | borrower      | message                       |
+| 0552131075 | user@test.com | An internal error occurred    |
+

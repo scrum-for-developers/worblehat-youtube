@@ -1,23 +1,27 @@
 package de.codecentric.psd.atdd.step.page;
 
+import de.codecentric.psd.atdd.adapter.wrapper.Page;
+import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.google.inject.Inject;
+import de.codecentric.psd.atdd.adapter.Config;
+import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import de.codecentric.psd.atdd.library.Config;
-import de.codecentric.psd.atdd.library.SeleniumAdapter;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BorrowBook {
 	
-	private WebDriver driver;
+	private SeleniumAdapter seleniumAdapter;
 
-	@Inject
-	public BorrowBook(SeleniumAdapter selenium) {
-		driver = selenium.getDriver();
+	@Autowired
+	public BorrowBook(SeleniumAdapter seleniumAdapter) {
+		this.seleniumAdapter = seleniumAdapter;
 	}
 	
 	// *******************
@@ -25,38 +29,32 @@ public class BorrowBook {
 	// *******************
 
 	// *****************
-	// *** W H E N *****
+	// *** W H E N *****s
 	// *****************
 	
-	@When("user <user> borrows the book <isbn>")
-	public void whenUseruserBorrowsTheBookisbn(@Named("user") String user, @Named("isbn") String isbn){
-		openBorrowBookPage();
-		typeIntoField("email", user);
-		typeIntoField("isbn", isbn);
-		submitForm();
+	@When("user <borrower> borrows the book <isbn>")
+	public void whenUseruserBorrowsTheBookisbn(@Named("borrower") String user, @Named("isbn") String isbn){
+		seleniumAdapter.gotoPage(Page.BORROWBOOK);
+		seleniumAdapter.typeIntoField("email", user);
+		seleniumAdapter.typeIntoField("isbn", isbn);
+		seleniumAdapter.clickOnPageElement(PageElement.BORROWBOOKBUTTON);
 	}
 	
 	// *****************
 	// *** T H E N *****
 	// *****************
-	
-	// *****************
-	// *** U T I L ***** 
-	// *****************
 
-	private void submitForm() {
-		driver.findElement(By.id("borrowBook")).click();
+	@Then("I get an error message <message> when the borrower <borrower> tries to borrow the book with isbn <isbn> again")
+	public void whenBorrowerBorrowsBorrowedBookShowErrorMessage(@Named("borrower")String borrower,
+																@Named("isbn")String isbn,
+																@Named("message")String message){
+		seleniumAdapter.gotoPage(Page.BORROWBOOK);
+		seleniumAdapter.typeIntoField("email", borrower);
+		seleniumAdapter.typeIntoField("isbn", isbn);
+		seleniumAdapter.clickOnPageElement(PageElement.BORROWBOOKBUTTON);
+		String errorMessage = seleniumAdapter.getTextFromElement(PageElement.ISBNERROR);
+		assertThat(errorMessage, is(message));
 	}
 
-	private void openBorrowBookPage() {
-		driver.get(Config.getApplicationURL() + "/"
-				+ Config.getApplicationContext() + "/borrow");
-	}
-	
-	private void typeIntoField(String id, String value) {
-		WebElement element = driver.findElement(By.id(id));
-		element.clear();
-		element.sendKeys(value);
-	}
 
 }

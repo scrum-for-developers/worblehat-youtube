@@ -8,8 +8,8 @@ import org.openqa.selenium.WebElement;
 
 import com.google.inject.Inject;
 
-import de.codecentric.psd.atdd.library.Config;
-import de.codecentric.psd.atdd.library.SeleniumAdapter;
+import de.codecentric.psd.atdd.adapter.Config;
+import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 
 public class ReturnAllBooks {
 	private final WebDriver driver;

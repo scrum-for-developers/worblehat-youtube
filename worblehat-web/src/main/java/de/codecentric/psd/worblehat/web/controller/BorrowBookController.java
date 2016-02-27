@@ -51,7 +51,7 @@ public class BorrowBookController {
 		try {
 			bookService.borrowBook(book, borrowFormData.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
-			result.reject("internalError");
+			result.rejectValue("isbn", "internalError");
 			return "borrow";
 		}
 		return "home";

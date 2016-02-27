@@ -18,4 +18,6 @@ public interface BookService {
 	void createBook(String title, String author, String edition, String isbn, int yearOfPublication);
 
 	boolean bookExists(String isbn);
+
+	void deleteAllBooks();
 }
