@@ -1,7 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.web.command.ReturnAllBooksFormData;
+import de.codecentric.psd.worblehat.web.formdata.ReturnAllBooksFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
