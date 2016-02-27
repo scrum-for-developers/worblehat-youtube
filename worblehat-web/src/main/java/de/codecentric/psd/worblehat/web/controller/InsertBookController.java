@@ -39,23 +39,20 @@ public class InsertBookController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(ModelMap modelMap,
-			@ModelAttribute("bookDataFormData") @Valid BookDataFormData cmd,
+	public String processSubmit(@ModelAttribute("bookDataFormData") @Valid BookDataFormData bookDataFormData,
 			BindingResult result) {
 
-		modelMap.put("bookDataFormData", cmd);
 		if (result.hasErrors()) {
 			return "insertBooks";
-		} else {
-			bookService.createBook(cmd.getTitle(), cmd.getAuthor(),
-					cmd.getEdition(), cmd.getIsbn(),
-					Integer.parseInt(cmd.getYearOfPublication()));
-			LOG.debug("new book instance is created: " + cmd.getIsbn());
-
-			List<Book> books = bookService.findAllBooks();
-			modelMap.addAttribute("books", books);
-
-			return "bookList";
+		} else if (bookService.bookExists(bookDataFormData.getIsbn())) {
+			result.rejectValue("isbn", "duplicateIsbn");
+			return "insertBooks";
+		} else{
+			bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
+					bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
+					Integer.parseInt(bookDataFormData.getYearOfPublication()));
+			LOG.debug("new book instance is created: " + bookDataFormData.getIsbn());
+			return "redirect:bookList";
 		}
 	}
 

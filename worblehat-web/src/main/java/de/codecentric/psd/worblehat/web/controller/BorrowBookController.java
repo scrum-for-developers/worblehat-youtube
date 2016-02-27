@@ -38,25 +38,20 @@ public class BorrowBookController {
 
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(ModelMap modelMap,
-			@ModelAttribute("borrowFormData") @Valid BookBorrowFormData cmd,
+	public String processSubmit(@ModelAttribute("borrowFormData") @Valid BookBorrowFormData borrowFormData,
 			BindingResult result) {
-
 		if (result.hasErrors()) {
-			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
-		Book book = bookService.findBookByIsbn(cmd.getIsbn());
+		Book book = bookService.findBookByIsbn(borrowFormData.getIsbn());
 		if(book == null) {
 			result.rejectValue("isbn", "notBorrowable");
-			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
 		try {
-			bookService.borrowBook(book, cmd.getEmail());
+			bookService.borrowBook(book, borrowFormData.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
 			result.reject("internalError");
-			modelMap.put("borrowFormData", cmd);
 			return "borrow";
 		}
 		return "home";

@@ -7,7 +7,8 @@ CREATE TABLE book (
   author VARCHAR(255),
   edition VARCHAR(255),
   isbn VARCHAR(255),
-  year_of_publication INT
+  year_of_publication INT,
+  UNIQUE (isbn)
 );
 
 -- changeset action:create_table_borrowing

@@ -47,8 +47,7 @@ public class StandardBookService implements BookService {
 
     @Override
     public Book findBookByIsbn(String isbn) {
-        Book book = (Book) bookRepository.findBookByIsbn(isbn);
-        return book; //null if not found
+        return bookRepository.findBookByIsbn(isbn); //null if not found
     }
 
     @Override
@@ -61,6 +60,11 @@ public class StandardBookService implements BookService {
     public void createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
         bookRepository.save(book);
+    }
+
+    @Override
+    public boolean bookExists(String isbn) {
+        return findBookByIsbn(isbn) != null;
     }
 
 }
