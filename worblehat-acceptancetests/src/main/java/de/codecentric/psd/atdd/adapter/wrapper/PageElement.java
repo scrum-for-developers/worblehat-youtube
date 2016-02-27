@@ -1,7 +1,8 @@
 package de.codecentric.psd.atdd.adapter.wrapper;
 
 public enum PageElement {
-    ADDBOOKBUTTON("addBook"), BOOKLIST("bookList"), BORROWBOOKBUTTON("borrowBook"), ISBNERROR("isbn-error");
+    ADDBOOKBUTTON("addBook"), BOOKLIST("bookList"), BORROWBOOKBUTTON("borrowBook"), ISBNERROR("isbn-error"),
+    RETURNALLBOOKSBUTTON("returnAllBooks");
 
 
     private String elementId;

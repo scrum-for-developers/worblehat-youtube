@@ -1,19 +1,24 @@
 package de.codecentric.psd.atdd.step.page;
 
+import de.codecentric.psd.atdd.adapter.wrapper.HtmlBook;
+import de.codecentric.psd.atdd.adapter.wrapper.HtmlBookList;
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
+import de.codecentric.psd.atdd.step.business.Library;
+import de.codecentric.psd.worblehat.domain.Book;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class BookList {
 
@@ -31,28 +36,60 @@ public class BookList {
                                               @Named("edition") final String edition,
                                               @Named("isbn") final String isbn){
         seleniumAdapter.gotoPage(Page.BOOKLIST);
-        List<Map<String, String>> content = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        Map<String, String> wantedRow = createRowMap(title, author, year, edition, isbn, "");
-        assertThat(content, contains(wantedRow));
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
+        assertThat(title, is(htmlBook.getTitle()));
+        assertThat(author, is(htmlBook.getAuthor()));
+        assertThat(year, is(htmlBook.getYearOfPublication()));
+        assertThat(edition, is(htmlBook.getEdition()));
+        assertThat(isbn, is(htmlBook.getIsbn()));
     }
 
     @Then("The library contains no books")
     public void libraryIsEmpty(){
         seleniumAdapter.gotoPage(Page.BOOKLIST);
-        List<Map<String, String>> content = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        assertThat(content.size(), is(0));
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        assertThat(htmlBookList.size(), is(0));
     }
 
-    @Then("the booklist lists the user <borrower> as borrower for the book with title <title>, author <author>, edition <edition>, year <year> and isbn <isbn>")
-    public void bookListHasBorrowerForBookWithIsbn(@Named("title") final String title,
-                                                   @Named("author") final String author,
-                                                   @Named("year") final String year,
-                                                   @Named("edition") final String edition,
-                                                   @Named("isbn") final String isbn,
-                                                   @Named("borrower") final String borrower){
+    @Then("the booklist lists the user <borrower> as borrower for the book with isbn <isbn>")
+    public void bookListHasBorrowerForBookWithIsbn(@Named("borrower") final String borrower,
+                                                   @Named("isbn") final String isbn){
+        Book book = Library.createDemoBook();
+        Map<String, String> wantedRow = createRowMap(book.getTitle(), book.getAuthor(),
+                String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
-        List<Map<String, String>> content = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        Map<String, String> wantedRow = createRowMap(title, author, year, edition, isbn, borrower);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
+        assertThat(htmlBook.getBorrower(), is(borrower));
+    }
+
+    @Then("books <isbns1> are not borrowed anymore by borrower <borrower1>")
+    public void booksAreNotBorrowedByBorrower1(@Named("isbns1")String isbns,
+                                               @Named("borrower1")String borrower1){
+        List<String> isbnList = getListOfItems(isbns);
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        for (String isbn : isbnList){
+            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(isEmptyOrNullString()));
+        }
+    }
+
+    @Then("books <isbns2> are still borrowed by borrower <borrower2>")
+    public void booksAreStillBorrowedByBorrower2(@Named("isbns2")String isbns,
+                                               @Named("borrower2")String borrower2){
+        List<String> isbnList = getListOfItems(isbns);
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        for (String isbn : isbnList){
+            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(borrower2));
+        }
+    }
+
+
+
+    private List<String> getListOfItems(String isbns) {
+        return Arrays.asList(isbns.split(" "));
     }
 
     private HashMap<String, String> createRowMap(final String title, final String author, final String year,

@@ -56,9 +56,9 @@ public class StandardBookService implements BookService {
 
 
     @Override
-    public void createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
+    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     @Override

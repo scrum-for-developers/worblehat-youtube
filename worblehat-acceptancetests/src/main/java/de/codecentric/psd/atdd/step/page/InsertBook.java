@@ -37,16 +37,8 @@ public class InsertBook {
 											 @Named("edition") String edition,
 											 @Named("year") String year,
 											 @Named("isbn") String isbn) {
-		openInsertBooksPage();
-		fillInsertBookForm(title, author, edition, isbn, year);
-		submitForm();
-	}
-
-	@When("the librarian tries to add a book with an <attribute> of <value>")
-	public void addABook(@Named("attribute") String attribute,
-			@Named("value") String value) {
 		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
-		seleniumAdapter.typeIntoField(getIdForAttribute(attribute), value);
+		fillInsertBookForm(title, author, edition, isbn, year);
 		seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
 	}
 
@@ -54,11 +46,6 @@ public class InsertBook {
 	// *** T H E N *****
 	// *****************
 
-
-	@Then("the page contains error message <message>")
-	public void thenThePageContainsErrorMessagemessage(@Named("message") String message){
-		assertThat(driver.getPageSource(), containsString(message));
-	}
 
 	// *****************
 	// *** U T I L ***** 
@@ -74,28 +61,5 @@ public class InsertBook {
 		seleniumAdapter.typeIntoField("yearOfPublication", year);
 	}
 
-	private void submitForm() {
-		driver.findElement(By.id("addBook")).click();
-	}
-
-	private void openInsertBooksPage() {
-		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
-		driver.get(Config.getApplicationURL() + "/"
-				+ Config.getApplicationContext() + "/insertBooks");
-	}
-
-	private void openBookListPage() {
-		);
-	}
-
-	private String getIdForAttribute(String attribute) {
-		if (attribute.equals("ISBN"))
-			return "isbn";
-		if (attribute.equals("Author"))
-			return "author";
-		if (attribute.equals("Edition"))
-			return "edition";
-		return null;
-	}
 
 }

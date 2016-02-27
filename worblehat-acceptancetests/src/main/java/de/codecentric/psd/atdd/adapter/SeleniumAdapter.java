@@ -2,12 +2,10 @@ package de.codecentric.psd.atdd.adapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
-import de.codecentric.psd.atdd.adapter.wrapper.WebTable;
+import de.codecentric.psd.atdd.adapter.wrapper.HtmlBookList;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
@@ -84,9 +82,9 @@ public class SeleniumAdapter {
 		element.clear();
 		element.sendKeys(value);
 	}
-	public List<Map<String, String>> getTableContent(PageElement pageElement) {
+	public HtmlBookList getTableContent(PageElement pageElement) {
 		WebElement table = driver.findElement(By.className(pageElement.getElementId()));
-		return new WebTable(table).getContent();
+		return new HtmlBookList(table);
 	}
 
 	public void clickOnPageElement(PageElement pageElement){
