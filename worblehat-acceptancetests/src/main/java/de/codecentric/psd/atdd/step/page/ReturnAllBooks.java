@@ -1,21 +1,19 @@
 package de.codecentric.psd.atdd.step.page;
 
+import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import com.google.inject.Inject;
-
-import de.codecentric.psd.atdd.adapter.Config;
-import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
-
+@Component
 public class ReturnAllBooks {
 	private final SeleniumAdapter seleniumAdapter;
 
-	@Inject
+	@Autowired
 	public ReturnAllBooks(SeleniumAdapter seleniumAdapter) {
 		this.seleniumAdapter = seleniumAdapter;
 	}

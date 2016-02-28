@@ -1,19 +1,22 @@
 package de.codecentric.psd.atdd.step.page;
 
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
 
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.openqa.selenium.By;
 
-import de.codecentric.psd.atdd.adapter.Config;
 import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
+@Component
 public class InsertBook {
 
 	private SeleniumAdapter seleniumAdapter;
@@ -46,6 +49,11 @@ public class InsertBook {
 	// *** T H E N *****
 	// *****************
 
+	@Then("the page contains error message <message>")
+	public void pageContainsErrorMessage(@Named("message")String message){
+		List<String> errorMsgs = seleniumAdapter.findAllStringsForElement(PageElement.ERROR);
+		assertThat(errorMsgs, contains(message));
+	}
 
 	// *****************
 	// *** U T I L ***** 

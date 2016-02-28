@@ -4,11 +4,16 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.openqa.selenium.Platform;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 /**
  * Reads config parameters from properties file. The properties are by maven during the build process.
  */
 public class Config {
+
 	private static final String BUNDLE_NAME = "de.codecentric.psd.atdd.adapter.config"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
@@ -29,10 +34,7 @@ public class Config {
 		return getString("application.url");
 	}
 	
-	public static String getApplicationContext() {
-		return getString("application.context");
-	}
-	
+
 	public static String getDbURL() {
 		return getString("db.url");
 	}

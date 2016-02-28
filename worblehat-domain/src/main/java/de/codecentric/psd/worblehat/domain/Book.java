@@ -21,7 +21,7 @@ public class Book implements Serializable {
 	private String isbn;
 	private int yearOfPublication;
 
-	@OneToOne(mappedBy = "borrowedBook")
+	@OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
 	private Borrowing borrowing;
 
 	/**
@@ -81,4 +81,27 @@ public class Book implements Serializable {
 
 	public String getBorrowerEmail() { return borrowing == null ? "" : borrowing.getBorrowerEmailAddress(); }
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setEdition(String edition) {
+		this.edition = edition;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public void setYearOfPublication(int yearOfPublication) {
+		this.yearOfPublication = yearOfPublication;
+	}
+
+	public void setBorrowing(Borrowing borrowing) {
+		this.borrowing = borrowing;
+	}
 }

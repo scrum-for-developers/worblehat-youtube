@@ -2,6 +2,8 @@ package de.codecentric.psd.atdd.adapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
@@ -17,12 +19,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.stereotype.Controller;
 
 /**
  * Itegrates Selenium into the tests.
  */
+@Controller
 public class SeleniumAdapter {
 	private WebDriver driver;
 
@@ -92,6 +94,15 @@ public class SeleniumAdapter {
 		element.click();
 	}
 
+	public List<String> findAllStringsForElement(PageElement pageElement){
+		List<WebElement> webElements = driver.findElements(By.className(pageElement.getElementId()));
+		List<String> strings = new ArrayList<>();
+		for (WebElement element : webElements){
+			strings.add(element.getText());
+		}
+		return strings;
+	}
+
 	@AfterStories
 	public void afterStories() {
 		// Close the browser
@@ -105,14 +116,6 @@ public class SeleniumAdapter {
 		driverOptions.deleteAllCookies();
 	}
 
-	public void waitUntilPageContainsId(final String id) throws InterruptedException {
-		new WebDriverWait(driver, 10)
-		  .until(new ExpectedCondition<WebElement>(){
-			@Override
-			public WebElement apply(WebDriver d) {
-				return d.findElement(By.id(id));
-			}});
-	}
 
 
 	public String getTextFromElement(PageElement pageElement) {

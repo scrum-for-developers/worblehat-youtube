@@ -5,16 +5,16 @@ import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-import de.codecentric.psd.atdd.adapter.Config;
 import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Component
 public class BorrowBook {
 	
 	private SeleniumAdapter seleniumAdapter;

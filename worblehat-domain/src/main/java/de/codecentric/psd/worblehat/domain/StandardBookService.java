@@ -13,6 +13,9 @@ import java.util.List;
 @Service
 @Transactional
 public class StandardBookService implements BookService {
+    public StandardBookService(){
+
+    }
 
     @Autowired
     public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
@@ -27,7 +30,7 @@ public class StandardBookService implements BookService {
     @Override
     public void returnAllBooksByBorrower(String borrowerEmailAddress) {
         List<Borrowing> borrowingsByUser = borrowingRepository
-                .findBooksByBorrower(borrowerEmailAddress);
+                .findBorrowingsByBorrower(borrowerEmailAddress);
         for (Borrowing borrowing : borrowingsByUser) {
             borrowingRepository.delete(borrowing);
         }
@@ -39,6 +42,7 @@ public class StandardBookService implements BookService {
         if (borrowing != null) {
             throw new BookAlreadyBorrowedException("Book is already borrowed");
         } else {
+            book =findBookByIsbn(book.getIsbn());
             borrowing = new Borrowing(book, borrowerEmail, new Date());
             borrowingRepository.save(borrowing);
         }
@@ -68,7 +72,9 @@ public class StandardBookService implements BookService {
 
     @Override
     public void deleteAllBooks() {
+        borrowingRepository.deleteAll();
         bookRepository.deleteAll();
     }
+
 
 }

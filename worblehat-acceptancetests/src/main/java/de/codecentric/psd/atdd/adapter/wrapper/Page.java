@@ -1,9 +1,9 @@
 package de.codecentric.psd.atdd.adapter.wrapper;
 
 public enum Page {
-    BOOKLIST("booklist"),
+    BOOKLIST("bookList"),
     INSERTBOOKS("insertBooks"),
-    BORROWBOOK("borrowBook"),
+    BORROWBOOK("borrow"),
     RETURNBOOKS("returnAllBooks");
 
     private String url;

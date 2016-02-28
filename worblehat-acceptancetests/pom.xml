@@ -121,12 +121,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.codecentric.psd</groupId>
-			<artifactId>worblehat-domain</artifactId>
-			<version>2.1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
+			<artifactId>worblehat-web</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
@@ -137,7 +133,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-guice</artifactId>
+			<artifactId>jbehave-spring</artifactId>
 			<version>${jbehave.core.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
@@ -179,20 +175,6 @@
 			<version>${selenium.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>jbehave-junit-runner</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.jbehave.web</groupId>
 			<artifactId>jbehave-web-selenium</artifactId>
 			<version>3.5.5</version>
@@ -207,7 +189,6 @@
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
 		<BROWSER_PROFILE>firefox</BROWSER_PROFILE>
-		<BASE_URL>localhost:8080</BASE_URL>
-		<CONTEXT>/worblehat</CONTEXT>
+		<BASE_URL>localhost:8080/worblehat</BASE_URL>
 	</properties>
 </project>

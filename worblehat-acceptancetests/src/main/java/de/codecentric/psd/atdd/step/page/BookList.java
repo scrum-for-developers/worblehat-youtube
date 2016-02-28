@@ -5,21 +5,20 @@ import de.codecentric.psd.atdd.adapter.wrapper.HtmlBookList;
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
-import de.codecentric.psd.atdd.step.business.Library;
+import de.codecentric.psd.atdd.step.business.DemoBookFactory;
 import de.codecentric.psd.worblehat.domain.Book;
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Component
 public class BookList {
 
     private SeleniumAdapter seleniumAdapter;
@@ -55,7 +54,7 @@ public class BookList {
     @Then("the booklist lists the user <borrower> as borrower for the book with isbn <isbn>")
     public void bookListHasBorrowerForBookWithIsbn(@Named("borrower") final String borrower,
                                                    @Named("isbn") final String isbn){
-        Book book = Library.createDemoBook();
+        Book book = DemoBookFactory.createDemoBook().build();
         Map<String, String> wantedRow = createRowMap(book.getTitle(), book.getAuthor(),
                 String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
@@ -89,7 +88,7 @@ public class BookList {
 
 
     private List<String> getListOfItems(String isbns) {
-        return Arrays.asList(isbns.split(" "));
+        return isbns.isEmpty() ? Collections.<String>emptyList() : Arrays.asList(isbns.split(" "));
     }
 
     private HashMap<String, String> createRowMap(final String title, final String author, final String year,

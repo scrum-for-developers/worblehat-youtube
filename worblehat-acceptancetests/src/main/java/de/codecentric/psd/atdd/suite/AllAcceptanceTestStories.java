@@ -1,35 +1,35 @@
 package de.codecentric.psd.atdd.suite;
 
-import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.CONSOLE;
-
-import java.util.List;
-
+import de.codecentric.Application;
+import junit.textui.TestRunner;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.PrintStreamStepdocReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.guice.GuiceStepsFactory;
-import org.jbehave.web.selenium.ContextView;
-import org.jbehave.web.selenium.LocalFrameContextView;
-import org.jbehave.web.selenium.SeleniumConfiguration;
-import org.jbehave.web.selenium.SeleniumContext;
-import org.jbehave.web.selenium.SeleniumContextOutput;
-import org.jbehave.web.selenium.WebDriverHtmlOutput;
+import org.jbehave.core.steps.ParameterConverters;
+import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.spring.SpringStepsFactory;
+import org.jbehave.web.selenium.*;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Scopes;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
+import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 
 /**
  * <p>
@@ -41,53 +41,22 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
  * </p>
  */
 
-@RunWith(JUnitReportingRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {Application.class})
 public class AllAcceptanceTestStories extends JUnitStories {
 
-	public AllAcceptanceTestStories() {
-		configuredEmbedder().embedderControls()
-				.doGenerateViewAfterStories(true)
-				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
-				.useThreads(1).useStoryTimeoutInSecs(60);
+	@Autowired
+	private ApplicationContext applicationContext;
 
-		ContextView contextView = new LocalFrameContextView().sized(640, 120);
-		SeleniumContext seleniumContext = new SeleniumContext();
-		Format[] formats = new Format[] {
-				new SeleniumContextOutput(seleniumContext), CONSOLE,
-				WebDriverHtmlOutput.WEB_DRIVER_HTML };
-		StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-				.withCodeLocation(
-						codeLocationFromClass(AllAcceptanceTestStories.class))
-				.withFailureTrace(true).withFailureTraceCompression(true)
-				.withDefaultFormats().withFormats(formats);
-
-		Configuration configuration = new SeleniumConfiguration()
-				.useSeleniumContext(seleniumContext)
-				.useFailureStrategy(new FailingUponPendingStep())
-				.useStoryControls(
-						new StoryControls().doResetStateBeforeScenario(false))
-				.useStoryLoader(
-						new LoadFromClasspath(AllAcceptanceTestStories.class))
-				.useStoryReporterBuilder(reporterBuilder);
-		useConfiguration(configuration);
-
-	}
-
-	private Injector createInjector() {
-		return Guice.createInjector(new StepsModule());
+	public AllAcceptanceTestStories(){
+		initJBehaveConfiguration();
 	}
 
 	@Override
-	public InjectableStepsFactory stepsFactory() {
-		return new GuiceStepsFactory(configuration(), createInjector());
+	public InjectableStepsFactory stepsFactory(){
+		return new SpringStepsFactory(configuration(), applicationContext);
 	}
 
-	private static void recastExceptionWhenFindingSteps(Exception e) {
-		e.printStackTrace();
-		throw new RuntimeException("Could not find Step classes", e);
-	}
-
-	@Override
 	protected List<String> storyPaths() {
 		String singleStoryName = System.getProperty("jbehave.story");
 		String includePattern = "**/*.story";
@@ -97,39 +66,35 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		return new StoryFinder().findPaths(
 				codeLocationFromClass(this.getClass()), includePattern,
 				"**/excluded*.story");
-
 	}
+	
 
-	/**
-	 * Defines the classes that contain the Steps of the Scenarios.
-	 */
-	public static class StepsModule extends AbstractModule {
 
-		@Override
-		protected void configure() {
-			List<String> stepNames = new StoryFinder().findPaths(
-					codeLocationFromClass(this.getClass()),
-					"**/step/**/*.class", "");
-			stepNames.addAll(new StoryFinder().findPaths(
-					codeLocationFromClass(this.getClass()),
-					"**/library/**/*.class", ""));
-			try {
-				for (String stepName : stepNames) {
+	private void initJBehaveConfiguration() {
+		configuredEmbedder().embedderControls()
+				.doGenerateViewAfterStories(true)
+				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
+				.useThreads(1).useStoryTimeoutInSecs(60);
+		SeleniumContext seleniumContext = new SeleniumContext();
+		Format[] formats = new Format[] {
+				new SeleniumContextOutput(seleniumContext), Format.CONSOLE,
+				WebDriverHtmlOutput.WEB_DRIVER_HTML };
+		StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
+				.withCodeLocation(
+						codeLocationFromClass(AllAcceptanceTestStories.class))
+				.withFailureTrace(true).withFailureTraceCompression(true)
+				.withDefaultFormats().withFormats(formats);
 
-					String className = convertFilepathToClassname(stepName);
-					if (!stepName.contains("$")) {
-						bind(Class.forName(className)).in(Scopes.SINGLETON);
-					}
-				}
-			} catch (ClassNotFoundException e) {
-				recastExceptionWhenFindingSteps(e);
-			}
-		}
+		 Configuration configuration = new SeleniumConfiguration()
+		 .useSeleniumContext(seleniumContext)
+		 .useFailureStrategy(new FailingUponPendingStep())
+		 .useStoryControls(
+		 new StoryControls().doResetStateBeforeScenario(false))
+		 .useStoryLoader(
+		 new LoadFromClasspath(AllAcceptanceTestStories.class))
+		 .useStoryReporterBuilder(reporterBuilder);
+		 useConfiguration(configuration);
 
-		private String convertFilepathToClassname(String stepName) {
-			return stepName.replaceAll("/", ".").substring(0,
-					stepName.length() - ".class".length());
-		}
 	}
 
 }

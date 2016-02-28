@@ -179,8 +179,7 @@
     <profile>
       <id>local</id>
       <properties>
-        <BASE_URL>http://localhost:8080</BASE_URL>
-        <CONTEXT>worblehat</CONTEXT>
+A        <BASE_URL>http://localhost:8080/worblehat</BASE_URL>
         <DB_URL>jdbc:mysql://192.168.99.100:3306/worblehat</DB_URL>
         <DB_USER>worblehat</DB_USER>
         <DB_PASSWORD>worblehat</DB_PASSWORD>
