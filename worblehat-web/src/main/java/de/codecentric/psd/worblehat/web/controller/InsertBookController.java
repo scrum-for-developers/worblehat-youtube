@@ -1,8 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.web.command.BookDataFormData;
+import de.codecentric.psd.worblehat.web.formdata.BookDataFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Handles requests for the application home page.

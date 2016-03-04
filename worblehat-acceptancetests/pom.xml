@@ -23,30 +23,15 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.jbehave</groupId>
-				<artifactId>jbehave-maven-plugin</artifactId>
-				<version>${jbehave.core.version}</version>
-				<executions>
-					<execution>
-						<id>embeddable-stories</id>
-						<phase>integration-test</phase>
-						<configuration>
-							<includes>
-								<include>${embeddables}</include>
-							</includes>
-							<excludes />
-							<ignoreFailureInStories>true</ignoreFailureInStories>
-							<ignoreFailureInView>false</ignoreFailureInView>
-							<threads>1</threads>
-							<metaFilters>
-								<metaFilter></metaFilter>
-							</metaFilters>
-						</configuration>
-						<goals>
-							<goal>run-stories-as-embeddables</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testSourceDirectory>${basedir}/src/main/java/</testSourceDirectory>
+					<testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>
+					<includes>
+						<include>de/codecentric/psd/atdd/suite/AllAcceptanceTestStories.java</include>
+					</includes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -120,6 +105,11 @@
 	</profiles>
 	<dependencies>
 		<dependency>
+			<groupId>de.codecentric.psd</groupId>
+			<artifactId>worblehat-web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jbehave</groupId>
 			<artifactId>jbehave-core</artifactId>
 			<version>${jbehave.core.version}</version>
@@ -128,7 +118,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-guice</artifactId>
+			<artifactId>jbehave-spring</artifactId>
 			<version>${jbehave.core.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
@@ -170,20 +160,6 @@
 			<version>${selenium.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>jbehave-junit-runner</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.jbehave.web</groupId>
 			<artifactId>jbehave-web-selenium</artifactId>
 			<version>3.5.5</version>
@@ -198,7 +174,6 @@
 		<SELENIUM_SERVER_HOST>localhost</SELENIUM_SERVER_HOST>
 		<SELENIUM_PORT>4455</SELENIUM_PORT>
 		<BROWSER_PROFILE>firefox</BROWSER_PROFILE>
-		<BASE_URL>localhost:8080</BASE_URL>
-		<CONTEXT>/worblehat</CONTEXT>
+		<BASE_URL>localhost:8080/worblehat</BASE_URL>
 	</properties>
 </project>

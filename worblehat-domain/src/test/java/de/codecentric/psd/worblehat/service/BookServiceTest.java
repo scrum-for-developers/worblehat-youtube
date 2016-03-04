@@ -4,7 +4,6 @@ import de.codecentric.psd.worblehat.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +35,7 @@ public class BookServiceTest {
 		Book testBook = new Book("title", "author", "edition", "isbn", 2016);
 		Borrowing borrowing = new Borrowing(testBook, BORROWER_EMAIL, new Date());
 		List<Borrowing> result = Collections.singletonList(borrowing);
-		when(borrowingRepository.findBooksByBorrower(BORROWER_EMAIL))
+		when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
 		.thenReturn(result);
 		bookService.returnAllBooksByBorrower(BORROWER_EMAIL);
 		verify(borrowingRepository).delete(borrowing);

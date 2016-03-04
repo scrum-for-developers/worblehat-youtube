@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,9 @@ import java.util.List;
 @Service
 @Transactional
 public class StandardBookService implements BookService {
+    public StandardBookService(){
+
+    }
 
     @Autowired
     public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
@@ -28,7 +30,7 @@ public class StandardBookService implements BookService {
     @Override
     public void returnAllBooksByBorrower(String borrowerEmailAddress) {
         List<Borrowing> borrowingsByUser = borrowingRepository
-                .findBooksByBorrower(borrowerEmailAddress);
+                .findBorrowingsByBorrower(borrowerEmailAddress);
         for (Borrowing borrowing : borrowingsByUser) {
             borrowingRepository.delete(borrowing);
         }
@@ -40,6 +42,7 @@ public class StandardBookService implements BookService {
         if (borrowing != null) {
             throw new BookAlreadyBorrowedException("Book is already borrowed");
         } else {
+            book =findBookByIsbn(book.getIsbn());
             borrowing = new Borrowing(book, borrowerEmail, new Date());
             borrowingRepository.save(borrowing);
         }
@@ -57,14 +60,21 @@ public class StandardBookService implements BookService {
 
 
     @Override
-    public void createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
+    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     @Override
     public boolean bookExists(String isbn) {
         return findBookByIsbn(isbn) != null;
     }
+
+    @Override
+    public void deleteAllBooks() {
+        borrowingRepository.deleteAll();
+        bookRepository.deleteAll();
+    }
+
 
 }

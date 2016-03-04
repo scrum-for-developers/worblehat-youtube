@@ -21,7 +21,7 @@ public class Borrowing implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date borrowDate;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne()
 	private Book borrowedBook;
 
 	public String getBorrowerEmailAddress() {

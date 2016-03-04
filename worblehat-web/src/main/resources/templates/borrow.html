@@ -8,7 +8,7 @@
 
 	<form th:object="${borrowFormData}" method="POST">
 		ISBN:<input id="isbn" type="text" th:field="*{isbn}" />
-		<span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+		<span id="isbn-error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
 		<br />
 		Email:<input id="email" type="text" th:field="*{email}" />
 		<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>

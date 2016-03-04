@@ -12,5 +12,5 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
     public Borrowing findBorrowingForBook(@Param("book")Book book);
 
     @Query("SELECT b from Borrowing b WHERE b.borrowerEmailAddress = :borrowerEmailAddress")
-    List<Borrowing> findBooksByBorrower(@Param("borrowerEmailAddress") String borrowerEmailAddress);
+    List<Borrowing> findBorrowingsByBorrower(@Param("borrowerEmailAddress") String borrowerEmailAddress);
 }

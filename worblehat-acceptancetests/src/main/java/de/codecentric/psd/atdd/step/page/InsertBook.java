@@ -1,27 +1,29 @@
 package de.codecentric.psd.atdd.step.page;
 
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
 
+import de.codecentric.psd.atdd.adapter.wrapper.Page;
+import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-import com.google.inject.Inject;
+import de.codecentric.psd.atdd.adapter.SeleniumAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import de.codecentric.psd.atdd.library.Config;
-import de.codecentric.psd.atdd.library.SeleniumAdapter;
+import java.util.List;
 
+@Component
 public class InsertBook {
 
-	private WebDriver driver;
+	private SeleniumAdapter seleniumAdapter;
 
-	@Inject
-	public InsertBook(SeleniumAdapter selenium) {
-		driver = selenium.getDriver();
+	@Autowired
+	public InsertBook(SeleniumAdapter seleniumAdapter) {
+		this.seleniumAdapter = seleniumAdapter;
 	}
 
 	// *******************
@@ -32,30 +34,25 @@ public class InsertBook {
 	// *** W H E N *****
 	// *****************
 
-	@When("a book with ISBN <isbn> is added")
-	public void whenABookWithISBNisbnIsAdded(@Named("isbn") String isbn) {
-		openInsertBooksPage();
-		fillInsertBookForm("Title", "2", isbn, "Author", "2002");
-		submitForm();
-	}
-
-	@When("the librarian tries to add a book with an <attribute> of <value>")
-	public void addABook(@Named("attribute") String attribute,
-			@Named("value") String value) {
-		openInsertBooksPage();
-		fillInsertBookForm("Title", "1", "123456789X", "Author", "2002");
-		typeIntoField(getIdForAttribute(attribute), value);
-		submitForm();
+	@When("a librarian adds a book with title <title>, author <author>, edition <edition>, year <year> and isbn <isbn>")
+	public void whenABookWithISBNisbnIsAdded(@Named("title") String title,
+											 @Named("author")String author,
+											 @Named("edition") String edition,
+											 @Named("year") String year,
+											 @Named("isbn") String isbn) {
+		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
+		fillInsertBookForm(title, author, edition, isbn, year);
+		seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
 	}
 
 	// *****************
 	// *** T H E N *****
 	// *****************
 
-
 	@Then("the page contains error message <message>")
-	public void thenThePageContainsErrorMessagemessage(@Named("message") String message){
-		assertThat(driver.getPageSource(), containsString(message));
+	public void pageContainsErrorMessage(@Named("message")String message){
+		List<String> errorMsgs = seleniumAdapter.findAllStringsForElement(PageElement.ERROR);
+		assertThat(errorMsgs, contains(message));
 	}
 
 	// *****************
@@ -63,58 +60,14 @@ public class InsertBook {
 	// *****************
 
 
-	private void setTitle(String titel) {
-		typeIntoField("title", titel);
+	private void fillInsertBookForm(String title, String author, String edition, String isbn,
+			 String year) {
+		seleniumAdapter.typeIntoField("title", title);
+		seleniumAdapter.typeIntoField("edition", edition);
+		seleniumAdapter.typeIntoField("isbn", isbn);
+		seleniumAdapter.typeIntoField("author", author);
+		seleniumAdapter.typeIntoField("yearOfPublication", year);
 	}
 
-	private void setEdition(String edition) {
-		typeIntoField("edition", edition);
-	}
-
-	private void setYear(String year) {
-		typeIntoField("yearOfPublication", year);
-	}
-
-	private void setAuthor(String author) {
-		typeIntoField("author", author);
-	}
-
-	private void setIsbn(String isbn) {
-		typeIntoField("isbn", isbn);
-	}
-
-	private void typeIntoField(String id, String value) {
-		WebElement element = driver.findElement(By.id(id));
-		element.clear();
-		element.sendKeys(value);
-	}
-
-	private void fillInsertBookForm(String titel, String edition, String isbn,
-			String author, String year) {
-		setTitle(titel);
-		setEdition(edition);
-		setIsbn(isbn);
-		setAuthor(author);
-		setYear(year);
-	}
-
-	private void submitForm() {
-		driver.findElement(By.id("addBook")).click();
-	}
-
-	private void openInsertBooksPage() {
-		driver.get(Config.getApplicationURL() + "/"
-				+ Config.getApplicationContext() + "/insertBooks");
-	}
-
-	private String getIdForAttribute(String attribute) {
-		if (attribute.equals("ISBN"))
-			return "isbn";
-		if (attribute.equals("Author"))
-			return "author";
-		if (attribute.equals("Edition"))
-			return "edition";
-		return null;
-	}
 
 }
