@@ -172,10 +172,10 @@
     <profile>
       <id>jenkins</id>
       <properties>
-        <DB_URL>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</DB_URL>
+        <DB_URL>jdbc:mysql://localhost/worblehat</DB_URL>
         <DB_USER>worblehat</DB_USER>
         <DB_PASSWORD>worblehat</DB_PASSWORD>
-        <BASE_URL>http://${env.PSD_SERVER}/worblehat</BASE_URL>
+        <BASE_URL>http://localhost/worblehat</BASE_URL>
         <SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
         <BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
         <BROWSER_VERSION></BROWSER_VERSION>
