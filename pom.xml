@@ -172,9 +172,16 @@
     <profile>
       <id>jenkins</id>
       <properties>
-        <psd.dbserver.url>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</psd.dbserver.url>
-        <psd.dbserver.username>worblehat</psd.dbserver.username>
-        <psd.dbserver.password>worblehat</psd.dbserver.password>
+        <DB_URL>jdbc:mysql://${env.WORBLEHAT_DB_HOST}/worblehat</DB_URL>
+        <DB_USER>worblehat</DB_USER>
+        <DB_PASSWORD>worblehat</DB_PASSWORD>
+        <BASE_URL>http://${env.PSD_SERVER}/worblehat</BASE_URL>
+        <SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
+        <BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
+        <BROWSER_VERSION></BROWSER_VERSION>
+        <BROWSER_OS>VISTA</BROWSER_OS>
+        <TEST_DESCRIPTION>Running Worblehat acceptance tests on
+          ${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}</TEST_DESCRIPTION>
         <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
         <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
         <sonar.jdbc.username>sonar</sonar.jdbc.username>
