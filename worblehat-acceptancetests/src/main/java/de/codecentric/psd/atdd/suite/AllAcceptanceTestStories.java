@@ -74,7 +74,7 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		configuredEmbedder().embedderControls()
 				.doGenerateViewAfterStories(true)
 				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
-				.useThreads(1).useStoryTimeoutInSecs(60);
+				.useThreads(1).useStoryTimeoutInSecs(120);
 		SeleniumContext seleniumContext = new SeleniumContext();
 		Format[] formats = new Format[] {
 				new SeleniumContextOutput(seleniumContext), Format.CONSOLE,
