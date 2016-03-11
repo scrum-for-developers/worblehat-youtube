@@ -77,32 +77,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-
-		<profile>
-			<id>jenkins</id>
-			<activation>
-				<property>
-					<!-- this is set automatically by Hudson, thus, configure here what 
-						is different when tests are run on hudson server -->
-					<name>env.WORKSPACE</name>
-				</property>
-			</activation>
-			<properties>
-				<BASE_URL>http://${env.PSD_SERVER}</BASE_URL>
-				<CONTEXT>worblehat-test</CONTEXT>
-				<DB_URL>jdbc:mysql://worblehatdb/worblehat</DB_URL>
-				<DB_USER>worblehat</DB_USER>
-				<DB_PASSWORD>worblehat</DB_PASSWORD>
-				<SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
-				<BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
-				<BROWSER_VERSION></BROWSER_VERSION>
-                                <BROWSER_OS>VISTA</BROWSER_OS>                                
-				<TEST_DESCRIPTION>Running Worblehat acceptance tests on
-					${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}</TEST_DESCRIPTION>
-			</properties>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>de.codecentric.psd</groupId>
