@@ -172,7 +172,7 @@
     <profile>
       <id>jenkins</id>
       <properties>
-        <DB_URL>jdbc:mysql://0.0.0.0:3307/worblehat</DB_URL>
+        <DB_URL>jdbc:mysql://0.0.0.0:3306/worblehat_test</DB_URL>
         <DB_USER>worblehat</DB_USER>
         <DB_PASSWORD>worblehat</DB_PASSWORD>
         <BASE_URL>http://localhost/worblehat</BASE_URL>
