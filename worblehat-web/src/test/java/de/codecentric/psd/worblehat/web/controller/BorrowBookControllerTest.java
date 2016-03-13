@@ -39,6 +39,13 @@ public class BorrowBookControllerTest {
     }
 
     @Test
+    public void shouldSetupForm() throws Exception {
+        ModelMap modelMap = mock(ModelMap.class);
+        borrowBookController.setupForm(modelMap);
+        verify(modelMap).put(eq("borrowFormData"), any(BookBorrowFormData.class));
+    }
+
+    @Test
     public void shouldNavigateToBorrowWhenResultHasErrors() throws Exception {
         when(bindingResult.hasErrors()).thenReturn(true);
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
@@ -78,12 +85,5 @@ public class BorrowBookControllerTest {
     public void shouldNavigateToHomeOnErrors() throws Exception {
         String navigateTo = borrowBookController.handleErrors(mock(Exception.class), mock(HttpServletRequest.class));
         assertThat(navigateTo, is("home"));
-    }
-
-    @Test
-    public void shouldSetupForm() throws Exception {
-        ModelMap modelMap = mock(ModelMap.class);
-        borrowBookController.setupForm(modelMap);
-        verify(modelMap).put("borrowFormData", BookBorrowFormData.class);
     }
 }
