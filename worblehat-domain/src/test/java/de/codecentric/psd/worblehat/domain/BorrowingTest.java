@@ -32,4 +32,6 @@ public class BorrowingTest {
         String borrowerEmail = borrowing.getBorrowerEmailAddress();
         assertThat(borrowerEmail, is(BORROWER_EMAIL));
     }
+
+
 }
