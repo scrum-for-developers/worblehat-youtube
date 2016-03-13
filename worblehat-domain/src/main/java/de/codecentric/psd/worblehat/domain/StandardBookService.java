@@ -1,5 +1,6 @@
 package de.codecentric.psd.worblehat.domain;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,7 @@ public class StandardBookService implements BookService {
             throw new BookAlreadyBorrowedException("Book is already borrowed");
         } else {
             book =findBookByIsbn(book.getIsbn());
-            borrowing = new Borrowing(book, borrowerEmail, new Date());
+            borrowing = new Borrowing(book, borrowerEmail, new DateTime());
             borrowingRepository.save(borrowing);
         }
     }

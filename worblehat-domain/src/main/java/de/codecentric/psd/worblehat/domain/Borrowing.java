@@ -1,5 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,8 +30,8 @@ public class Borrowing implements Serializable {
 		return borrowerEmailAddress;
 	}
 
-	public Date getBorrowDate() {
-		return borrowDate;
+	public DateTime getBorrowDate() {
+		return new DateTime(borrowDate);
 	}
 
 	/**
@@ -40,11 +42,11 @@ public class Borrowing implements Serializable {
 	 * @param borrowDate
 	 * The borrow date
      */
-	public Borrowing(Book book, String borrowerEmailAddress, Date borrowDate) {
+	public Borrowing(Book book, String borrowerEmailAddress, DateTime borrowDate) {
 		super();
 		this.borrowedBook = book;
 		this.borrowerEmailAddress = borrowerEmailAddress;
-		this.borrowDate = borrowDate;
+		this.borrowDate = borrowDate.toDate();
 	}
 
 	private Borrowing() {

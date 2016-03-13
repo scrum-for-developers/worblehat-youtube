@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
 import de.codecentric.psd.worblehat.domain.*;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +34,7 @@ public class BookServiceTest {
 	@Test
 	public void shouldReturnAllBooksOfOnePerson() {
 		Book testBook = new Book("title", "author", "edition", "isbn", 2016);
-		Borrowing borrowing = new Borrowing(testBook, BORROWER_EMAIL, new Date());
+		Borrowing borrowing = new Borrowing(testBook, BORROWER_EMAIL, new DateTime());
 		List<Borrowing> result = Collections.singletonList(borrowing);
 		when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
 		.thenReturn(result);
