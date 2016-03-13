@@ -30,10 +30,6 @@ public class Borrowing implements Serializable {
 		return borrowerEmailAddress;
 	}
 
-	public DateTime getBorrowDate() {
-		return new DateTime(borrowDate);
-	}
-
 	/**
 	 * @param book
 	 * The borrowed book
