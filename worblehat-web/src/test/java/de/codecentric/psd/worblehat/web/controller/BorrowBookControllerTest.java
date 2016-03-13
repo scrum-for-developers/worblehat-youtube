@@ -27,6 +27,7 @@ public class BorrowBookControllerTest {
     private BookBorrowFormData bookBorrowFormData;
 
     private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
+
     public static final String BORROWER_EMAIL = "someone@codecentric.de";
 
     @Before
