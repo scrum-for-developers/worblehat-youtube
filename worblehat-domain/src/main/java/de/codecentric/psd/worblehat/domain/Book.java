@@ -55,10 +55,6 @@ public class Book implements Serializable {
 		this.yearOfPublication = yearOfPublication;
 	}
 
-	public long getId() {
-		return id;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -101,4 +97,7 @@ public class Book implements Serializable {
 		this.yearOfPublication = yearOfPublication;
 	}
 
+	public void setBorrowing(Borrowing borrowing) {
+		this.borrowing = borrowing;
+	}
 }
