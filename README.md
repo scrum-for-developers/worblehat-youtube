@@ -10,7 +10,14 @@ held by [codecentric AG](https://www.codecentric.de/).
 * Apache Maven (https://maven.apache.org)
 * Docker (for running acceptance tests, https://www.docker.com)
 
+## Running the application
+
+1. Build the project by running `mvn clean install` in the root directory
+1. Run `mvn spring-boot:run` in the worblehat-web directory
+
 ## Running acceptance tests
+
+_Acceptance Tests are currently broken_
 
 The acceptance tests currently don't work with the in-memory data base,
 which is provided by Spring Boot. For this reason you need to start a
