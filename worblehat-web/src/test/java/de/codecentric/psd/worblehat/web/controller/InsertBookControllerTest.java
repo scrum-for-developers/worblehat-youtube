@@ -59,29 +59,37 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldRejectExistingBooks() throws Exception {
-        bookDataFormData.setIsbn(TEST_BOOK.getIsbn());
+    public void shouldCreateNewCopyOfExistingBook() throws Exception {
+        setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(true);
 
         String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
 
-        assertThat(bindingResult.hasFieldErrors("isbn"), is(true));
-        assertThat(navigateTo, is("insertBooks"));
+        verifyBookIsCreated();
+        assertThat(navigateTo, is("redirect:bookList"));
     }
 
     @Test
     public void shouldCreateBookAndNavigateToBookList() throws Exception {
+        setupFormData();
+        when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
+
+        String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
+
+        verifyBookIsCreated();
+        assertThat(navigateTo, is("redirect:bookList"));
+    }
+
+    private void verifyBookIsCreated() {
+        verify(bookService).createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(),
+                TEST_BOOK.getEdition(), TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
+    }
+
+    private void setupFormData() {
         bookDataFormData.setTitle(TEST_BOOK.getTitle());
         bookDataFormData.setAuthor(TEST_BOOK.getAuthor());
         bookDataFormData.setEdition(TEST_BOOK.getEdition());
         bookDataFormData.setIsbn(TEST_BOOK.getIsbn());
         bookDataFormData.setYearOfPublication(String.valueOf(TEST_BOOK.getYearOfPublication()));
-        when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
-
-        String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
-
-        verify(bookService).createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(),
-                TEST_BOOK.getEdition(), TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
-        assertThat(navigateTo, is("redirect:bookList"));
     }
 }

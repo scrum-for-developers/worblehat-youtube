@@ -42,10 +42,7 @@ public class InsertBookController {
 
 		if (result.hasErrors()) {
 			return "insertBooks";
-		} else if (bookService.bookExists(bookDataFormData.getIsbn())) {
-			result.rejectValue("isbn", "duplicateIsbn");
-			return "insertBooks";
-		} else{
+		} else {
 			bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
 					bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
 					Integer.parseInt(bookDataFormData.getYearOfPublication()));
