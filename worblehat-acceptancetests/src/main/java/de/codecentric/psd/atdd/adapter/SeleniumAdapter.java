@@ -1,13 +1,8 @@
 package de.codecentric.psd.atdd.adapter;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
+import de.codecentric.psd.atdd.adapter.wrapper.HtmlBookList;
 import de.codecentric.psd.atdd.adapter.wrapper.Page;
 import de.codecentric.psd.atdd.adapter.wrapper.PageElement;
-import de.codecentric.psd.atdd.adapter.wrapper.HtmlBookList;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
@@ -16,10 +11,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Itegrates Selenium into the tests.
@@ -27,13 +29,18 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class SeleniumAdapter {
 	private WebDriver driver;
+	private Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);
 
 	@BeforeStories
 	public void initSelenium() throws MalformedURLException {
-		
 		String seleniumProvider = Config.getSeleniumProvider();
 		if (seleniumProvider.equalsIgnoreCase("local")) {
-			driver = new FirefoxDriver();
+			try{
+				System.setProperty("webdriver.chrome.driver","worblehat-acceptancetests/src/main/resources/chromedriver_mac64");
+				driver = new ChromeDriver();
+			} catch (Exception e){
+				LOGGER.error("Error initializing ChromeDriver", e);
+			}
 		} else {
 			DesiredCapabilities capabilities = null;
 			String browser = Config.getBrowser();
@@ -49,7 +56,7 @@ public class SeleniumAdapter {
 			capabilities.setCapability("name", Config.getTestDescription());
 			capabilities.setCapability("public", true);
 			capabilities.setCapability("restricted-public-info", true);
-			
+
 			driver = new RemoteWebDriver(
 					new URL("http://"+Config.getSauceAccount()+":"+Config.getSauceKey() + "@" +
 							Config.getSeleniumServer()), capabilities);
@@ -60,9 +67,9 @@ public class SeleniumAdapter {
 						"platform: "+Config.getBrowserOS());
 			}
 			System.out.println("To access the job page, please go to http://saucelabs.com/jobs/"+((RemoteWebDriver)driver).getSessionId());
-			
+
 		}
-        
+
 		// // Find the text input element by its name
 		// WebElement element = driver.findElement(By.name("q"));
 		//

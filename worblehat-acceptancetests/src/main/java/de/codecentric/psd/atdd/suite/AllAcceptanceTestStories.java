@@ -42,7 +42,7 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class})
+@SpringApplicationConfiguration(classes = Application.class)
 public class AllAcceptanceTestStories extends JUnitStories {
 
 	@Autowired

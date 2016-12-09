@@ -8,3 +8,4 @@ local.properties
 *.versionsBackup
 *.idea
 *.iml
+*.db
