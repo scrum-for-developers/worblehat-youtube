@@ -177,7 +177,7 @@
         <DB_URL>jdbc:mysql://0.0.0.0:3306/worblehat_test</DB_URL>
         <DB_USER>worblehat</DB_USER>
         <DB_PASSWORD>worblehat</DB_PASSWORD>
-        <BASE_URL>http://52.58.61.56/worblehat-test/</BASE_URL>
+        <BASE_URL>http://35.156.205.123/worblehat-test/</BASE_URL>
         <SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
         <BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
         <BROWSER_VERSION></BROWSER_VERSION>
