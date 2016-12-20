@@ -9,4 +9,4 @@ local.properties
 *.idea
 *.iml
 *.db
-log
+logs
