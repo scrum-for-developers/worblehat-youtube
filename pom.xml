@@ -19,6 +19,13 @@
         <module>worblehat-web</module>
     </modules>
 
+    <distributionManagement>
+        <site>
+            <id>psd-teamserver-website</id>
+            <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+        </site>
+    </distributionManagement>
+
     <name>worblehat</name>
     <build>
         <plugins>
