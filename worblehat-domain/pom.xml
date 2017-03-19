@@ -11,7 +11,7 @@
 	<name>worblehat-domain</name>
 
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
  	</properties>
 
 	<dependencies>
@@ -48,36 +48,4 @@
 
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<configuration>
-					<changeLogFile>master.xml</changeLogFile>
-					<driver>com.mysql.jdbc.Driver</driver>
-					<url>${psd.dbserver.url}</url>
-					<username>${psd.dbserver.username}</username>
-					<password>${psd.dbserver.password}</password>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>maven-apt-plugin</artifactId>
-				<version>1.0</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/generated-sources</outputDirectory>
-							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
