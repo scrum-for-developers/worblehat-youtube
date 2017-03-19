@@ -17,14 +17,21 @@
         <jbehave.core.version>3.6.6</jbehave.core.version>
         <jbehave.site.version>3.1.1</jbehave.site.version>
         <selenium.version>3.0.1</selenium.version>
-        <ENVIRONMENT>local</ENVIRONMENT>
+        <environment>local</environment>
+        <application.url>http://localhost:8080/worblehat</application.url>
     </properties>
 
     <profiles>
         <profile>
+            <id>headless</id>
+            <properties>
+                <environment>jenkins</environment>
+            </properties>
+        </profile>
+        <profile>
             <id>jenkins</id>
             <properties>
-                <ENVIRONMENT>jenkins</ENVIRONMENT>
+                <application.url>http://localhost/worblehat-test</application.url>
             </properties>
         </profile>
     </profiles>
