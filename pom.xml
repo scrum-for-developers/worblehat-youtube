@@ -27,6 +27,16 @@
     </distributionManagement>
 
     <name>worblehat</name>
+
+
+    <properties>
+        <java.version>1.8</java.version>
+        <psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
+        <psd.dbserver.username>worblehat</psd.dbserver.username>
+        <psd.dbserver.password>worblehat</psd.dbserver.password>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -34,8 +44,17 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <logging>info</logging>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
             </plugin>
         </plugins>
@@ -85,19 +104,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.3.2</version>
-                <configuration>
-                    <logging>info</logging>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <reporting>
         <plugins>
             <plugin>
@@ -132,20 +138,6 @@
                 <sonar.jdbc.username>sonar</sonar.jdbc.username>
                 <sonar.jdbc.password>123qwe</sonar.jdbc.password>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>3.3.2</version>
-                        <configuration>
-                            <url>${psd.dbserver.url}</url>
-                            <username>${psd.dbserver.username}</username>
-                            <password>${psd.dbserver.password}</password>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>include-acceptancetests</id>

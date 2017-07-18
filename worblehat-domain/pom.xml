@@ -48,4 +48,20 @@
 
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<configuration>
+					<changeLogFile>master.xml</changeLogFile>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<url>${psd.dbserver.url}</url>
+					<username>${psd.dbserver.username}</username>
+					<password>${psd.dbserver.password}</password>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
