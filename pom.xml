@@ -161,9 +161,6 @@
                     ${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}
                 </TEST_DESCRIPTION>
                 <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
-                <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
-                <sonar.jdbc.username>sonar</sonar.jdbc.username>
-                <sonar.jdbc.password>123qwe</sonar.jdbc.password>
             </properties>
         </profile>
         <profile>
@@ -184,7 +181,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.7.2.201409121644</version>
+                        <version>0.7.9</version>
                         <executions>
                             <!-- Prepares the property pointing to the JaCoCo
                                 runtime agent which is passed as VM argument when Maven the Surefire plugin
