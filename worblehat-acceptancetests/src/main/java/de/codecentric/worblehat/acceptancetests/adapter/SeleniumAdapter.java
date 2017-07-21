@@ -46,7 +46,8 @@ public class SeleniumAdapter {
             }
         } catch (Exception e) {
             LOGGER.error("Error initializing Webdriver", e);
-            System.out.println(e.getStackTrace());
+            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat("/");
