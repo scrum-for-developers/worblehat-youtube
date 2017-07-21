@@ -35,16 +35,15 @@
         <psd.dbserver.password>worblehat</psd.dbserver.password>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+<!--
     <repositories>
-        <!-- necessary for sonar -->
         <repository>
             <id>gemfire-repository</id>
             <name>Gemfire Repository</name>
             <url>http://dist.gemstone.com/maven/release</url>
         </repository>
     </repositories>
-
+-->
     <build>
         <plugins>
             <plugin>
