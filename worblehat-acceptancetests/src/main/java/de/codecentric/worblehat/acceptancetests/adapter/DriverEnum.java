@@ -52,6 +52,7 @@ public enum DriverEnum {
         } else {
             throw new Exception("Unsupported operation system for chromedriver");
         }
+        System.out.println("Using driver from the following path: " + sb);
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(
                 PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
