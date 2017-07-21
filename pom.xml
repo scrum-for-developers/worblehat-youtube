@@ -37,6 +37,7 @@
     </properties>
 
     <repositories>
+        <!-- necessary for sonar -->
         <repository>
             <id>gemfire-repository</id>
             <name>Gemfire Repository</name>
@@ -131,18 +132,6 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
-                <version>2.11</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>changes-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
         </plugins>
     </reporting>
     <profiles>
@@ -175,6 +164,39 @@
             <modules>
                 <module>worblehat-acceptancetests</module>
             </modules>
+        </profile>
+        <profile>
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.2.201409121644</version>
+                        <executions>
+                            <!-- Prepares the property pointing to the JaCoCo
+                                runtime agent which is passed as VM argument when Maven the Surefire plugin
+                                is executed. -->
+                            <execution>
+                                <id>pre-unit-test</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+
+                            <!-- Ensures that the code coverage report for
+                                unit tests is created after unit tests have been run. -->
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
