@@ -28,7 +28,6 @@
 
     <name>worblehat</name>
 
-
     <properties>
         <java.version>1.8</java.version>
         <psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
@@ -101,11 +100,29 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>1.4.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.11</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
@@ -132,7 +149,8 @@
                 <BROWSER_VERSION></BROWSER_VERSION>
                 <BROWSER_OS>VISTA</BROWSER_OS>
                 <TEST_DESCRIPTION>Running Worblehat acceptance tests on
-                    ${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}</TEST_DESCRIPTION>
+                    ${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}
+                </TEST_DESCRIPTION>
                 <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
                 <sonar.jdbc.url>jdbc:mysql://${env.SONAR_DB_HOST}/sonar</sonar.jdbc.url>
                 <sonar.jdbc.username>sonar</sonar.jdbc.username>
