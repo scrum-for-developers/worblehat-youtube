@@ -35,7 +35,7 @@
         <psd.dbserver.password>worblehat</psd.dbserver.password>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-<!--
+
     <repositories>
         <repository>
             <id>gemfire-repository</id>
@@ -43,7 +43,7 @@
             <url>http://dist.gemstone.com/maven/release</url>
         </repository>
     </repositories>
--->
+
     <build>
         <plugins>
             <plugin>
