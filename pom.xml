@@ -49,6 +49,19 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.8</version>
+                <!--
+                  Fixes build warning
+                  [WARNING] The repository url 'http://url.to/repository' is invalid - Repository 'repository-id' will be blacklisted.
+                  see http://www.java-tutorial.ch/maven/maven-site-build-slow-due-to-dependency-report-plugin
+                -->
+                <configuration>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
