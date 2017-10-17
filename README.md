@@ -12,8 +12,24 @@ held by [codecentric AG](https://www.codecentric.de/).
 
 ## Running the application
 
-1. Build the project by running `mvn clean install` in the root directory
-1. Run `mvn spring-boot:run` in the worblehat-web directory
+1. Build the project: For example by running `mvn clean install` in the root directory
+1. Start the database. The easiest way is to fire up a docker container:
+```
+#!/bin/bash
+
+docker run --detach \
+  --name worblehat-db \
+  --env MYSQL_ROOT_PASSWORD=root \
+  --env MYSQL_USER=worblehat \
+  --env MYSQL_PASSWORD=worblehat \
+  --env MYSQL_DATABASE=worblehat_test \
+  --publish 3306:3306 \
+  mysql:5.6.25
+```
+3. Run the application. In the directory `worblehat-web`:
+  * Either run `mvn spring-boot:run`
+  * Or start as plain Java main class: `de.codecentric.Application`
+4. Access the application at <http://localhost:8080/worblehat/>
 
 ## Running acceptance tests
 
