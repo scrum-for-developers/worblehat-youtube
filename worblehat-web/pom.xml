@@ -9,7 +9,7 @@
 		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
-	<name>worblehat-web</name>
+	<name>Worblehat Bookmanager</name>
 	<artifactId>worblehat-web</artifactId>
 	<packaging>jar</packaging>
 
