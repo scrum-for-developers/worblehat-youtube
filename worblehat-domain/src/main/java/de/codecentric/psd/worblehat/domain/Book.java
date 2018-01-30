@@ -1,7 +1,10 @@
 package de.codecentric.psd.worblehat.domain;
 
+import javax.annotation.Nonnull;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Entity implementation class for Entity: Book
@@ -75,8 +78,6 @@ public class Book implements Serializable {
 		return yearOfPublication;
 	}
 
-	public String getBorrowerEmail() { return borrowing == null ? "" : borrowing.getBorrowerEmailAddress(); }
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -97,7 +98,20 @@ public class Book implements Serializable {
 		this.yearOfPublication = yearOfPublication;
 	}
 
-	public void setBorrowing(Borrowing borrowing) {
-		this.borrowing = borrowing;
+    public Borrowing getBorrowing() {
+		return borrowing;
+	}
+
+	boolean isSameCopy(@Nonnull Optional<Book> book) {
+		if (!book.isPresent()) {
+			return false;
+		}
+		return getTitle().equals(book.get().title) && getAuthor().equals(book.get().author);
+	}
+
+	public void borrowNowByBorrower(String borrowerEmailAddress) {
+		if (borrowing==null) {
+            this.borrowing = new Borrowing(this, borrowerEmailAddress);
+        }
 	}
 }

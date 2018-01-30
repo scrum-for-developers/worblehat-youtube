@@ -1,6 +1,8 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
@@ -8,6 +10,7 @@ import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.BookBorrowFormData;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,8 +19,10 @@ import org.springframework.validation.ObjectError;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -65,7 +70,7 @@ public class BorrowBookControllerTest {
 
     @Test
     public void shouldRejectBorrowingIfBookDoesNotExist() throws Exception {
-        when(bookService.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(null);
+        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(null);
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
 
@@ -77,8 +82,8 @@ public class BorrowBookControllerTest {
     public void shouldRejectAlreadyBorrowedBooks() throws Exception {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
-        when(bookService.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(TEST_BOOK);
-        doThrow(BookAlreadyBorrowedException.class).when(bookService).borrowBook(TEST_BOOK, BORROWER_EMAIL);
+        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(new HashSet<Book>() {{add(TEST_BOOK);}});
+        doThrow(BookAlreadyBorrowedException.class).when(bookService).borrowOneBook(anySetOf(Book.class), eq(BORROWER_EMAIL));
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
 
@@ -90,11 +95,12 @@ public class BorrowBookControllerTest {
     public void shouldNavigateHomeOnSuccess() throws Exception {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
-        when(bookService.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(TEST_BOOK);
+        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(new HashSet<Book>() {{add(TEST_BOOK);}});
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
-
-        verify(bookService).borrowBook(TEST_BOOK, BORROWER_EMAIL);
+        verify(bookService).borrowOneBook(anySetOf(Book.class), eq(BORROWER_EMAIL));
+        verify(bookService).borrowOneBook((Set<Book>) Matchers.argThat(org.hamcrest.Matchers.contains(TEST_BOOK)), eq(BORROWER_EMAIL));
+//        verify(bookService).borrowOneBook(TEST_BOOK, BORROWER_EMAIL);
         assertThat(navigateTo, is("home"));
     }
 

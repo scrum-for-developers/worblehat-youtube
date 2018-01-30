@@ -1,12 +1,16 @@
 package de.codecentric.psd.worblehat.domain;
 
+import org.apache.commons.collections.SetUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The domain service class for book operations.
@@ -39,19 +43,44 @@ public class StandardBookService implements BookService {
 
     @Override
     public void borrowBook(Book book, String borrowerEmail) throws BookAlreadyBorrowedException {
+        // TODO: is it really necessary to retrieve the borrowing from the repository?
         Borrowing borrowing = borrowingRepository.findBorrowingForBook(book);
         if (borrowing != null) {
             throw new BookAlreadyBorrowedException("Book is already borrowed");
         } else {
-            book =findBookByIsbn(book.getIsbn());
+            //book =findBookByIsbn(book.getIsbn());
             borrowing = new Borrowing(book, borrowerEmail, new DateTime());
             borrowingRepository.save(borrowing);
         }
     }
 
     @Override
-    public Book findBookByIsbn(String isbn) {
-        return bookRepository.findBookByIsbn(isbn); //null if not found
+    public void borrowOneBook(@Nonnull Set<Book> books, String borrower) throws BookAlreadyBorrowedException {
+        Set<Book> unborrowedBooks = books.stream()
+                .filter(book -> book.getBorrowing() == null)
+                .collect(Collectors.toSet());
+        if (!unborrowedBooks.isEmpty()) {
+            boolean borrowed = false;
+            for (Book book: unborrowedBooks) {
+                try {
+                    borrowBook(book, borrower);
+                    borrowed = true;
+                    break;
+                } catch( BookAlreadyBorrowedException babe) {
+                    continue;
+                }
+            }
+            if (!borrowed)
+                throw new BookAlreadyBorrowedException("All books are already borrowed");
+
+        } else {
+            return;
+        }
+    }
+
+    @Override
+    public Set<Book> findBooksByIsbn(String isbn) {
+        return bookRepository.findBooksByIsbn(isbn); //null if not found
     }
 
     @Override
@@ -63,12 +92,17 @@ public class StandardBookService implements BookService {
     @Override
     public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
-        return bookRepository.save(book);
+        Optional<Book> bookByIsbn = bookRepository.findBookByIsbn(isbn);
+
+        if (!bookByIsbn.isPresent() || book.isSameCopy(bookByIsbn)) {
+            return bookRepository.save(book);
+        } else
+            return null;
     }
 
     @Override
     public boolean bookExists(String isbn) {
-        return findBookByIsbn(isbn) != null;
+        return bookRepository.findBookByIsbn(isbn) != null;
     }
 
     @Override

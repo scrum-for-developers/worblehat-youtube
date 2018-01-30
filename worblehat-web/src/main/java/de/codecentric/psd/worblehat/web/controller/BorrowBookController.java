@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.thymeleaf.util.SetUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Set;
 
 /**
  * Controller for BorrowingBook
@@ -43,13 +45,13 @@ public class BorrowBookController {
 		if (result.hasErrors()) {
 			return "borrow";
 		}
-		Book book = bookService.findBookByIsbn(borrowFormData.getIsbn());
-		if(book == null) {
+		Set<Book> books = bookService.findBooksByIsbn(borrowFormData.getIsbn());
+		if(SetUtils.isEmpty(books)) {
 			result.rejectValue("isbn", "notBorrowable");
 			return "borrow";
 		}
 		try {
-			bookService.borrowBook(book, borrowFormData.getEmail());
+			bookService.borrowOneBook(books, borrowFormData.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
 			result.rejectValue("isbn", "internalError");
 			return "borrow";
