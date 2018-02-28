@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class StandardBookService implements BookService {
+
     public StandardBookService(){
 
     }
@@ -43,12 +44,10 @@ public class StandardBookService implements BookService {
 
     @Override
     public void borrowBook(Book book, String borrowerEmail) throws BookAlreadyBorrowedException {
-        // TODO: is it really necessary to retrieve the borrowing from the repository?
-        Borrowing borrowing = borrowingRepository.findBorrowingForBook(book);
+        Borrowing borrowing = book.getBorrowing();
         if (borrowing != null) {
             throw new BookAlreadyBorrowedException("Book is already borrowed");
         } else {
-            //book =findBookByIsbn(book.getIsbn());
             borrowing = new Borrowing(book, borrowerEmail, new DateTime());
             borrowingRepository.save(borrowing);
         }
@@ -56,6 +55,7 @@ public class StandardBookService implements BookService {
 
     @Override
     public void borrowOneBook(@Nonnull Set<Book> books, String borrower) throws BookAlreadyBorrowedException {
+        if (books.isEmpty()) throw new IllegalArgumentException("No books to borrow.");
         Set<Book> unborrowedBooks = books.stream()
                 .filter(book -> book.getBorrowing() == null)
                 .collect(Collectors.toSet());
@@ -67,14 +67,15 @@ public class StandardBookService implements BookService {
                     borrowed = true;
                     break;
                 } catch( BookAlreadyBorrowedException babe) {
-                    continue;
+                    // someone has borrowed this book after we filtered all borrowed books out in the beginning
+                    // let's try with the next one, if there are any left
                 }
             }
             if (!borrowed)
                 throw new BookAlreadyBorrowedException("All books are already borrowed");
 
         } else {
-            return;
+            throw new BookAlreadyBorrowedException("All books are already borrowed");
         }
     }
 
@@ -93,7 +94,6 @@ public class StandardBookService implements BookService {
     public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
 
-        // FIXME: there might be multiple copies of a books!
         Set<Book> booksByIsbn = bookRepository.findBooksByIsbn(isbn);
 
         if (booksByIsbn.isEmpty() || book.isSameCopy(booksByIsbn.iterator().next())) {

@@ -10,11 +10,10 @@ import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
+    // TODO: get rid of Query annotations
+
     @Query("SELECT b from Book b order by title")
     List<Book> findAllBooks();
-
-    @Query("SELECT b from Book b WHERE b.isbn = :isbn")
-    Optional<Book> findBookByIsbn(@Param("isbn") String isbn);
 
     @Query("SELECT b from Book b where b.isbn = :isbn")
     Set<Book> findBooksByIsbn(@Param("isbn") String isbn);

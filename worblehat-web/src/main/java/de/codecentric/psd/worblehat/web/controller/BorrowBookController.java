@@ -47,13 +47,13 @@ public class BorrowBookController {
 		}
 		Set<Book> books = bookService.findBooksByIsbn(borrowFormData.getIsbn());
 		if(SetUtils.isEmpty(books)) {
-			result.rejectValue("isbn", "notBorrowable");
+			result.rejectValue("isbn", "noBookExists");
 			return "borrow";
 		}
 		try {
 			bookService.borrowOneBook(books, borrowFormData.getEmail());
 		} catch (BookAlreadyBorrowedException e) {
-			result.rejectValue("isbn", "internalError");
+			result.rejectValue("isbn", "noBorrowableBooks");
 			return "borrow";
 		}
 		return "home";

@@ -1,5 +1,6 @@
 package de.codecentric.psd.worblehat.web.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class BorrowBookControllerTest {
     public static final String BORROWER_EMAIL = "someone@codecentric.de";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         bookService = mock(BookService.class);
         bindingResult = new MapBindingResult(new HashMap<>(), "");
         bookBorrowFormData = new BookBorrowFormData();
@@ -51,7 +52,7 @@ public class BorrowBookControllerTest {
     }
 
     @Test
-    public void shouldSetupForm() throws Exception {
+    public void shouldSetupForm() {
         ModelMap modelMap = new ModelMap();
 
         borrowBookController.setupForm(modelMap);
@@ -60,7 +61,7 @@ public class BorrowBookControllerTest {
     }
 
     @Test
-    public void shouldNavigateToBorrowWhenResultHasErrors() throws Exception {
+    public void shouldNavigateToBorrowWhenResultHasErrors() {
         bindingResult.addError(new ObjectError("", ""));
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
@@ -69,7 +70,7 @@ public class BorrowBookControllerTest {
     }
 
     @Test
-    public void shouldRejectBorrowingIfBookDoesNotExist() throws Exception {
+    public void shouldRejectBorrowingIfBookDoesNotExist() {
         when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(null);
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
@@ -82,12 +83,13 @@ public class BorrowBookControllerTest {
     public void shouldRejectAlreadyBorrowedBooks() throws Exception {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
-        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(new HashSet<Book>() {{add(TEST_BOOK);}});
+        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
         doThrow(BookAlreadyBorrowedException.class).when(bookService).borrowOneBook(anySetOf(Book.class), eq(BORROWER_EMAIL));
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
 
         assertThat(bindingResult.hasFieldErrors("isbn"), is(true));
+        assertThat(bindingResult.getFieldError("isbn").getCode(), is("noBorrowableBooks"));
         assertThat(navigateTo, is("borrow"));
     }
 
@@ -95,7 +97,7 @@ public class BorrowBookControllerTest {
     public void shouldNavigateHomeOnSuccess() throws Exception {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
-        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(new HashSet<Book>() {{add(TEST_BOOK);}});
+        when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
         verify(bookService).borrowOneBook(anySetOf(Book.class), eq(BORROWER_EMAIL));
@@ -105,7 +107,7 @@ public class BorrowBookControllerTest {
     }
 
     @Test
-    public void shouldNavigateToHomeOnErrors() throws Exception {
+    public void shouldNavigateToHomeOnErrors() {
         String navigateTo = borrowBookController.handleErrors(new Exception(), new MockHttpServletRequest());
 
         assertThat(navigateTo, is("home"));
