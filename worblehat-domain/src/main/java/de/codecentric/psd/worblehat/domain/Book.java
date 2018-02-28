@@ -21,6 +21,8 @@ public class Book implements Serializable {
 	private String title;
 	private String author;
 	private String edition;
+
+	// TODO: convert String to an ISBN class, that ensures a valid ISBN
 	private String isbn;
 	private int yearOfPublication;
 
@@ -102,11 +104,8 @@ public class Book implements Serializable {
 		return borrowing;
 	}
 
-	boolean isSameCopy(@Nonnull Optional<Book> book) {
-		if (!book.isPresent()) {
-			return false;
-		}
-		return getTitle().equals(book.get().title) && getAuthor().equals(book.get().author);
+	boolean isSameCopy(@Nonnull Book book) {
+		return getTitle().equals(book.title) && getAuthor().equals(book.author);
 	}
 
 	public void borrowNowByBorrower(String borrowerEmailAddress) {

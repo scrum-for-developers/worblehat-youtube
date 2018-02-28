@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -31,7 +32,7 @@ public class StandardBookServiceTest {
 	private static final Book TEST_BOOK2 = new Book("title2", "author2", "edition2", "isbn2", 2016);
 
 	@Before
-	public void setup() throws Exception {
+	public void setup() {
 		borrowingRepository = mock(BorrowingRepository.class);
 		bookRepository = mock(BookRepository.class);
 		bookService = new StandardBookService(borrowingRepository, bookRepository);
@@ -89,7 +90,7 @@ public class StandardBookServiceTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionWhenAllBooksAreBorrowed() throws Exception {
+	public void shouldThrowExceptionWhenAllBooksAreBorrowed() {
 		when(borrowingRepository.findBorrowingForBook(TEST_BOOK)).thenReturn(new Borrowing(TEST_BOOK, BORROWER_EMAIL, NOW));
 		when(borrowingRepository.findBorrowingForBook(TEST_BOOK2)).thenReturn(new Borrowing(TEST_BOOK2, BORROWER_EMAIL, NOW));
 		ArgumentCaptor<Borrowing> borrowingArgumentCaptor = ArgumentCaptor.forClass(Borrowing.class);
@@ -107,9 +108,9 @@ public class StandardBookServiceTest {
 	}
 
 	@Test
-	public void shouldCreateBook() throws Exception {
+	public void shouldCreateBook() {
 		ArgumentCaptor<Book> bookArgumentCaptor = ArgumentCaptor.forClass(Book.class);
-		when(bookRepository.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(Optional.of(TEST_BOOK));
+		when(bookRepository.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
 		bookService.createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(), TEST_BOOK.getEdition(),
 				TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
 		verify(bookRepository).save(bookArgumentCaptor.capture());
@@ -121,37 +122,36 @@ public class StandardBookServiceTest {
 	}
 
 	@Test
-	public void shouldCreateAnotherCopyOfExistingBook() throws Exception {
+	public void shouldCreateAnotherCopyOfExistingBook() {
 		givenAnExistingBook(TEST_BOOK);
 		bookService.createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(), TEST_BOOK.getEdition(),
 				TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
-		verify(bookRepository, times(2)).save(any(Book.class));
+		verify(bookRepository, times(1)).save(any(Book.class));
 	}
 
 	@Test
-	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentTitle() throws Exception {
+	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentTitle() {
 		givenAnExistingBook(TEST_BOOK);
 		bookService.createBook(TEST_BOOK.getTitle()+"X", TEST_BOOK.getAuthor(), TEST_BOOK.getEdition(),
 				TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
-		verify(bookRepository, times(1)).save(any(Book.class));
+		verify(bookRepository, times(0)).save(any(Book.class));
 	}
 
 	@Test
-	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentAuthor() throws Exception {
+	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentAuthor() {
 		givenAnExistingBook(TEST_BOOK);
 		bookService.createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor()+"X", TEST_BOOK.getEdition(),
 				TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
-		verify(bookRepository, times(1)).save(any(Book.class));
+		verify(bookRepository, times(0)).save(any(Book.class));
 	}
 
 	private void givenAnExistingBook(Book testBook) {
 		when(bookRepository.findBookByIsbn(testBook.getIsbn())).thenReturn(Optional.of(TEST_BOOK));
-		bookService.createBook(testBook.getTitle(), testBook.getAuthor(), testBook.getEdition(),
-				testBook.getIsbn(), testBook.getYearOfPublication());
+        when(bookRepository.findBooksByIsbn(testBook.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
 	}
 
 	@Test
-	public void shouldFindAllBooks() throws Exception {
+	public void shouldFindAllBooks() {
 		List<Book> expectedBooks = new ArrayList<>();
 		expectedBooks.add(TEST_BOOK);
 		when(bookRepository.findAllBooks()).thenReturn(expectedBooks);
@@ -160,21 +160,28 @@ public class StandardBookServiceTest {
 	}
 
 	@Test
-	public void shouldFindexistingBooks() throws Exception {
+	public void shouldFindexistingBooks() {
 		when(bookRepository.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(Optional.of(TEST_BOOK));
 		Optional<Book> actualBook = bookRepository.findBookByIsbn(TEST_BOOK.getIsbn());
 		assertThat(actualBook.get(), is(TEST_BOOK));
 	}
 
 	@Test
-	public void shouldVerifyExistingBooks() throws Exception {
-		when(bookRepository.findBookByIsbn(TEST_BOOK.getIsbn())).thenReturn(Optional.of(TEST_BOOK));
+	public void shouldVerifyExistingBooks() {
+		when(bookRepository.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
 		Boolean bookExists = bookService.bookExists(TEST_BOOK.getIsbn());
 		assertTrue(bookExists);
 	}
 
-	@Test
-	public void shouldDeleteAllBooksAndBorrowings() throws Exception {
+    @Test
+    public void shouldVerifyNonexistingBooks() {
+        when(bookRepository.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.emptySet());
+	    Boolean bookExists = bookService.bookExists(TEST_BOOK.getIsbn());
+	    assertThat(bookExists, is(false));
+    }
+
+    @Test
+	public void shouldDeleteAllBooksAndBorrowings() {
 		bookService.deleteAllBooks();
 		verify(bookRepository).deleteAll();
 		verify(borrowingRepository).deleteAll();

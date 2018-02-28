@@ -92,9 +92,11 @@ public class StandardBookService implements BookService {
     @Override
     public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
-        Optional<Book> bookByIsbn = bookRepository.findBookByIsbn(isbn);
 
-        if (!bookByIsbn.isPresent() || book.isSameCopy(bookByIsbn)) {
+        // FIXME: there might be multiple copies of a books!
+        Set<Book> booksByIsbn = bookRepository.findBooksByIsbn(isbn);
+
+        if (booksByIsbn.isEmpty() || book.isSameCopy(booksByIsbn.iterator().next())) {
             return bookRepository.save(book);
         } else
             return null;
@@ -102,7 +104,8 @@ public class StandardBookService implements BookService {
 
     @Override
     public boolean bookExists(String isbn) {
-        return bookRepository.findBookByIsbn(isbn) != null;
+        Set<Book> books = bookRepository.findBooksByIsbn(isbn);
+        return !books.isEmpty();
     }
 
     @Override

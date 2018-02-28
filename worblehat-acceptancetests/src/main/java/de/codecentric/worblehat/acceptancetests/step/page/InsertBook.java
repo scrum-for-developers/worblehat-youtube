@@ -33,6 +33,9 @@ public class InsertBook {
 	// *** W H E N *****
 	// *****************
 
+	// TODO: write story that reuses this step with a different title (header in examples table)
+	// TODO: write story that contains whitespaces in examples table
+
 	@When("a librarian adds a book with title <title>, author <author>, edition <edition>, year <year> and isbn <isbn>")
 	public void whenABookWithISBNisbnIsAdded(@Named("title") String title,
 											 @Named("author")String author,

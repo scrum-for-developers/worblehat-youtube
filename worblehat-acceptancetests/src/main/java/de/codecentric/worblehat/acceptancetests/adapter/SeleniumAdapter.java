@@ -36,7 +36,7 @@ public class SeleniumAdapter {
     private String folderName;
 
     @BeforeStories
-    public void initSelenium() {
+    public void initSelenium() throws Exception {
         String seleniumProvider = Config.getEnvironment();
         try {
             if (seleniumProvider.equalsIgnoreCase("local")) {
@@ -48,8 +48,10 @@ public class SeleniumAdapter {
             LOGGER.error("Error initializing Webdriver", e);
             System.out.println(e);
             System.out.println(e.getMessage());
+            throw e;
         }
 
+        // TODO: don't hardcode linux file separators
         folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat("/");
         folderName = "target/screenshots/".concat(folderName);
         new File(folderName).mkdirs();

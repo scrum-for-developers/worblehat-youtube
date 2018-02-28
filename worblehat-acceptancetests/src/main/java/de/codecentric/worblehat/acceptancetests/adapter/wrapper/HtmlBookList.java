@@ -26,6 +26,7 @@ public class HtmlBookList {
                     colums.get(3).getText(), //Edition
                     colums.get(4).getText(), //ISBN
                     colums.get(5).getText());//Borrower
+            // TODO: avoid magic numbers to prevent inserted columns to break tests
             values.put(htmlBook.getIsbn(), htmlBook);
         }
     }
