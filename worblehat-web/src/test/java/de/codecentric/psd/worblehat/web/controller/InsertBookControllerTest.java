@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
@@ -16,6 +17,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,7 +36,7 @@ public class InsertBookControllerTest {
     private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         bookService = mock(BookService.class);
         insertBookController = new InsertBookController(bookService);
         bookDataFormData = new BookDataFormData();
@@ -41,7 +44,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldSetupForm() throws Exception {
+    public void shouldSetupForm() {
         ModelMap modelMap = new ModelMap();
 
         insertBookController.setupForm(modelMap);
@@ -50,7 +53,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldRejectErrors() throws Exception {
+    public void shouldRejectErrors() {
         bindingResult.addError(new ObjectError("", ""));
 
         String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
@@ -59,9 +62,10 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldCreateNewCopyOfExistingBook() throws Exception {
+    public void shouldCreateNewCopyOfExistingBook() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(true);
+        when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
 
@@ -70,9 +74,10 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldCreateBookAndNavigateToBookList() throws Exception {
+    public void shouldCreateBookAndNavigateToBookList() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
+        when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(bookDataFormData, bindingResult);
 

@@ -1,16 +1,25 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
+import com.thoughtworks.paranamer.NullParanamer;
 import de.codecentric.Application;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.failures.PassingUponPendingStep;
+import org.jbehave.core.failures.RethrowingFailure;
+import org.jbehave.core.i18n.LocalizedKeywords;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.parsers.RegexPrefixCapturingPatternParser;
+import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.FreemarkerViewGenerator;
+import org.jbehave.core.reporters.PrintStreamStepdocReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.junit.runner.RunWith;
@@ -64,10 +73,23 @@ public class AllAcceptanceTestStories extends JUnitStories {
 
 
 	private void initJBehaveConfiguration() {
-		configuredEmbedder().embedderControls()
+
+		// configure Embedder
+		configuredEmbedder()
+				.embedderControls()
+
+				// collect failures and report them in batch
+				.doBatch(false)
 				.doGenerateViewAfterStories(true)
-				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
-				.useThreads(1).useStoryTimeoutInSecs(600);
+				.doIgnoreFailureInStories(false)
+				.doIgnoreFailureInView(false)
+				.doSkip(false)
+				.doVerboseFailures(false)
+				.doVerboseFiltering(false)
+				.useThreads(1)
+				.useStoryTimeoutInSecs(600);
+
+		// create SeleniumContext
 		SeleniumContext seleniumContext = new SeleniumContext();
 		Format[] formats = new Format[] {
 				new SeleniumContextOutput(seleniumContext), Format.CONSOLE,
@@ -78,6 +100,7 @@ public class AllAcceptanceTestStories extends JUnitStories {
 				.withFailureTrace(true).withFailureTraceCompression(true)
 				.withDefaultFormats().withFormats(formats);
 
+		// general JBehave configuration
 		 Configuration configuration = new SeleniumConfiguration()
 		 .useSeleniumContext(seleniumContext)
 		 .useFailureStrategy(new FailingUponPendingStep())
@@ -86,8 +109,25 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		 .useStoryLoader(
 		 new LoadFromClasspath(AllAcceptanceTestStories.class))
 		 .useStoryReporterBuilder(reporterBuilder);
-		 useConfiguration(configuration);
 
+		 // add configuration from MostUsefulConfiguration
+		configuration
+				.useKeywords(new LocalizedKeywords())
+				.useStoryControls(new StoryControls())
+				.useStoryLoader(new LoadFromClasspath())
+				.useStoryParser(new RegexStoryParser(configuration.keywords()))
+				.useFailureStrategy(new RethrowingFailure())
+				.usePendingStepStrategy(new PassingUponPendingStep())
+				.useStepCollector(new MarkUnmatchedStepsAsPending())
+				.useStepFinder(new StepFinder())
+				.useStepPatternParser(new RegexPrefixCapturingPatternParser())
+				.useStepMonitor(new SilentStepMonitor())
+				.useStepdocReporter(new PrintStreamStepdocReporter())
+				.useParanamer(new NullParanamer())
+				.useParameterControls(new ParameterControls())
+				.useViewGenerator(new FreemarkerViewGenerator());
+
+		 useConfiguration(configuration);
 	}
 
 }

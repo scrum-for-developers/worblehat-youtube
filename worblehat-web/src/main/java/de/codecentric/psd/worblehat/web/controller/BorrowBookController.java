@@ -3,7 +3,10 @@ package de.codecentric.psd.worblehat.web.controller;
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
 import de.codecentric.psd.worblehat.domain.BookService;
+import de.codecentric.psd.worblehat.domain.Borrowing;
 import de.codecentric.psd.worblehat.web.formdata.BookBorrowFormData;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +16,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.thymeleaf.util.SetUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -46,17 +49,19 @@ public class BorrowBookController {
 			return "borrow";
 		}
 		Set<Book> books = bookService.findBooksByIsbn(borrowFormData.getIsbn());
-		if(SetUtils.isEmpty(books)) {
+		if(books.isEmpty()) {
 			result.rejectValue("isbn", "noBookExists");
 			return "borrow";
 		}
-		try {
-			bookService.borrowOneBook(books, borrowFormData.getEmail());
-		} catch (BookAlreadyBorrowedException e) {
-			result.rejectValue("isbn", "noBorrowableBooks");
-			return "borrow";
-		}
-		return "home";
+		Optional<Borrowing> borrowing = bookService.borrowBook(borrowFormData.getIsbn(), borrowFormData.getEmail());
+
+		return borrowing
+				.map(b -> "home")
+				.orElseGet( () -> {
+					result.rejectValue("isbn", "noBorrowableBooks");
+					return "borrow";
+				});
+
 	}
 
 	@ExceptionHandler(Exception.class)

@@ -50,8 +50,11 @@ public class Book implements Serializable {
 	 * @param yearOfPublication
 	 *            the yearOfPublication
 	 */
-	public Book(String title, String author, String edition, String isbn,
-			int yearOfPublication) {
+	public Book(@Nonnull String title,
+				@Nonnull String author,
+				@Nonnull String edition,
+				@Nonnull String isbn,
+				int yearOfPublication) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -109,7 +112,7 @@ public class Book implements Serializable {
 	}
 
 	public void borrowNowByBorrower(String borrowerEmailAddress) {
-		if (borrowing==null) {
+		if (borrowing == null) {
             this.borrowing = new Borrowing(this, borrowerEmailAddress);
         }
 	}

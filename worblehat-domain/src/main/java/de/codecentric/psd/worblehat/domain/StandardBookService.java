@@ -1,6 +1,5 @@
 package de.codecentric.psd.worblehat.domain;
 
-import org.apache.commons.collections.SetUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,40 +42,18 @@ public class StandardBookService implements BookService {
     }
 
     @Override
-    public void borrowBook(Book book, String borrowerEmail) throws BookAlreadyBorrowedException {
-        Borrowing borrowing = book.getBorrowing();
-        if (borrowing != null) {
-            throw new BookAlreadyBorrowedException("Book is already borrowed");
-        } else {
-            borrowing = new Borrowing(book, borrowerEmail, new DateTime());
-            borrowingRepository.save(borrowing);
-        }
-    }
+    public Optional<Borrowing> borrowBook(String isbn, String borrower) {
+        Set<Book> books = bookRepository.findBooksByIsbn(isbn);
 
-    @Override
-    public void borrowOneBook(@Nonnull Set<Book> books, String borrower) throws BookAlreadyBorrowedException {
-        if (books.isEmpty()) throw new IllegalArgumentException("No books to borrow.");
-        Set<Book> unborrowedBooks = books.stream()
+        Optional<Book> unborrowedBook = books.stream()
                 .filter(book -> book.getBorrowing() == null)
-                .collect(Collectors.toSet());
-        if (!unborrowedBooks.isEmpty()) {
-            boolean borrowed = false;
-            for (Book book: unborrowedBooks) {
-                try {
-                    borrowBook(book, borrower);
-                    borrowed = true;
-                    break;
-                } catch( BookAlreadyBorrowedException babe) {
-                    // someone has borrowed this book after we filtered all borrowed books out in the beginning
-                    // let's try with the next one, if there are any left
-                }
-            }
-            if (!borrowed)
-                throw new BookAlreadyBorrowedException("All books are already borrowed");
+                .findFirst();
 
-        } else {
-            throw new BookAlreadyBorrowedException("All books are already borrowed");
-        }
+        return unborrowedBook.map(book -> {
+            book.borrowNowByBorrower(borrower);
+            borrowingRepository.save(book.getBorrowing());
+            return book.getBorrowing();
+        });
     }
 
     @Override
@@ -91,15 +68,19 @@ public class StandardBookService implements BookService {
 
 
     @Override
-    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
+    public Optional<Book> createBook(@Nonnull String title,
+                                     @Nonnull String author,
+                                     @Nonnull String edition,
+                                     @Nonnull String isbn,
+                                     int yearOfPublication) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
 
         Set<Book> booksByIsbn = bookRepository.findBooksByIsbn(isbn);
 
         if (booksByIsbn.isEmpty() || book.isSameCopy(booksByIsbn.iterator().next())) {
-            return bookRepository.save(book);
+            return Optional.of(bookRepository.save(book));
         } else
-            return null;
+            return Optional.empty();
     }
 
     @Override

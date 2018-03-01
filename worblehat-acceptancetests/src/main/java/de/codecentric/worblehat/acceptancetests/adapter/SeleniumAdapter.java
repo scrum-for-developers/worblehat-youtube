@@ -9,6 +9,7 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
+import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -51,9 +52,8 @@ public class SeleniumAdapter {
             throw e;
         }
 
-        // TODO: don't hardcode linux file separators
-        folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat("/");
-        folderName = "target/screenshots/".concat(folderName);
+        folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat(File.separator);
+        folderName = "target" + File.separator + "screenshots" + File.separator + folderName;
         new File(folderName).mkdirs();
 
     }
