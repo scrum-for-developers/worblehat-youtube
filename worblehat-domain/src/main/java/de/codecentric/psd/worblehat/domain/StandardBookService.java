@@ -1,12 +1,13 @@
 package de.codecentric.psd.worblehat.domain;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * The domain service class for book operations.
@@ -14,68 +15,83 @@ import java.util.List;
 @Service
 @Transactional
 public class StandardBookService implements BookService {
-    public StandardBookService(){
 
-    }
+	public StandardBookService() {
 
-    @Autowired
-    public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
-        this.borrowingRepository = borrowingRepository;
-        this.bookRepository = bookRepository;
-    }
+	}
 
-    private BorrowingRepository borrowingRepository;
+	@Autowired
+	public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
+		this.borrowingRepository = borrowingRepository;
+		this.bookRepository = bookRepository;
+	}
 
-    private BookRepository bookRepository;
+	private BorrowingRepository borrowingRepository;
 
-    @Override
-    public void returnAllBooksByBorrower(String borrowerEmailAddress) {
-        List<Borrowing> borrowingsByUser = borrowingRepository
-                .findBorrowingsByBorrower(borrowerEmailAddress);
-        for (Borrowing borrowing : borrowingsByUser) {
-            borrowingRepository.delete(borrowing);
-        }
-    }
+	private BookRepository bookRepository;
 
-    @Override
-    public void borrowBook(Book book, String borrowerEmail) throws BookAlreadyBorrowedException {
-        Borrowing borrowing = borrowingRepository.findBorrowingForBook(book);
-        if (borrowing != null) {
-            throw new BookAlreadyBorrowedException("Book is already borrowed");
-        } else {
-            book =findBookByIsbn(book.getIsbn());
-            borrowing = new Borrowing(book, borrowerEmail, new DateTime());
-            borrowingRepository.save(borrowing);
-        }
-    }
+	@Override
+	public void returnAllBooksByBorrower(String borrowerEmailAddress) {
+		List<Borrowing> borrowingsByUser = borrowingRepository
+				.findBorrowingsByBorrower(borrowerEmailAddress);
+		for (Borrowing borrowing : borrowingsByUser) {
+			borrowingRepository.delete(borrowing);
+		}
+	}
 
-    @Override
-    public Book findBookByIsbn(String isbn) {
-        return bookRepository.findBookByIsbn(isbn); //null if not found
-    }
+	@Override
+	public Optional<Borrowing> borrowBook(String isbn, String borrower) {
+		Set<Book> books = bookRepository.findByIsbn(isbn);
 
-    @Override
-    public List<Book> findAllBooks() {
-        return bookRepository.findAllBooks();
-    }
+		Optional<Book> unborrowedBook = books.stream()
+				.filter(book -> book.getBorrowing() == null)
+				.findFirst();
+
+		return unborrowedBook.map(book -> {
+			book.borrowNowByBorrower(borrower);
+			borrowingRepository.save(book.getBorrowing());
+			return book.getBorrowing();
+		});
+	}
+
+	@Override
+	public Set<Book> findBooksByIsbn(String isbn) {
+		return bookRepository.findByIsbn(isbn); //null if not found
+	}
+
+	@Override
+	public List<Book> findAllBooks() {
+		return bookRepository.findAllByOrderByTitle();
+	}
 
 
-    @Override
-    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication) {
-        Book book = new Book(title, author, edition, isbn, yearOfPublication);
-        return bookRepository.save(book);
-    }
+	@Override
+	public Optional<Book> createBook(@Nonnull String title,
+									 @Nonnull String author,
+									 @Nonnull String edition,
+									 @Nonnull String isbn,
+									 int yearOfPublication) {
+		Book book = new Book(title, author, edition, isbn, yearOfPublication);
 
-    @Override
-    public boolean bookExists(String isbn) {
-        return findBookByIsbn(isbn) != null;
-    }
+		Optional<Book> bookFromRepo = bookRepository.findTopByIsbn(isbn);
 
-    @Override
-    public void deleteAllBooks() {
-        borrowingRepository.deleteAll();
-        bookRepository.deleteAll();
-    }
+        if (!bookFromRepo.isPresent() || book.isSameCopy(bookFromRepo.get())) {
+            return Optional.of(bookRepository.save(book));
+        } else
+            return Optional.empty();
+	}
+
+	@Override
+	public boolean bookExists(String isbn) {
+		Set<Book> books = bookRepository.findByIsbn(isbn);
+		return !books.isEmpty();
+	}
+
+	@Override
+	public void deleteAllBooks() {
+		borrowingRepository.deleteAll();
+		bookRepository.deleteAll();
+	}
 
 
 }

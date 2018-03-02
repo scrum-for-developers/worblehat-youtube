@@ -31,8 +31,8 @@ public class BorrowBook {
 	// *** W H E N *****s
 	// *****************
 	
-	@When("user <borrower> borrows the book <isbn>")
-	public void whenUseruserBorrowsTheBookisbn(@Named("borrower") String user, @Named("isbn") String isbn){
+	@When("user $borrower borrows the book $isbn")
+	public void whenUseruserBorrowsTheBookisbn(String user, String isbn){
 		seleniumAdapter.gotoPage(Page.BORROWBOOK);
 		seleniumAdapter.typeIntoField("email", user);
 		seleniumAdapter.typeIntoField("isbn", isbn);
@@ -43,10 +43,10 @@ public class BorrowBook {
 	// *** T H E N *****
 	// *****************
 
-	@Then("I get an error message <message> when the borrower <borrower> tries to borrow the book with isbn <isbn> again")
-	public void whenBorrowerBorrowsBorrowedBookShowErrorMessage(@Named("borrower")String borrower,
-																@Named("isbn")String isbn,
-																@Named("message")String message){
+	@Then("I get an error message $message when the borrower $borrower tries to borrow the book with isbn $isbn again")
+	public void whenBorrowerBorrowsBorrowedBookShowErrorMessage(String message,
+																String borrower,
+																String isbn){
 		seleniumAdapter.gotoPage(Page.BORROWBOOK);
 		seleniumAdapter.typeIntoField("email", borrower);
 		seleniumAdapter.typeIntoField("isbn", isbn);

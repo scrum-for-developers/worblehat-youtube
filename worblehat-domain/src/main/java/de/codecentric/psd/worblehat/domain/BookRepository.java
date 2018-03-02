@@ -5,21 +5,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query("SELECT b from Book b order by title")
-    public List<Book> findAllBooks();
+    List<Book> findAllByOrderByTitle();
 
-    @Query("SELECT b from Book b WHERE b.isbn = :isbn")
-    public Book findBookByIsbn(@Param("isbn")String isbn);
+    Set<Book> findByIsbn(String isbn);
 
-    @Query("SELECT b from Book b where b.isbn = :isbn")
-    List<Book> findBooksByIsbn(String value);
+    Optional<Book> findTopByIsbn(String isbn);
 
-    @Query("SELECT b from Book b where b.author = :author")
-    List<Book> findBooksByAuthor(String author);
+    Set<Book> findByAuthor(String author);
 
-    @Query("SELECT b from Book b where b.edition = :edition")
-    List<Book> findBooksByEdition(String edition);
+    Set<Book> findByEdition(String edition);
 }

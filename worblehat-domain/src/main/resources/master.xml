@@ -4,4 +4,5 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
 	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.0/001-initialize-db.sql" />
-</databaseChangeLog> 
+	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.0/002-remove-unique-isbn-constraint.sql" />
+</databaseChangeLog>

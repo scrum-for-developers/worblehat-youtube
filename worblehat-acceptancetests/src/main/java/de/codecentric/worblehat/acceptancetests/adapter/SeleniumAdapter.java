@@ -9,6 +9,7 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
+import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -36,7 +37,7 @@ public class SeleniumAdapter {
     private String folderName;
 
     @BeforeStories
-    public void initSelenium() {
+    public void initSelenium() throws Exception {
         String seleniumProvider = Config.getEnvironment();
         try {
             if (seleniumProvider.equalsIgnoreCase("local")) {
@@ -48,10 +49,11 @@ public class SeleniumAdapter {
             LOGGER.error("Error initializing Webdriver", e);
             System.out.println(e);
             System.out.println(e.getMessage());
+            throw e;
         }
 
-        folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat("/");
-        folderName = "target/screenshots/".concat(folderName);
+        folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat(File.separator);
+        folderName = "target" + File.separator + "screenshots" + File.separator + folderName;
         new File(folderName).mkdirs();
 
     }

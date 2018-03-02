@@ -1,5 +1,6 @@
 package de.codecentric.psd.worblehat.web.controller;
 
+import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.BookDataFormData;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * Handles requests for the application home page.
@@ -43,10 +45,14 @@ public class InsertBookController {
 		if (result.hasErrors()) {
 			return "insertBooks";
 		} else {
-			bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
+			Optional<Book> book = bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
 					bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
 					Integer.parseInt(bookDataFormData.getYearOfPublication()));
-			LOG.debug("new book instance is created: " + bookDataFormData.getIsbn());
+			if (book.isPresent()) {
+			    LOG.info("new book instance is created: " + book.get());
+            } else {
+			    LOG.debug("failed to create new book with: "+bookDataFormData.toString());
+            }
 			return "redirect:bookList";
 		}
 	}

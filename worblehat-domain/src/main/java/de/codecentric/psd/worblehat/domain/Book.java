@@ -1,7 +1,10 @@
 package de.codecentric.psd.worblehat.domain;
 
+import javax.annotation.Nonnull;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Entity implementation class for Entity: Book
@@ -18,6 +21,8 @@ public class Book implements Serializable {
 	private String title;
 	private String author;
 	private String edition;
+
+	// TODO: convert String to an ISBN class, that ensures a valid ISBN
 	private String isbn;
 	private int yearOfPublication;
 
@@ -45,8 +50,11 @@ public class Book implements Serializable {
 	 * @param yearOfPublication
 	 *            the yearOfPublication
 	 */
-	public Book(String title, String author, String edition, String isbn,
-			int yearOfPublication) {
+	public Book(@Nonnull String title,
+				@Nonnull String author,
+				@Nonnull String edition,
+				@Nonnull String isbn,
+				int yearOfPublication) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -75,8 +83,6 @@ public class Book implements Serializable {
 		return yearOfPublication;
 	}
 
-	public String getBorrowerEmail() { return borrowing == null ? "" : borrowing.getBorrowerEmailAddress(); }
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -97,7 +103,17 @@ public class Book implements Serializable {
 		this.yearOfPublication = yearOfPublication;
 	}
 
-	public void setBorrowing(Borrowing borrowing) {
-		this.borrowing = borrowing;
+    public Borrowing getBorrowing() {
+		return borrowing;
+	}
+
+	boolean isSameCopy(@Nonnull Book book) {
+		return getTitle().equals(book.title) && getAuthor().equals(book.author);
+	}
+
+	public void borrowNowByBorrower(String borrowerEmailAddress) {
+		if (borrowing == null) {
+            this.borrowing = new Borrowing(this, borrowerEmailAddress);
+        }
 	}
 }
