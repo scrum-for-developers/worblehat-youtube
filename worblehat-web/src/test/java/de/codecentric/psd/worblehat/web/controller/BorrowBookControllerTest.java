@@ -84,7 +84,6 @@ public class BorrowBookControllerTest {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
         when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
-        when(bookService.borrowBook(any(), any())).thenReturn(Optional.empty());
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
 
         assertThat(bindingResult.hasFieldErrors("isbn"), is(true));
