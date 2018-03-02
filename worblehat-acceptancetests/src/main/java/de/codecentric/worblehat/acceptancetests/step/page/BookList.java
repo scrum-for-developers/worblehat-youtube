@@ -27,12 +27,12 @@ public class BookList {
         this.seleniumAdapter = seleniumAdapter;
     }
 
-    @Then("The booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn>")
-    public void bookListContainsRowWithValues(@Named("title") final String title,
-                                              @Named("author") final String author,
-                                              @Named("year") final String year,
-                                              @Named("edition") final String edition,
-                                              @Named("isbn") final String isbn){
+    @Then("the booklist contains a book with values title $title, author $author, year $year, edition $edition, isbn $isbn")
+    public void bookListContainsRowWithValues(final String title,
+                                              final String author,
+                                              final String year,
+                                              final String edition,
+                                              final String isbn){
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
@@ -50,9 +50,9 @@ public class BookList {
         assertThat(htmlBookList.size(), is(0));
     }
 
-    @Then("the booklist lists the user <borrower> as borrower for the book with isbn <isbn>")
-    public void bookListHasBorrowerForBookWithIsbn(@Named("borrower") final String borrower,
-                                                   @Named("isbn") final String isbn){
+    @Then("the booklist lists the user $borrower as borrower for the book with isbn $isbn")
+    public void bookListHasBorrowerForBookWithIsbn(final String borrower,
+                                                   final String isbn){
         Book book = DemoBookFactory.createDemoBook().build();
         Map<String, String> wantedRow = createRowMap(book.getTitle(), book.getAuthor(),
                 String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
@@ -62,9 +62,9 @@ public class BookList {
         assertThat(htmlBook.getBorrower(), is(borrower));
     }
 
-    @Then("books <isbns1> are not borrowed anymore by borrower <borrower1>")
-    public void booksAreNotBorrowedByBorrower1(@Named("isbns1")String isbns,
-                                               @Named("borrower1")String borrower1){
+    @Then("books $isbns are not borrowed anymore by borrower $borrower")
+    public void booksAreNotBorrowedByBorrower1(String isbns,
+                                               String borrower){
         List<String> isbnList = getListOfItems(isbns);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
@@ -73,21 +73,8 @@ public class BookList {
         }
     }
 
-    @Then("books <isbns2> are still borrowed by borrower <borrower2>")
-    public void booksAreStillBorrowedByBorrower2(@Named("isbns2")String isbns,
-                                               @Named("borrower2")String borrower2){
-        List<String> isbnList = getListOfItems(isbns);
-        seleniumAdapter.gotoPage(Page.BOOKLIST);
-        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        for (String isbn : isbnList){
-            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(borrower2));
-        }
-    }
-
-
-
     private List<String> getListOfItems(String isbns) {
-        return isbns.isEmpty() ? Collections.<String>emptyList() : Arrays.asList(isbns.split(" "));
+        return isbns.isEmpty() ? Collections.emptyList() : Arrays.asList(isbns.split(" "));
     }
 
     private HashMap<String, String> createRowMap(final String title, final String author, final String year,

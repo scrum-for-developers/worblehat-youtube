@@ -113,10 +113,7 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		 // add configuration from MostUsefulConfiguration
 		configuration
 				.useKeywords(new LocalizedKeywords())
-				.useStoryControls(new StoryControls())
-				.useStoryLoader(new LoadFromClasspath())
 				.useStoryParser(new RegexStoryParser(configuration.keywords()))
-				.useFailureStrategy(new RethrowingFailure())
 				.usePendingStepStrategy(new PassingUponPendingStep())
 				.useStepCollector(new MarkUnmatchedStepsAsPending())
 				.useStepFinder(new StepFinder())
@@ -124,7 +121,9 @@ public class AllAcceptanceTestStories extends JUnitStories {
 				.useStepMonitor(new SilentStepMonitor())
 				.useStepdocReporter(new PrintStreamStepdocReporter())
 				.useParanamer(new NullParanamer())
-				.useParameterControls(new ParameterControls())
+
+				// use column headers of example table to identify the parameter instead of the name in the step itself
+				.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true))
 				.useViewGenerator(new FreemarkerViewGenerator());
 
 		 useConfiguration(configuration);

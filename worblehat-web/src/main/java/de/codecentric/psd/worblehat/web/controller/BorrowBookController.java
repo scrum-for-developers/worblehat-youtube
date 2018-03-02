@@ -61,7 +61,6 @@ public class BorrowBookController {
 					result.rejectValue("isbn", "noBorrowableBooks");
 					return "borrow";
 				});
-
 	}
 
 	@ExceptionHandler(Exception.class)

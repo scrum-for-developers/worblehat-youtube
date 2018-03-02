@@ -25,8 +25,8 @@ public class ReturnAllBooks {
 	// *** W H E N *****
 	// *****************
 	
-	@When("borrower <borrower1> returns all his books")
-	public void whenUseruserReturnsAllHisBooks(@Named("borrower1") String borrower1) throws InterruptedException{
+	@When("borrower $borrower returns all his books")
+	public void whenUseruserReturnsAllHisBooks(String borrower1) {
 		seleniumAdapter.gotoPage(Page.RETURNBOOKS);
 		seleniumAdapter.typeIntoField("emailAddress", borrower1);
 		seleniumAdapter.clickOnPageElement(PageElement.RETURNALLBOOKSBUTTON);

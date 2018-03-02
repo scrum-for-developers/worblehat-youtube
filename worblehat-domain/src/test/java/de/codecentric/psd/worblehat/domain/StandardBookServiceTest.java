@@ -30,10 +30,7 @@ public class StandardBookServiceTest {
 	private Book aBook, aCopyofBook, anotherBook;
 
 	private Book aBorrowedBook, aCopyofBorrowedBook, anotherBorrowedBook;
-    private Borrowing aBorrowing, aBorrowingOfCopy, anotherBorrowing;
-
-	static {
-	}
+	private Borrowing aBorrowing, aBorrowingOfCopy, anotherBorrowing;
 
 	@Before
 	public void setup() {
@@ -55,27 +52,28 @@ public class StandardBookServiceTest {
 
 		bookRepository = mock(BookRepository.class);
 
-        borrowingRepository = mock(BorrowingRepository.class);
-        when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
-                .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
+		borrowingRepository = mock(BorrowingRepository.class);
+		when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
+				.thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
 
-        when(borrowingRepository.findBorrowingForBook(aBook)).thenReturn(null);
+		when(borrowingRepository.findBorrowingForBook(aBook)).thenReturn(null);
 
 		bookService = new StandardBookService(borrowingRepository, bookRepository);
 
 	}
 
 	private void givenALibraryWith(Book... books) {
-		Map <String,Set<Book>> bookCopies = new HashMap<>();
-		for (Book book: books
-			 ) {
+		Map<String, Set<Book>> bookCopies = new HashMap<>();
+		for (Book book : books
+				) {
 			if (!bookCopies.containsKey(book.getIsbn())) {
 				bookCopies.put(book.getIsbn(), new HashSet<>());
 			}
 			bookCopies.get(book.getIsbn()).add(book);
 		}
-		for (Map.Entry<String, Set<Book>> entry: bookCopies.entrySet()) {
-			when(bookRepository.findBooksByIsbn(entry.getKey())).thenReturn(entry.getValue());
+		for (Map.Entry<String, Set<Book>> entry : bookCopies.entrySet()) {
+			when(bookRepository.findByIsbn(entry.getKey())).thenReturn(entry.getValue());
+			when(bookRepository.findTopByIsbn(entry.getKey())).thenReturn(Optional.of(entry.getValue().iterator().next()));
 		}
 	}
 
@@ -97,9 +95,9 @@ public class StandardBookServiceTest {
 	@Test()
 	public void shouldNotBorrowWhenBookAlreadyBorrowed() {
 		givenALibraryWith(aBorrowedBook);
-        Optional<Borrowing> borrowing = bookService.borrowBook(aBorrowedBook.getIsbn(), BORROWER_EMAIL);
-        assertTrue(!borrowing.isPresent());
-    }
+		Optional<Borrowing> borrowing = bookService.borrowBook(aBorrowedBook.getIsbn(), BORROWER_EMAIL);
+		assertTrue(!borrowing.isPresent());
+	}
 
 	@Test
 	public void shouldSelectOneOfTwoBooksWhenBothAreNotBorrowed() {
@@ -159,7 +157,7 @@ public class StandardBookServiceTest {
 	@Test
 	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentTitle() {
 		givenALibraryWith(aBook);
-		bookService.createBook(aBook.getTitle()+"X", aBook.getAuthor(), aBook.getEdition(),
+		bookService.createBook(aBook.getTitle() + "X", aBook.getAuthor(), aBook.getEdition(),
 				aBook.getIsbn(), aBook.getYearOfPublication());
 		verify(bookRepository, times(0)).save(any(Book.class));
 	}
@@ -167,7 +165,7 @@ public class StandardBookServiceTest {
 	@Test
 	public void shouldNotCreateAnotherCopyOfExistingBookWithDifferentAuthor() {
 		givenALibraryWith(aBook);
-		bookService.createBook(aBook.getTitle(), aBook.getAuthor()+"X", aBook.getEdition(),
+		bookService.createBook(aBook.getTitle(), aBook.getAuthor() + "X", aBook.getEdition(),
 				aBook.getIsbn(), aBook.getYearOfPublication());
 		verify(bookRepository, times(0)).save(any(Book.class));
 	}
@@ -176,26 +174,26 @@ public class StandardBookServiceTest {
 	public void shouldFindAllBooks() {
 		List<Book> expectedBooks = new ArrayList<>();
 		expectedBooks.add(aBook);
-		when(bookRepository.findAllBooks()).thenReturn(expectedBooks);
+		when(bookRepository.findAllByOrderByTitle()).thenReturn(expectedBooks);
 		List<Book> actualBooks = bookService.findAllBooks();
 		assertThat(actualBooks, is(expectedBooks));
 	}
 
 	@Test
 	public void shouldVerifyExistingBooks() {
-		when(bookRepository.findBooksByIsbn(aBook.getIsbn())).thenReturn(Collections.singleton(aBook));
+		when(bookRepository.findByIsbn(aBook.getIsbn())).thenReturn(Collections.singleton(aBook));
 		Boolean bookExists = bookService.bookExists(aBook.getIsbn());
 		assertTrue(bookExists);
 	}
 
-    @Test
-    public void shouldVerifyNonexistingBooks() {
-        when(bookRepository.findBooksByIsbn(aBook.getIsbn())).thenReturn(Collections.emptySet());
-	    Boolean bookExists = bookService.bookExists(aBook.getIsbn());
-	    assertThat(bookExists, is(false));
-    }
+	@Test
+	public void shouldVerifyNonexistingBooks() {
+		when(bookRepository.findByIsbn(aBook.getIsbn())).thenReturn(Collections.emptySet());
+		Boolean bookExists = bookService.bookExists(aBook.getIsbn());
+		assertThat(bookExists, is(false));
+	}
 
-    @Test
+	@Test
 	public void shouldDeleteAllBooksAndBorrowings() {
 		bookService.deleteAllBooks();
 		verify(bookRepository).deleteAll();
