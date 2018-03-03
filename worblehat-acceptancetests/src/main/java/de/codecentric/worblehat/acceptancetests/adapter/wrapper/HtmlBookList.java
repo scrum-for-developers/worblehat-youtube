@@ -1,5 +1,6 @@
 package de.codecentric.worblehat.acceptancetests.adapter.wrapper;
 
+import de.codecentric.worblehat.acceptancetests.step.business.DemoBookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -8,40 +9,64 @@ import java.util.List;
 import java.util.Map;
 
 public class HtmlBookList {
-    private Map<String, HtmlBook> values;
+	private List<WebElement> headers;
+	private Map<String, HtmlBook> values;
 
-    public HtmlBookList(WebElement table){
-        WebElement tbody = table.findElement(By.tagName("tbody"));
-        extractValues(tbody);
-    }
+	public HtmlBookList(WebElement table) {
 
-    private void extractValues(WebElement tbody) {
-        values = new HashMap<>();
-        for (WebElement row : tbody.findElements(By.tagName("tr"))){
-            List<WebElement> colums = row.findElements(By.tagName("td"));
-            HtmlBook htmlBook = new HtmlBook(
-                    colums.get(0).getText(), //Title
-                    colums.get(1).getText(), //Author
-                    colums.get(2).getText(), //Year
-                    colums.get(3).getText(), //Edition
-                    colums.get(4).getText(), //ISBN
-                    colums.get(5).getText());//Borrower
-            // TODO: avoid magic numbers to prevent inserted columns to break tests
-            values.put(htmlBook.getIsbn(), htmlBook);
-        }
-    }
+		headers = table.findElements(By.cssSelector("thead tr th"));
 
-    public int size(){
-        return values.size();
-    }
+		WebElement tbody = table.findElement(By.tagName("tbody"));
+		extractValues(tbody);
+	}
 
-    public HtmlBook getBookByIsbn(String isbn){
-        return values.get(isbn);
-    }
+	private void extractValues(WebElement tbody) {
+		values = new HashMap<>();
+		for (WebElement row : tbody.findElements(By.tagName("tr"))) {
+			List<WebElement> cells = row.findElements(By.tagName("td"));
 
-    public Map<String, HtmlBook> getHtmlBooks(){
-        return values;
-    }
+			HtmlBook book = new HtmlBook();
+			int currentColumn = 0;
+			for (WebElement column : headers) {
+				switch (column.getText()) {
+					case "Title":
+						book.setTitle(cells.get(currentColumn).getText());
+						break;
+					case "Author":
+						book.setAuthor(cells.get(currentColumn).getText());
+						break;
+					case "Year":
+						book.setYearOfPublication(cells.get(currentColumn).getText());
+						break;
+					case "Edition":
+						book.setEdition(cells.get(currentColumn).getText());
+						break;
+					case "Borrower":
+						book.setBorrower(cells.get(currentColumn).getText());
+						break;
+					case "ISBN":
+						book.setIsbn(cells.get(currentColumn).getText());
+						break;
+
+				}
+				currentColumn++;
+			}
+
+			values.put(book.getIsbn(), book);
+		}
+	}
+
+	public int size() {
+		return values.size();
+	}
+
+	public HtmlBook getBookByIsbn(String isbn) {
+		return values.get(isbn);
+	}
+
+	public Map<String, HtmlBook> getHtmlBooks() {
+		return values;
+	}
 
 
 }
