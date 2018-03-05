@@ -73,6 +73,17 @@ public class BookList {
         }
     }
 
+    @Then("books $isbns are still borrowed by borrower $borrower")
+    public void booksAreStillBorrowedByBorrower2(String isbns,
+                                                 String borrower2){
+        List<String> isbnList = getListOfItems(isbns);
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        for (String isbn : isbnList){
+            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(borrower2));
+        }
+    }
+
     private List<String> getListOfItems(String isbns) {
         return isbns.isEmpty() ? Collections.emptyList() : Arrays.asList(isbns.split(" "));
     }

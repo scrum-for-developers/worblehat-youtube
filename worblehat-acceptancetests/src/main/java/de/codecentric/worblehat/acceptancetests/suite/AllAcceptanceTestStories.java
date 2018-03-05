@@ -4,11 +4,9 @@ import com.thoughtworks.paranamer.NullParanamer;
 import de.codecentric.Application;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.failures.PassingUponPendingStep;
-import org.jbehave.core.failures.RethrowingFailure;
 import org.jbehave.core.i18n.LocalizedKeywords;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
@@ -24,9 +22,9 @@ import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -42,8 +40,8 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
  * </p>
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes= Application.class)
 public class AllAcceptanceTestStories extends JUnitStories {
 
 	@Autowired
@@ -113,7 +111,7 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		 // add configuration from MostUsefulConfiguration
 		configuration
 				.useKeywords(new LocalizedKeywords())
-				.useStoryParser(new RegexStoryParser(configuration.keywords()))
+				//.useStoryParser(new RegexStoryParser(configuration.keywords()))
 				.usePendingStepStrategy(new PassingUponPendingStep())
 				.useStepCollector(new MarkUnmatchedStepsAsPending())
 				.useStepFinder(new StepFinder())
