@@ -27,13 +27,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 
@@ -56,12 +59,15 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 "liquibase.change-log=classpath:master.xml",
 "spring.datasource.username=worblehat",
 "spring.datasource.password=worblehat"} )
-/*@ComponentScan(
+
+@EnableJpaRepositories("de.codecentric.psd.worblehat.domain")
+@EntityScan("de.codecentric.psd.worblehat.domain")
+@EnableTransactionManagement
+@ComponentScan(
 		basePackages = {
 				"de.codecentric.worblehat.acceptancetests.adapter",
 				"de.codecentric.worblehat.acceptancetests.step",
 				"de.codecentric.psd.worblehat.domain"})
-				*/
 public class AllAcceptanceTestStories extends JUnitStories {
 	
 	@Autowired
