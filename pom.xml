@@ -19,6 +19,20 @@
         <module>worblehat-web</module>
     </modules>
 
+    <distributionManagement>
+        <site>
+            <!-- The global jenkins configuration will define a SITE_DEPLOY_PATH environment variable:
+            http://<team-ip>/jenkins/configure
+
+            It's usually set to /scrumfordevelopers/nginx_root/worblehat-site
+
+            This is required by the maven site plugin, that generates the documentation
+            see: https://maven.apache.org/plugins/maven-site-plugin/usage.html -->
+            <id>psd-teamserver-website</id>
+            <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
+        </site>
+    </distributionManagement>
+
     <name>worblehat</name>
 
     <properties>
