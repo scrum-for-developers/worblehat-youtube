@@ -14,7 +14,7 @@
     <name>worblehat-acceptancetests</name>
 
     <properties>
-        <jbehave.core.version>3.6.6</jbehave.core.version>
+        <jbehave.core.version>4.1.3</jbehave.core.version>
         <jbehave.site.version>3.1.1</jbehave.site.version>
         <selenium.version>3.0.1</selenium.version>
         <environment>local</environment>
@@ -41,13 +41,6 @@
             <groupId>de.codecentric.psd</groupId>
             <artifactId>worblehat-web</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-core</artifactId>
-            <version>${jbehave.core.version}</version>
-            <classifier>resources</classifier>
-            <type>zip</type>
         </dependency>
         <dependency>
             <groupId>org.jbehave</groupId>
@@ -86,6 +79,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -101,6 +95,7 @@
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+         -->
     </dependencies>
 
     <build>
@@ -112,6 +107,14 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <!--verbose>true</verbose-->
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.lazerycode.selenium</groupId>
                 <artifactId>driver-binary-downloader-maven-plugin</artifactId>
