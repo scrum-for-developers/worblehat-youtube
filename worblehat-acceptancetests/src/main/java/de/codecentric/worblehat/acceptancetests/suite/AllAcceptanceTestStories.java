@@ -1,7 +1,8 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
+import com.sun.xml.internal.bind.api.impl.NameConverter;
 import com.thoughtworks.paranamer.NullParanamer;
-import de.codecentric.psd.Worblehat;
+import de.codecentric.psd.worblehat.domain.*;
 import de.codecentric.worblehat.acceptancetests.step.business.Library;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
@@ -24,10 +25,14 @@ import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -45,12 +50,20 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Worblehat.class)
+@SpringBootApplication()
+@TestPropertySource( properties = {"spring.datasource.driver-class-name=com.mysql.jdbc.Driver",
+"spring.datasource.url=jdbc:mysql://localhost:3306/worblehat_test",
+"liquibase.change-log=classpath:master.xml",
+"spring.datasource.username=worblehat",
+"spring.datasource.password=worblehat"} )
+/*@ComponentScan(
+		basePackages = {
+				"de.codecentric.worblehat.acceptancetests.adapter",
+				"de.codecentric.worblehat.acceptancetests.step",
+				"de.codecentric.psd.worblehat.domain"})
+				*/
 public class AllAcceptanceTestStories extends JUnitStories {
 	
-	@Autowired
-	Library myLibrary;
-
 	@Autowired
 	private ApplicationContext applicationContext;
 
