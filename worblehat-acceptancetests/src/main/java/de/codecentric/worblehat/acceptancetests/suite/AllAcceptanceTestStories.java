@@ -1,9 +1,11 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
 import com.thoughtworks.paranamer.NullParanamer;
-import de.codecentric.Application;
+import de.codecentric.psd.Worblehat;
+import de.codecentric.worblehat.acceptancetests.step.business.Library;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.failures.PassingUponPendingStep;
@@ -24,6 +26,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -41,14 +45,87 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes= Application.class)
+@SpringBootTest(classes = Worblehat.class)
 public class AllAcceptanceTestStories extends JUnitStories {
+	
+	@Autowired
+	Library myLibrary;
 
 	@Autowired
 	private ApplicationContext applicationContext;
 
 	public AllAcceptanceTestStories(){
-		initJBehaveConfiguration();
+	}
+
+	@Override
+	public Configuration configuration() {
+
+		if (!hasConfiguration()) {
+
+			// prepare SeleniumContext
+			SeleniumContext seleniumContext = new SeleniumContext();
+			Format[] formats = new Format[] {
+					new SeleniumContextOutput(seleniumContext), Format.CONSOLE,
+					WebDriverHtmlOutput.WEB_DRIVER_HTML };
+
+			// prepare ReportBuilder
+			StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
+					.withCodeLocation(
+							codeLocationFromClass(AllAcceptanceTestStories.class))
+					.withFailureTrace(true).withFailureTraceCompression(true)
+					.withDefaultFormats().withFormats(formats);
+
+			// general JBehave configuration
+			Configuration configuration = new SeleniumConfiguration()
+					.useSeleniumContext(seleniumContext)
+					.useFailureStrategy(new FailingUponPendingStep())
+					.useStoryControls(
+							new StoryControls().doResetStateBeforeScenario(false))
+					.useStoryLoader(
+							new LoadFromClasspath(AllAcceptanceTestStories.class))
+					.useStoryReporterBuilder(reporterBuilder);
+
+			// add configuration from MostUsefulConfiguration
+			configuration
+					.useKeywords(new LocalizedKeywords())
+					.useStoryParser(new RegexStoryParser(configuration.keywords(), configuration.storyLoader(), configuration.tableTransformers()))
+					.usePendingStepStrategy(new PassingUponPendingStep())
+					.useStepCollector(new MarkUnmatchedStepsAsPending())
+					.useStepFinder(new StepFinder())
+					.useStepPatternParser(new RegexPrefixCapturingPatternParser())
+					.useStepMonitor(new SilentStepMonitor())
+					.useStepdocReporter(new PrintStreamStepdocReporter())
+					.useParanamer(new NullParanamer())
+
+					// use column headers of example table to identify the parameter instead of the name in the step itself
+					.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true))
+					.useViewGenerator(new FreemarkerViewGenerator());
+
+			useConfiguration(configuration);
+
+		}
+
+		return super.configuration();
+	}
+
+	@Override
+	public Embedder configuredEmbedder() {
+		Embedder configuredEmbedder = super.configuredEmbedder();
+
+		configuredEmbedder.embedderControls()
+
+				// collect failures and report them in batch
+				.doBatch(false)
+				.doGenerateViewAfterStories(true)
+				.doIgnoreFailureInStories(false)
+				.doIgnoreFailureInView(false)
+				.doSkip(false)
+				.doVerboseFailures(false)
+				.doVerboseFiltering(false)
+				.useThreads(1);
+
+		return configuredEmbedder;
+
 	}
 
 	@Override
@@ -66,65 +143,6 @@ public class AllAcceptanceTestStories extends JUnitStories {
 		return new StoryFinder().findPaths(
 				codeLocationFromClass(this.getClass()), includePattern,
 				"**/excluded*.story");
-	}
-	
-
-
-	private void initJBehaveConfiguration() {
-
-		// configure Embedder
-		configuredEmbedder()
-				.embedderControls()
-
-				// collect failures and report them in batch
-				.doBatch(false)
-				.doGenerateViewAfterStories(true)
-				.doIgnoreFailureInStories(false)
-				.doIgnoreFailureInView(false)
-				.doSkip(false)
-				.doVerboseFailures(false)
-				.doVerboseFiltering(false)
-				.useThreads(1)
-				.useStoryTimeoutInSecs(600);
-
-		// create SeleniumContext
-		SeleniumContext seleniumContext = new SeleniumContext();
-		Format[] formats = new Format[] {
-				new SeleniumContextOutput(seleniumContext), Format.CONSOLE,
-				WebDriverHtmlOutput.WEB_DRIVER_HTML };
-		StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-				.withCodeLocation(
-						codeLocationFromClass(AllAcceptanceTestStories.class))
-				.withFailureTrace(true).withFailureTraceCompression(true)
-				.withDefaultFormats().withFormats(formats);
-
-		// general JBehave configuration
-		 Configuration configuration = new SeleniumConfiguration()
-		 .useSeleniumContext(seleniumContext)
-		 .useFailureStrategy(new FailingUponPendingStep())
-		 .useStoryControls(
-		 new StoryControls().doResetStateBeforeScenario(false))
-		 .useStoryLoader(
-		 new LoadFromClasspath(AllAcceptanceTestStories.class))
-		 .useStoryReporterBuilder(reporterBuilder);
-
-		 // add configuration from MostUsefulConfiguration
-		configuration
-				.useKeywords(new LocalizedKeywords())
-				//.useStoryParser(new RegexStoryParser(configuration.keywords()))
-				.usePendingStepStrategy(new PassingUponPendingStep())
-				.useStepCollector(new MarkUnmatchedStepsAsPending())
-				.useStepFinder(new StepFinder())
-				.useStepPatternParser(new RegexPrefixCapturingPatternParser())
-				.useStepMonitor(new SilentStepMonitor())
-				.useStepdocReporter(new PrintStreamStepdocReporter())
-				.useParanamer(new NullParanamer())
-
-				// use column headers of example table to identify the parameter instead of the name in the step itself
-				.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true))
-				.useViewGenerator(new FreemarkerViewGenerator());
-
-		 useConfiguration(configuration);
 	}
 
 }
