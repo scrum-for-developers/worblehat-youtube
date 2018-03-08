@@ -1,9 +1,7 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
-import com.sun.xml.internal.bind.api.impl.NameConverter;
 import com.thoughtworks.paranamer.NullParanamer;
 import de.codecentric.psd.worblehat.domain.*;
-import de.codecentric.worblehat.acceptancetests.step.business.Library;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
@@ -25,15 +23,11 @@ import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -53,7 +47,7 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootApplication()
+@EnableAutoConfiguration
 @TestPropertySource( properties = {"spring.datasource.driver-class-name=com.mysql.jdbc.Driver",
 "spring.datasource.url=jdbc:mysql://localhost:3306/worblehat_test",
 "liquibase.change-log=classpath:master.xml",
@@ -65,8 +59,7 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 @EnableTransactionManagement
 @ComponentScan(
 		basePackages = {
-				"de.codecentric.worblehat.acceptancetests.adapter",
-				"de.codecentric.worblehat.acceptancetests.step",
+				"de.codecentric.worblehat.acceptancetests",
 				"de.codecentric.psd.worblehat.domain"})
 public class AllAcceptanceTestStories extends JUnitStories {
 	
