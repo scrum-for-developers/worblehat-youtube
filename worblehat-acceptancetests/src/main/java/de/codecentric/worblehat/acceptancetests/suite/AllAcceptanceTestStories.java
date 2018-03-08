@@ -143,6 +143,16 @@ public class AllAcceptanceTestStories extends JUnitStories {
 
 	@Override
 	public InjectableStepsFactory stepsFactory(){
+		// just some sanity check to fail fast, while working on the Spring plumbing
+		boolean seleniumAdapter = applicationContext.containsBeanDefinition("SeleniumAdapter");
+		boolean library = applicationContext.containsBeanDefinition("Library");
+		boolean bookList = applicationContext.containsBeanDefinition("BookList");
+		if (!seleniumAdapter || !library || !bookList) {
+			throw new RuntimeException("Some essential beans are missing. SeleniumAdapter: " + seleniumAdapter +
+					", Library: " + library +
+							", BookList: " + bookList);
+		}
+
 		return new SpringStepsFactory(configuration(), applicationContext);
 	}
 

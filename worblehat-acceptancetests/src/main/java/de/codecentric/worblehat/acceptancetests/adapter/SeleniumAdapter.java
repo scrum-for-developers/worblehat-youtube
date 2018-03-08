@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Itegrates Selenium into the tests.
  */
-@Controller
+@Controller("SeleniumAdapter")
 public class SeleniumAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);

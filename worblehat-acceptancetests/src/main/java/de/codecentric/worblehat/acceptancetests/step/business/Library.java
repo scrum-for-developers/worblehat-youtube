@@ -10,6 +10,7 @@ import org.jbehave.core.annotations.Then;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -17,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
 
-@Component
+@Component("Library")
 public class Library {
 
 	private BookService bookService;

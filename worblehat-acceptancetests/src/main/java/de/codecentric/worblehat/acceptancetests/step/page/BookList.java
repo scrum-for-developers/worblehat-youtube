@@ -17,7 +17,7 @@ import java.util.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@Component
+@Component("BookList")
 public class BookList {
 
     private SeleniumAdapter seleniumAdapter;
