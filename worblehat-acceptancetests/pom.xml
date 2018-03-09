@@ -24,24 +24,13 @@
     <profiles>
         <profile>
             <id>headless</id>
-            <activation>
-                <property>
-                    <name>psd.environment</name>
-                    <value>jenkins</value>
-                </property>
-            </activation>
+            <!-- forces the use of phantomjs in SeleniumAdapter -->
             <properties>
                 <environment>jenkins</environment>
             </properties>
         </profile>
         <profile>
             <id>jenkins</id>
-            <activation>
-                <property>
-                    <name>psd.environment</name>
-                    <value>jenkins</value>
-                </property>
-            </activation>
             <properties>
                 <application.url>http://localhost/worblehat-test</application.url>
             </properties>

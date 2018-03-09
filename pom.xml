@@ -161,13 +161,6 @@
     <profiles>
         <profile>
             <id>jenkins</id>
-            <activation>
-                <!-- this property is set in settings.xml on the build server for the jenkins user -->
-                <property>
-                    <name>psd.environment</name>
-                    <value>jenkins</value>
-                </property>
-            </activation>
 
             <properties>
                 <!-- On the team server, the sonar server is usually located at http://<team-ip>/sonar/
