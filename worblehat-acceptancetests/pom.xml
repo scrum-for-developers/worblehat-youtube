@@ -137,6 +137,8 @@
                     <rootStandaloneServerDirectory>target/binaries</rootStandaloneServerDirectory>
                     <!-- Where you want to store downloaded zip files -->
                     <downloadedZipFileDirectory>target/zips</downloadedZipFileDirectory>
+                    <!-- Location of a custom repository map -->
+                    <customRepositoryMap>repo.xml</customRepositoryMap>
                 </configuration>
                 <executions>
                     <execution>
