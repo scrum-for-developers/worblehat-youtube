@@ -48,12 +48,7 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 
 @RunWith(SpringRunner.class)
 @EnableAutoConfiguration
-@TestPropertySource( properties = {"spring.datasource.driver-class-name=com.mysql.jdbc.Driver",
-"spring.datasource.url=jdbc:mysql://localhost:3306/worblehat_test",
-"liquibase.change-log=classpath:master.xml",
-"spring.datasource.username=worblehat",
-"spring.datasource.password=worblehat"} )
-
+@TestPropertySource
 @EnableJpaRepositories("de.codecentric.psd.worblehat.domain")
 @EntityScan("de.codecentric.psd.worblehat.domain")
 @EnableTransactionManagement
