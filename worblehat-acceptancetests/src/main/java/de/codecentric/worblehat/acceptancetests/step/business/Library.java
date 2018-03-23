@@ -10,6 +10,7 @@ import org.jbehave.core.annotations.Then;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -17,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
 
-@Component
+@Component("Library")
 public class Library {
 
 	private BookService bookService;
@@ -40,6 +41,18 @@ public class Library {
 	@Given("a library, containing a book with isbn $isbn")
 	public void createLibraryWithSingleBookWithGivenIsbn(String isbn){
 		Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
+		bookService.createBook(book.getTitle(), book.getAuthor(), book.getEdition(),
+				isbn, book.getYearOfPublication());
+	}
+
+	// just an example of how a step looks that is different from another one, after the last parameter
+	// see configuration in AllAcceptanceTestStories
+	@Given("a library, containing a book with isbn $isbn and title $title")
+	public void createLibraryWithSingleBookWithGivenIsbnAndTitle(String isbn, String title){
+		Book book = DemoBookFactory.createDemoBook()
+				.withISBN(isbn)
+				.withTitle(title)
+				.build();
 		bookService.createBook(book.getTitle(), book.getAuthor(), book.getEdition(),
 				isbn, book.getYearOfPublication());
 	}

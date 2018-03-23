@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.1.RELEASE</version>
+        <version>1.5.5.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,6 +21,13 @@
 
     <distributionManagement>
         <site>
+            <!-- The global jenkins configuration will define a SITE_DEPLOY_PATH environment variable:
+            http://<team-ip>/jenkins/configure
+
+            It's usually set to /scrumfordevelopers/nginx_root/worblehat-site
+
+            This is required by the maven site plugin, that generates the documentation
+            see: https://maven.apache.org/plugins/maven-site-plugin/usage.html -->
             <id>psd-teamserver-website</id>
             <url>file:${env.SITE_DEPLOY_PATH}/site/worblehat-build/</url>
         </site>
@@ -62,7 +69,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -156,15 +163,13 @@
             <id>jenkins</id>
 
             <properties>
-                <spring.profiles.active>jenkins</spring.profiles.active>
-                <BASE_URL>http://35.156.205.123/worblehat-test/</BASE_URL>
-                <SELENIUM_SERVER_HOST>ondemand.saucelabs.com:80/wd/hub</SELENIUM_SERVER_HOST>
-                <BROWSER_PROFILE>CHROME</BROWSER_PROFILE>
-                <BROWSER_VERSION></BROWSER_VERSION>
-                <BROWSER_OS>VISTA</BROWSER_OS>
-                <TEST_DESCRIPTION>Running Worblehat acceptance tests on
-                    ${BROWSER_OS} with ${BROWSER_PROFILE} ${BROWSER_VERSION}
-                </TEST_DESCRIPTION>
+                <!-- On the team server, the sonar server is usually located at http://<team-ip>/sonar/
+                The sonar plugin defaults http://localhost:9000 so this needs to be changed.
+                The global jenkins configuration will define a SONAL_URL environment variable:
+                http://<team-ip>/jenkins/configure
+
+                see: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven
+                -->
                 <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
             </properties>
         </profile>

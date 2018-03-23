@@ -116,4 +116,15 @@ public class Book implements Serializable {
             this.borrowing = new Borrowing(this, borrowerEmailAddress);
         }
 	}
+
+	@Override
+	public String toString() {
+		return "Book{" +
+				"title='" + title + '\'' +
+				", author='" + author + '\'' +
+				", edition='" + edition + '\'' +
+				", isbn='" + isbn + '\'' +
+				", yearOfPublication=" + yearOfPublication +
+				'}';
+	}
 }
