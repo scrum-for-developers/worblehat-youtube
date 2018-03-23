@@ -116,7 +116,7 @@
                     <!-- Where you want to store downloaded zip files -->
                     <downloadedZipFileDirectory>target/zips</downloadedZipFileDirectory>
                     <!-- Location of a custom repository map -->
-                    <customRepositoryMap>repo.xml</customRepositoryMap>
+                    <customRepositoryMap>${project.basedir}/repo.xml</customRepositoryMap>
                 </configuration>
                 <executions>
                     <execution>
