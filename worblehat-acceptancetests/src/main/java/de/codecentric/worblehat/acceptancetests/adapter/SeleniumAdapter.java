@@ -9,15 +9,10 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
-import org.junit.After;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +22,7 @@ import java.util.List;
 /**
  * Itegrates Selenium into the tests.
  */
-@Controller("SeleniumAdapter")
+@Component("SeleniumAdapter")
 public class SeleniumAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);
@@ -40,15 +35,13 @@ public class SeleniumAdapter {
     public void initSelenium() throws Exception {
         String seleniumProvider = Config.getEnvironment();
         try {
-            if (seleniumProvider.equalsIgnoreCase("local")) {
+			if ("local".equalsIgnoreCase(seleniumProvider)) {
                 driver = DriverEnum.CHROME.getDriver();
             } else {
                 driver = DriverEnum.PHANTOMJS.getDriver();
             }
         } catch (Exception e) {
             LOGGER.error("Error initializing Webdriver", e);
-            System.out.println(e);
-            System.out.println(e.getMessage());
             throw e;
         }
 
@@ -110,7 +103,7 @@ public class SeleniumAdapter {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(scrFile, new File(folderName.concat(filename).concat(".png")));
         } catch (IOException e) {
-            e.printStackTrace();
+			LOGGER.error("Could not take screenshot!", e);
         }
 
     }
