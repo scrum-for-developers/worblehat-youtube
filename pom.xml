@@ -37,7 +37,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <psd.dbserver.url>jdbc:mysql://localhost/worblehat</psd.dbserver.url>
+        <psd.dbserver.url>jdbc:mysql://localhost/worblehat_test</psd.dbserver.url>
         <psd.dbserver.username>worblehat</psd.dbserver.username>
         <psd.dbserver.password>worblehat</psd.dbserver.password>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
