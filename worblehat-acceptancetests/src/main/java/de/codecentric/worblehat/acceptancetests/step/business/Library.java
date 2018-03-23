@@ -45,6 +45,18 @@ public class Library {
 				isbn, book.getYearOfPublication());
 	}
 
+	// just an example of how a step looks that is different from another one, after the last parameter
+	// see configuration in AllAcceptanceTestStories
+	@Given("a library, containing a book with isbn $isbn and title $title")
+	public void createLibraryWithSingleBookWithGivenIsbnAndTitle(String isbn, String title){
+		Book book = DemoBookFactory.createDemoBook()
+				.withISBN(isbn)
+				.withTitle(title)
+				.build();
+		bookService.createBook(book.getTitle(), book.getAuthor(), book.getEdition(),
+				isbn, book.getYearOfPublication());
+	}
+
 	@Given("borrower $borrower has borrowed books $isbns")
 	public void borrower1HasBorrowerdBooks(String borrower,
 										  String isbns) {

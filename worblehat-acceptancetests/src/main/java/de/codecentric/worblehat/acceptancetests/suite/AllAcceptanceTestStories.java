@@ -60,8 +60,15 @@ public class AllAcceptanceTestStories extends JUnitStories {
 					.withFailureTraceCompression(true)
 					.withFormats(Format.CONSOLE, Format.HTML, Format.STATS);
 
+			// necessary to match steps correctly that only differ after the last parameter
+			// see http://jbehave.org/reference/stable/prioritising-steps.html
+			StepFinder.PrioritisingStrategy prioritisingStrategy = new StepFinder.ByLevenshteinDistance();
+			StepFinder stepFinder = new StepFinder(prioritisingStrategy);
+			StepCollector usefulStepCollector = new MarkUnmatchedStepsAsPending(stepFinder);
+
 			// general JBehave configuration
 			Configuration configuration = new MostUsefulConfiguration()
+					.useStepCollector(usefulStepCollector)
 					.useStoryControls(
 							new StoryControls().doResetStateBeforeScenario(false))
 					.useStoryReporterBuilder(reporterBuilder);
