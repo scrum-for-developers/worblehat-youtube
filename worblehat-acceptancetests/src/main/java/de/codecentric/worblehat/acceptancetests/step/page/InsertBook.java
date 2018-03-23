@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.PageElement;
+import de.codecentric.worblehat.acceptancetests.step.StoryContext;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
@@ -18,6 +19,9 @@ import java.util.List;
 public class InsertBook {
 
 	private SeleniumAdapter seleniumAdapter;
+
+	@Autowired
+	public StoryContext context;
 
 	@Autowired
 	public InsertBook(SeleniumAdapter seleniumAdapter) {
@@ -43,6 +47,7 @@ public class InsertBook {
 		seleniumAdapter.gotoPage(Page.INSERTBOOKS);
 		fillInsertBookForm(title, author, edition, isbn, year);
 		seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
+		context.putObject("LAST_INSERTED_BOOK", isbn);
 	}
 
 	// *****************
