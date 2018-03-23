@@ -33,33 +33,29 @@ docker run --detach \
 
 ## Running acceptance tests
 
-_Acceptance Tests are currently broken_
+1. The acceptance tests have a dependency on the domain module, so the first
+   step is to ensure that the most recent snapshot is installed in the local
+   maven repository
+   
+   ```
+   root> mvn clean instal 
+   ```
+   
+1. Then, we need the application running, that should be tested
 
-The acceptance tests currently don't work with the in-memory data base,
-which is provided by Spring Boot. For this reason you need to start a
-real data base. The acceptance test build will use the data base directly
-to insert test data.
+   ```
+   root> mvn -f worblehat-web spring-boot:run
+   ```
 
-1. Setup the database
-  * Run the `docker-db.sh` script in the worblehat-web directory. It will
-    start a MySQL docker container and expose port 3306 for you. Depending
-    on your operating system you can access the data base via `localhost:3306`
-    (Linux) or \<DOCKER-HOST-IP\>:3306 (MacOS + boot2docker).
-    
-    Notice: To find out your DOCKER-HOST-IP execute `docker-machine env default`
-1. Configure worblehat to use the MySQL data base
-  * Uncomment the data base connection configuration in
-    `worblehat-web/src/main/resources/application.properties`
-  * Depending on your operating system you may have to modify the
-    `spring.datasource.url` property to the URL your docker MySQL data base it
-    running at.
-  * Start the application.
-1. Configure the acceptance test build to use the MySQL data base
-  * Change the `DB_URL` property in the `local` profile in
-    `worblehat-acceptancetests/pom.xml` to the URL your docker MySQL data base
-    it running at (if necessary).
-1. Run acceptance tests by calling `$ mvn -Plocal clean verify` in the
-   `worblehat-acceptancetests` directory.
+1. Run acceptance tests. It currently requires Chrome to be installed.
+
+   ```
+   root> cd worblehat-acceptancetests
+   worblehat-acceptancetests> mvn clean verify
+   ```
+ 
+   To run the tests headless, use the headless profile ```> mvn -Pheadless clean verify```
+1. The report can be found in ```target/jbehave/view/reports.html```
 
 ## Howto Release
 
