@@ -3,16 +3,13 @@ package de.codecentric.psd.worblehat.web.controller;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.Set;
 
 import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
-import de.codecentric.psd.worblehat.web.formdata.BookBorrowFormData;
+import de.codecentric.psd.worblehat.web.formdata.BorrowBookFormData;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -37,7 +34,7 @@ public class BorrowBookControllerTest {
 
     private BindingResult bindingResult;
 
-    private BookBorrowFormData bookBorrowFormData;
+    private BorrowBookFormData bookBorrowFormData;
 
     private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
@@ -47,7 +44,7 @@ public class BorrowBookControllerTest {
     public void setUp() {
         bookService = mock(BookService.class);
         bindingResult = new MapBindingResult(new HashMap<>(), "");
-        bookBorrowFormData = new BookBorrowFormData();
+        bookBorrowFormData = new BorrowBookFormData();
         borrowBookController = new BorrowBookController(bookService);
     }
 

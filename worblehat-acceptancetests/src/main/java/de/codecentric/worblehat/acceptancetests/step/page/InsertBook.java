@@ -1,6 +1,7 @@
 package de.codecentric.worblehat.acceptancetests.step.page;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.Page;
@@ -12,8 +13,6 @@ import org.jbehave.core.annotations.When;
 import de.codecentric.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class InsertBook {
@@ -54,10 +53,10 @@ public class InsertBook {
 	// *** T H E N *****
 	// *****************
 
-	@Then("the page contains error message $message")
-	public void pageContainsErrorMessage(String message){
-		List<String> errorMsgs = seleniumAdapter.findAllStringsForElement(PageElement.ERROR);
-		assertThat(errorMsgs, contains(message));
+	@Then("the page contains error message for field $field")
+	public void pageContainsErrorMessage(String field){
+		String errorMessage = seleniumAdapter.getTextFromElement(("isbn".equals(field)?PageElement.ISBN_ERROR: PageElement.EDITION_ERROR));
+		assertThat(errorMessage, notNullValue());
 	}
 
 	// *****************
