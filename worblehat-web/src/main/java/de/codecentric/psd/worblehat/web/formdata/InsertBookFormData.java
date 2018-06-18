@@ -8,25 +8,25 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  * This class represent the form data of the add book form.
  */
-public class BookDataFormData {
+public class InsertBookFormData {
 
-	@NotEmpty(message = "{empty.bookDataFormData.title}")
+	@NotEmpty(message = "{empty.title}")
 	private String title;
 
-	@NotEmpty(message = "{empty.bookDataFormData.edition}")
-	@Numeric(message = "{notvalid.bookDataFormData.edition}")
+	@NotEmpty(message = "{empty.edition}")
+	@Numeric(message = "{invalid.edition}")
 	private String edition;
 
-	@NotEmpty(message = "{empty.bookDataFormData.yearOfPublication}")
-	@Numeric(message = "{notvalid.bookDataFormData.yearOfPublication}")
-	@Length(message = "{invalid.length.bookDataFormData.yearOfPublication}", min = 4, max = 4)
+	@NotEmpty(message = "{empty.yearOfPublication}")
+	@Numeric(message = "{invalid.yearOfPublication}")
+	@Length(message = "{invalid.length.yearOfPublication}", min = 4, max = 4)
 	private String yearOfPublication;
 
-	@NotEmpty(message = "{empty.bookDataFormData.isbn}")
-	@ISBN(message = "{notvalid.bookDataFormData.isbn}")
+	@NotEmpty(message = "{empty.isbn}")
+	@ISBN(message = "{invalid.isbn}")
 	private String isbn;
 
-	@NotEmpty(message = "{empty.bookDataFormData.author}")
+	@NotEmpty(message = "{empty.author}")
 	private String author;
 
 	public String getYearOfPublication() {
@@ -71,7 +71,7 @@ public class BookDataFormData {
 
 	@Override
 	public String toString() {
-		return "BookDataFormData [title=" + title + ", edition=" + edition
+		return "InsertBookFormData [title=" + title + ", edition=" + edition
 				+ ", yearOfPublication=" + yearOfPublication + ", isbn=" + isbn + ", author=" + author
 				+ "]";
 	}

@@ -1,12 +1,9 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookAlreadyBorrowedException;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
-import de.codecentric.psd.worblehat.web.formdata.BookBorrowFormData;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.SetUtils;
+import de.codecentric.psd.worblehat.web.formdata.BorrowBookFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +26,8 @@ import java.util.Set;
 @Controller
 public class BorrowBookController {
 
-	private BookService bookService;
+    private static final String BORROW_PAGE = "borrow";
+    private BookService bookService;
 
 	@Autowired
 	public BorrowBookController(BookService bookService) {
@@ -38,20 +36,20 @@ public class BorrowBookController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void setupForm(final ModelMap model) {
-		model.put("borrowFormData", new BookBorrowFormData());
+		model.put("borrowFormData", new BorrowBookFormData());
 	}
 
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("borrowFormData") @Valid BookBorrowFormData borrowFormData,
+	public String processSubmit(@ModelAttribute("borrowFormData") @Valid BorrowBookFormData borrowFormData,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return "borrow";
+			return BORROW_PAGE;
 		}
 		Set<Book> books = bookService.findBooksByIsbn(borrowFormData.getIsbn());
 		if(books.isEmpty()) {
 			result.rejectValue("isbn", "noBookExists");
-			return "borrow";
+			return BORROW_PAGE;
 		}
 		Optional<Borrowing> borrowing = bookService.borrowBook(borrowFormData.getIsbn(), borrowFormData.getEmail());
 
@@ -59,7 +57,7 @@ public class BorrowBookController {
 				.map(b -> "home")
 				.orElseGet( () -> {
 					result.rejectValue("isbn", "noBorrowableBooks");
-					return "borrow";
+					return BORROW_PAGE;
 				});
 	}
 

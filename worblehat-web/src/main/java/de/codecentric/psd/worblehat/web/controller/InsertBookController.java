@@ -2,7 +2,7 @@ package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.web.formdata.BookDataFormData;
+import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,23 +35,23 @@ public class InsertBookController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void setupForm(ModelMap modelMap) {
-		modelMap.put("bookDataFormData", new BookDataFormData());
+		modelMap.put("insertBookFormData", new InsertBookFormData());
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("bookDataFormData") @Valid BookDataFormData bookDataFormData,
+	public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "insertBooks";
 		} else {
-			Optional<Book> book = bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
-					bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
-					Integer.parseInt(bookDataFormData.getYearOfPublication()));
+			Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
+					insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
+					Integer.parseInt(insertBookFormData.getYearOfPublication()));
 			if (book.isPresent()) {
 			    LOG.info("new book instance is created: " + book.get());
             } else {
-			    LOG.debug("failed to create new book with: "+bookDataFormData.toString());
+			    LOG.debug("failed to create new book with: "+insertBookFormData.toString());
             }
 			return "redirect:bookList";
 		}
