@@ -1,6 +1,6 @@
 package de.codecentric.psd.worblehat.web.validation;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.ISBNValidator;
 
 import javax.validation.ConstraintValidator;
