@@ -10,28 +10,28 @@ import javax.validation.constraints.NotEmpty;
  */
 public class BorrowBookFormData {
 
-	@NotEmpty(message = "{empty.isbn}")
-	@ISBN(message = "{invalid.isbn}")
-	private String isbn;
+    @NotEmpty(message = "{empty.isbn}")
+    @ISBN(message = "{invalid.isbn}")
+    private String isbn;
 
-	@NotEmpty(message = "{empty.email}")
-	@Email(message = "{invalid.email}")
-	private String email;
+    @NotEmpty(message = "{empty.email}")
+    @Email(message = "{invalid.email}")
+    private String email;
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }

@@ -8,11 +8,11 @@ public enum Page {
 
     private String url;
 
-    Page(String url){
+    Page(String url) {
         this.url = url;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return url;
     }
 }

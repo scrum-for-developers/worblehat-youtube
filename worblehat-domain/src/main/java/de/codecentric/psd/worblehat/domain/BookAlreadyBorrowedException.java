@@ -5,10 +5,10 @@ package de.codecentric.psd.worblehat.domain;
  */
 public class BookAlreadyBorrowedException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public BookAlreadyBorrowedException(String message) {
-		super(message);
-	}
+    public BookAlreadyBorrowedException(String message) {
+        super(message);
+    }
 
 }

@@ -19,28 +19,28 @@ import javax.validation.Valid;
 @RequestMapping("/returnAllBooks")
 public class ReturnAllBooksController {
 
-	private BookService bookService;
+    private BookService bookService;
 
-	@Autowired
-	public ReturnAllBooksController(BookService bookService) {
-		this.bookService = bookService;
-	}
+    @Autowired
+    public ReturnAllBooksController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public void prepareView(ModelMap modelMap) {
-		modelMap.put("returnAllBookFormData", new ReturnAllBooksFormData());
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public void prepareView(ModelMap modelMap) {
+        modelMap.put("returnAllBookFormData", new ReturnAllBooksFormData());
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String returnAllBooks(
-			@ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
-			BindingResult result) {
-		if (result.hasErrors()) {
-			return "returnAllBooks";
-		} else {
-			bookService.returnAllBooksByBorrower(formData.getEmailAddress());
-			return "home";
-		}
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String returnAllBooks(
+            @ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return "returnAllBooks";
+        } else {
+            bookService.returnAllBooksByBorrower(formData.getEmailAddress());
+            return "home";
+        }
+    }
 
 }

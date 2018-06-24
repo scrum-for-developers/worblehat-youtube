@@ -9,7 +9,10 @@ import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.*;
+import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.MarkUnmatchedStepsAsPending;
+import org.jbehave.core.steps.StepCollector;
+import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,55 +44,55 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 @EnableJpaRepositories("de.codecentric.psd.worblehat.domain")
 @EntityScan("de.codecentric.psd.worblehat.domain")
 @ComponentScan(
-		basePackages = {
-				"de.codecentric.worblehat.acceptancetests",
-				"de.codecentric.psd.worblehat.domain"})
+        basePackages = {
+                "de.codecentric.worblehat.acceptancetests",
+                "de.codecentric.psd.worblehat.domain"})
 public class AllAcceptanceTestStories extends JUnitStories {
 
-	@Autowired
-	private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-	@Override
-	public Configuration configuration() {
+    @Override
+    public Configuration configuration() {
 
-		if (!hasConfiguration()) {
+        if (!hasConfiguration()) {
 
-			// prepare ReportBuilder
-			StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-					.withFailureTrace(true)
-					.withFailureTraceCompression(true)
-					.withFormats(Format.CONSOLE, Format.HTML, Format.STATS);
+            // prepare ReportBuilder
+            StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
+                    .withFailureTrace(true)
+                    .withFailureTraceCompression(true)
+                    .withFormats(Format.CONSOLE, Format.HTML, Format.STATS);
 
-			// necessary to match steps correctly that only differ after the last parameter
-			// see http://jbehave.org/reference/stable/prioritising-steps.html
-			StepFinder.PrioritisingStrategy prioritisingStrategy = new StepFinder.ByLevenshteinDistance();
-			StepFinder stepFinder = new StepFinder(prioritisingStrategy);
-			StepCollector usefulStepCollector = new MarkUnmatchedStepsAsPending(stepFinder);
+            // necessary to match steps correctly that only differ after the last parameter
+            // see http://jbehave.org/reference/stable/prioritising-steps.html
+            StepFinder.PrioritisingStrategy prioritisingStrategy = new StepFinder.ByLevenshteinDistance();
+            StepFinder stepFinder = new StepFinder(prioritisingStrategy);
+            StepCollector usefulStepCollector = new MarkUnmatchedStepsAsPending(stepFinder);
 
-			// general JBehave configuration
-			Configuration configuration = new MostUsefulConfiguration()
-					.useStepCollector(usefulStepCollector)
-					.useStoryControls(
-							new StoryControls().doResetStateBeforeScenario(false))
-					.useStoryReporterBuilder(reporterBuilder);
+            // general JBehave configuration
+            Configuration configuration = new MostUsefulConfiguration()
+                    .useStepCollector(usefulStepCollector)
+                    .useStoryControls(
+                            new StoryControls().doResetStateBeforeScenario(false))
+                    .useStoryReporterBuilder(reporterBuilder);
 
-			useConfiguration(configuration);
+            useConfiguration(configuration);
 
-		}
+        }
 
-		return super.configuration();
-	}
+        return super.configuration();
+    }
 
-	@Override
-	public InjectableStepsFactory stepsFactory(){
-		return new SpringStepsFactory(configuration(), applicationContext);
-	}
+    @Override
+    public InjectableStepsFactory stepsFactory() {
+        return new SpringStepsFactory(configuration(), applicationContext);
+    }
 
-	@Override
-	protected List<String> storyPaths() {
-		return new StoryFinder().findPaths(
-				codeLocationFromClass(this.getClass()), "**/*.story",
-				"");
-	}
+    @Override
+    protected List<String> storyPaths() {
+        return new StoryFinder().findPaths(
+                codeLocationFromClass(this.getClass()), "**/*.story",
+                "");
+    }
 
 }

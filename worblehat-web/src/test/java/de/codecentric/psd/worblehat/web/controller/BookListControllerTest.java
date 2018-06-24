@@ -43,7 +43,7 @@ class BookListControllerTest {
         bookList.add(TEST_BOOK);
         when(bookService.findAllBooks()).thenReturn(bookList);
         bookListController.setupForm(modelMap);
-        List<Book> actualBooks = (List<Book>)modelMap.get("books");
+        List<Book> actualBooks = (List<Book>) modelMap.get("books");
         assertThat(actualBooks, is(bookList));
     }
 

@@ -23,38 +23,38 @@ import java.util.Optional;
 @RequestMapping("/insertBooks")
 public class InsertBookController {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(InsertBookController.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(InsertBookController.class);
 
-	private BookService bookService;
+    private BookService bookService;
 
-	@Autowired
-	public InsertBookController(BookService bookService) {
-		this.bookService = bookService;
-	}
+    @Autowired
+    public InsertBookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public void setupForm(ModelMap modelMap) {
-		modelMap.put("insertBookFormData", new InsertBookFormData());
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public void setupForm(ModelMap modelMap) {
+        modelMap.put("insertBookFormData", new InsertBookFormData());
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
-			BindingResult result) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
+                                BindingResult result) {
 
-		if (result.hasErrors()) {
-			return "insertBooks";
-		} else {
-			Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
-					insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
-					Integer.parseInt(insertBookFormData.getYearOfPublication()));
-			if (book.isPresent()) {
-			    LOG.info("new book instance is created: " + book.get());
+        if (result.hasErrors()) {
+            return "insertBooks";
+        } else {
+            Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
+                    insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
+                    Integer.parseInt(insertBookFormData.getYearOfPublication()));
+            if (book.isPresent()) {
+                LOG.info("new book instance is created: " + book.get());
             } else {
-			    LOG.debug("failed to create new book with: "+insertBookFormData.toString());
+                LOG.debug("failed to create new book with: " + insertBookFormData.toString());
             }
-			return "redirect:bookList";
-		}
-	}
+            return "redirect:bookList";
+        }
+    }
 
 }
