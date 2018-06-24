@@ -1,14 +1,14 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-public class NavigationControllerTest {
+class NavigationControllerTest {
 
     @Test
-    public void shouldNavigateToHome() throws Exception {
+    void shouldNavigateToHome() throws Exception {
         String navigateTo = new NavigationController().home();
 
         assertThat(navigateTo, is("home"));
