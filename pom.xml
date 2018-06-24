@@ -67,14 +67,6 @@
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <configuration>
-                    <logging>info</logging>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                </configuration>
-            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
