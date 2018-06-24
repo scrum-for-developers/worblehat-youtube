@@ -36,11 +36,13 @@
     <name>worblehat</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <psd.dbserver.url>jdbc:mysql://localhost/worblehat_test</psd.dbserver.url>
         <psd.dbserver.username>worblehat</psd.dbserver.username>
         <psd.dbserver.password>worblehat</psd.dbserver.password>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
@@ -63,14 +65,6 @@
                 -->
                 <configuration>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
