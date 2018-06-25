@@ -30,6 +30,7 @@ public class Book implements Serializable {
 
     @OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
     private Borrowing borrowing;
+    private String description;
 
     /**
      * Empty constructor needed by Hibernate.
@@ -100,6 +101,14 @@ public class Book implements Serializable {
         this.yearOfPublication = yearOfPublication;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
     public Borrowing getBorrowing() {
         return borrowing;
     }
@@ -122,6 +131,7 @@ public class Book implements Serializable {
                 ", edition='" + edition + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", yearOfPublication=" + yearOfPublication +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
