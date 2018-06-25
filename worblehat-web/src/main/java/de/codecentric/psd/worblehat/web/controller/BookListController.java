@@ -17,18 +17,18 @@ import java.util.List;
 @RequestMapping("/bookList")
 public class BookListController {
 
-	private BookService bookService;
+    private BookService bookService;
 
-	@Autowired
-	public BookListController(BookService bookService) {
-		this.bookService = bookService;
-	}
+    @Autowired
+    public BookListController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(ModelMap modelMap) {
-		List<Book> books = bookService.findAllBooks();
-		modelMap.addAttribute("books", books);
-		return "bookList";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String setupForm(ModelMap modelMap) {
+        List<Book> books = bookService.findAllBooks();
+        modelMap.addAttribute("books", books);
+        return "bookList";
+    }
 
 }

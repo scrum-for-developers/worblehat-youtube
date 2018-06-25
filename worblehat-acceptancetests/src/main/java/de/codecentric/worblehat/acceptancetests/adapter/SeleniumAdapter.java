@@ -9,7 +9,11 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,7 +39,7 @@ public class SeleniumAdapter {
     public void initSelenium() throws Exception {
         String seleniumProvider = Config.getEnvironment();
         try {
-			if ("local".equalsIgnoreCase(seleniumProvider)) {
+            if ("local".equalsIgnoreCase(seleniumProvider)) {
                 driver = DriverEnum.CHROME.getDriver();
             } else {
                 driver = DriverEnum.PHANTOMJS.getDriver();
@@ -103,7 +107,7 @@ public class SeleniumAdapter {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(scrFile, new File(folderName.concat(filename).concat(".png")));
         } catch (IOException e) {
-			LOGGER.error("Could not take screenshot!", e);
+            LOGGER.error("Could not take screenshot!", e);
         }
 
     }

@@ -1,15 +1,15 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import java.util.HashMap;
-
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.ReturnAllBooksFormData;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.validation.ObjectError;
+
+import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class ReturnAllBooksControllerTest {
+class ReturnAllBooksControllerTest {
 
     private ReturnAllBooksController returnAllBooksController;
 
@@ -28,8 +28,8 @@ public class ReturnAllBooksControllerTest {
 
     private BindingResult bindingResult;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         bookService = mock(BookService.class);
         returnAllBooksController = new ReturnAllBooksController(bookService);
         returnAllBooksFormData = new ReturnAllBooksFormData();
@@ -37,7 +37,7 @@ public class ReturnAllBooksControllerTest {
     }
 
     @Test
-    public void shouldSetupForm() throws Exception {
+    void shouldSetupForm() throws Exception {
         ModelMap modelMap = new ModelMap();
 
         returnAllBooksController.prepareView(modelMap);
@@ -46,7 +46,7 @@ public class ReturnAllBooksControllerTest {
     }
 
     @Test
-    public void shouldRejectErrors() throws Exception {
+    void shouldRejectErrors() throws Exception {
         bindingResult.addError(new ObjectError("", ""));
 
         String navigateTo = returnAllBooksController.returnAllBooks(returnAllBooksFormData, bindingResult);
@@ -55,7 +55,7 @@ public class ReturnAllBooksControllerTest {
     }
 
     @Test
-    public void shouldReturnAllBooksAndNavigateHome() throws Exception {
+    void shouldReturnAllBooksAndNavigateHome() throws Exception {
         String borrower = "someone@codecentric.de";
         returnAllBooksFormData.setEmailAddress(borrower);
 

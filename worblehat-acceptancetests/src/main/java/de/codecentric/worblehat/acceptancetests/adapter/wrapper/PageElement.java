@@ -13,11 +13,11 @@ public enum PageElement {
 
     private String elementId;
 
-    PageElement(String elementId){
+    PageElement(String elementId) {
         this.elementId = elementId;
     }
 
-    public String getElementId(){
+    public String getElementId() {
         return elementId;
     }
 }

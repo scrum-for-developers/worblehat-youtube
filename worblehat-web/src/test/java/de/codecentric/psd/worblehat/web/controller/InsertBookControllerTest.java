@@ -1,29 +1,29 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import java.util.HashMap;
-import java.util.Optional;
-
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.validation.ObjectError;
 
+import java.util.HashMap;
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class InsertBookControllerTest {
+class InsertBookControllerTest {
 
     private InsertBookController insertBookController;
 
@@ -35,8 +35,8 @@ public class InsertBookControllerTest {
 
     private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         bookService = mock(BookService.class);
         insertBookController = new InsertBookController(bookService);
         insertBookFormData = new InsertBookFormData();
@@ -44,7 +44,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldSetupForm() {
+    void shouldSetupForm() {
         ModelMap modelMap = new ModelMap();
 
         insertBookController.setupForm(modelMap);
@@ -53,7 +53,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldRejectErrors() {
+    void shouldRejectErrors() {
         bindingResult.addError(new ObjectError("", ""));
 
         String navigateTo = insertBookController.processSubmit(insertBookFormData, bindingResult);
@@ -62,7 +62,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldCreateNewCopyOfExistingBook() {
+    void shouldCreateNewCopyOfExistingBook() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(true);
         when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
@@ -74,7 +74,7 @@ public class InsertBookControllerTest {
     }
 
     @Test
-    public void shouldCreateBookAndNavigateToBookList() {
+    void shouldCreateBookAndNavigateToBookList() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
         when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
