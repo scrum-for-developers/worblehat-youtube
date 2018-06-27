@@ -76,7 +76,7 @@ public class InsertBook {
 
 
     private void fillInsertBookForm(String title, String author, String edition, String isbn,
-                                    String year, final String description) {
+                                    String year, String description) {
         seleniumAdapter.typeIntoField("title", title);
         seleniumAdapter.typeIntoField("edition", edition);
         seleniumAdapter.typeIntoField("isbn", isbn);

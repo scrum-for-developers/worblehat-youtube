@@ -71,7 +71,7 @@ public class StandardBookService implements BookService {
                                      @Nonnull String edition,
                                      @Nonnull String isbn,
                                      int yearOfPublication,
-                                     final String description) {
+                                     String description) {
         Book book = new Book(title, author, edition, isbn, yearOfPublication);
         book.setDescription(description);
 
