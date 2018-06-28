@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
 import javax.annotation.Nonnull;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,8 @@ public class Book implements Serializable {
 
     @OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
     private Borrowing borrowing;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     /**
