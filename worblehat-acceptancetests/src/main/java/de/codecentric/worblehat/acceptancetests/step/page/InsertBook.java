@@ -36,28 +36,22 @@ public class InsertBook {
     // TODO: write story that contains whitespaces in examples table
 
     @When("a librarian adds a book with title $title, author $author, edition $edition, year $year and isbn $isbn")
-    public void whenABookWithISBNisbnIsAdded(String title,
-                                             String author,
-                                             String edition,
-                                             String year,
-                                             String isbn) {
-        seleniumAdapter.gotoPage(Page.INSERTBOOKS);
-        fillInsertBookForm(title, author, edition, isbn, year, "");
-        seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
-        context.putObject("LAST_INSERTED_BOOK", isbn);
+    public void whenABookIsAdded(String title,
+                                 String author,
+                                 String edition,
+                                 String year,
+                                 String isbn) {
+        insertAndSubmitBook(title, author, edition, year, "", isbn);
     }
 
     @When("a librarian adds a book with title $title, author $author, edition $edition, year $year, description $description and isbn $isbn")
-    public void whenABookWithISBNisbnIsAdded(String title,
-                                             String author,
-                                             String edition,
-                                             String year,
-                                             String description,
-                                             String isbn) {
-        seleniumAdapter.gotoPage(Page.INSERTBOOKS);
-        fillInsertBookForm(title, author, edition, isbn, year, description);
-        seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
-        context.putObject("LAST_INSERTED_BOOK", isbn);
+    public void whenABookIsAdded(String title,
+                                 String author,
+                                 String edition,
+                                 String year,
+                                 String description,
+                                 String isbn) {
+        insertAndSubmitBook(title, author, edition, year, description, isbn);
     }
 
     // *****************
@@ -74,6 +68,17 @@ public class InsertBook {
     // *** U T I L *****
     // *****************
 
+    private void insertAndSubmitBook(String title,
+                                     String author,
+                                     String edition,
+                                     String year,
+                                     String description,
+                                     String isbn) {
+        seleniumAdapter.gotoPage(Page.INSERTBOOKS);
+        fillInsertBookForm(title, author, edition, isbn, year, description);
+        seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
+        context.putObject("LAST_INSERTED_BOOK", isbn);
+    }
 
     private void fillInsertBookForm(String title, String author, String edition, String isbn,
                                     String year, String description) {
