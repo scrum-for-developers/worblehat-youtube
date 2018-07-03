@@ -65,7 +65,7 @@ class InsertBookControllerTest {
     void shouldCreateNewCopyOfExistingBook() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(true);
-        when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
+        when(bookService.createBook(any(), any(), any(), any(), anyInt(), any())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(insertBookFormData, bindingResult);
 
@@ -77,7 +77,7 @@ class InsertBookControllerTest {
     void shouldCreateBookAndNavigateToBookList() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
-        when(bookService.createBook(any(), any(), any(), any(), anyInt())).thenReturn(Optional.of(TEST_BOOK));
+        when(bookService.createBook(any(), any(), any(), any(), anyInt(), any())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(insertBookFormData, bindingResult);
 
@@ -87,7 +87,8 @@ class InsertBookControllerTest {
 
     private void verifyBookIsCreated() {
         verify(bookService).createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(),
-                TEST_BOOK.getEdition(), TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication());
+                TEST_BOOK.getEdition(), TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication(),
+                TEST_BOOK.getDescription());
     }
 
     private void setupFormData() {

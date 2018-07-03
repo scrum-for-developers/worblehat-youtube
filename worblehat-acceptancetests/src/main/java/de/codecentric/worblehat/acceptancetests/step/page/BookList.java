@@ -47,6 +47,24 @@ public class BookList {
         assertThat(isbn, is(htmlBook.getIsbn()));
     }
 
+    @Then("the booklist contains a book with values title $title, author $author, year $year, edition $edition, isbn $isbn and description $description")
+    public void bookListContainsRowWithValues(final String title,
+                                              final String author,
+                                              final String year,
+                                              final String edition,
+                                              final String isbn,
+                                              final String description) {
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
+        assertThat(title, is(htmlBook.getTitle()));
+        assertThat(author, is(htmlBook.getAuthor()));
+        assertThat(year, is(htmlBook.getYearOfPublication()));
+        assertThat(edition, is(htmlBook.getEdition()));
+        assertThat(isbn, is(htmlBook.getIsbn()));
+        assertThat(description, is(htmlBook.getDescription()));
+    }
+
     @Then("The library contains no books")
     public void libraryIsEmpty() {
         seleniumAdapter.gotoPage(Page.BOOKLIST);

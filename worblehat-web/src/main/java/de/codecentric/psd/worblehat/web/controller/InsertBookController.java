@@ -47,7 +47,8 @@ public class InsertBookController {
         } else {
             Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
                     insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
-                    Integer.parseInt(insertBookFormData.getYearOfPublication()));
+                    Integer.parseInt(insertBookFormData.getYearOfPublication()),
+                    insertBookFormData.getDescription());
             if (book.isPresent()) {
                 LOG.info("new book instance is created: " + book.get());
             } else {

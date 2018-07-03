@@ -30,6 +30,8 @@ public class InsertBookFormData {
     @NotEmpty(message = "{empty.author}")
     private String author;
 
+    private String description;
+
     public String getYearOfPublication() {
         return yearOfPublication;
     }
@@ -70,11 +72,23 @@ public class InsertBookFormData {
         this.edition = edition;
     }
 
-    @Override
-    public String toString() {
-        return "InsertBookFormData [title=" + title + ", edition=" + edition
-                + ", yearOfPublication=" + yearOfPublication + ", isbn=" + isbn + ", author=" + author
-                + "]";
+    public String getDescription() {
+        return description;
     }
 
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "InsertBookFormData{" +
+                "title='" + title + '\'' +
+                ", edition='" + edition + '\'' +
+                ", yearOfPublication='" + yearOfPublication + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
