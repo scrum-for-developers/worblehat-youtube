@@ -15,14 +15,14 @@ import static org.junit.Assert.assertThat;
 @Component
 public class InsertBook {
 
-    private SeleniumAdapter seleniumAdapter;
+    private final SeleniumAdapter seleniumAdapter;
+
+    private final StoryContext context;
 
     @Autowired
-    public StoryContext context;
-
-    @Autowired
-    public InsertBook(SeleniumAdapter seleniumAdapter) {
+    public InsertBook(SeleniumAdapter seleniumAdapter, StoryContext context) {
         this.seleniumAdapter = seleniumAdapter;
+        this.context = context;
     }
 
     // *******************
