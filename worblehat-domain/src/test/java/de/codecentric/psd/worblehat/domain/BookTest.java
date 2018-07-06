@@ -10,28 +10,42 @@ class BookTest {
 
     Book BOOK;
 
-    @BeforeEach
-    void setup() {
-        BOOK = new Book("Titel", "Author", "2", "1", 1234);
+        @BeforeEach
+        void setup() {
+        //TODO: Book.fromParameter
+        BOOK = new Book(new BookParameter("Titel", "Author", "2", "1", 1234));
+    }
+
+    @Test
+    void shouldCreateCompleteObjectFromParameter() {
+            Book b = new Book(new BookParameter("Title", "Author", "2", "1", 1234, "Description"));
+            assertThat(b.getTitle(), is("Title"));
+            assertThat(b.getAuthor(), is("Author"));
+            assertThat(b.getEdition(), is("2"));
+            assertThat(b.getIsbn(), is("1"));
+            assertThat(b.getYearOfPublication(), is(1234));
+            assertThat(b.getDescription(), is("Description"));
+
+
     }
 
     @Test
     void shouldReturnFalseWhenAuthorisDifferent() {
-        Book anotherCopy = new Book(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication());
+        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
         anotherCopy.setAuthor("Bene");
         assertThat(BOOK.isSameCopy(anotherCopy), is(false));
     }
 
     @Test
     void shouldReturnFalseWhenTitleisDifferent() {
-        Book anotherCopy = new Book(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication());
+        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
         anotherCopy.setTitle("Lord of the Rings");
         assertThat(BOOK.isSameCopy(anotherCopy), is(false));
     }
 
     @Test
     void shouldReturnTrueWhenAllButTitleAndAuthorAreDifferent() {
-        Book anotherCopy = new Book(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication());
+        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
         anotherCopy.setEdition("2000");
         anotherCopy.setIsbn("123456789X");
         anotherCopy.setYearOfPublication(2010);

@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
 import org.slf4j.Logger;
@@ -23,34 +24,39 @@ import java.util.Optional;
 @RequestMapping("/insertBooks")
 public class InsertBookController {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(InsertBookController.class);
 
-    private BookService bookService;
+	private static final Logger LOG = LoggerFactory
+			.getLogger(InsertBookController.class);
 
-    @Autowired
-    public InsertBookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+	private BookService bookService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public void setupForm(ModelMap modelMap) {
-        modelMap.put("insertBookFormData", new InsertBookFormData());
-    }
+	@Autowired
+	public InsertBookController(BookService bookService) {
+		this.bookService = bookService;
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
-                                BindingResult result) {
+	@RequestMapping(method = RequestMethod.GET)
+	public void setupForm(ModelMap modelMap) {
+		modelMap.put("insertBookFormData", new InsertBookFormData());
+	}
 
-        if (result.hasErrors()) {
-            return "insertBooks";
-        } else {
-            Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
-                    insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
-                    Integer.parseInt(insertBookFormData.getYearOfPublication()),
-                    insertBookFormData.getDescription());
-            if (book.isPresent()) {
-                LOG.info("new book instance is created: " + book.get());
+	@RequestMapping(method = RequestMethod.POST)
+	public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "insertBooks";
+		} else {
+			Optional<Book> book = bookService.createBook(
+					new BookParameter(
+					        insertBookFormData.getTitle(),
+                            insertBookFormData.getAuthor(),
+                            insertBookFormData.getEdition(),
+                            insertBookFormData.getIsbn(),
+                            Integer.parseInt(insertBookFormData.getYearOfPublication()),
+                            insertBookFormData.getDescription()));
+			if (book.isPresent()) {
+			    LOG.info("new book instance is created: " + book.get());
             } else {
                 LOG.debug("failed to create new book with: " + insertBookFormData.toString());
             }
