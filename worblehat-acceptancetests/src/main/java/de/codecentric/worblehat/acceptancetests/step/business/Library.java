@@ -1,16 +1,13 @@
 package de.codecentric.worblehat.acceptancetests.step.business;
 
-import java.sql.SQLException;
 import java.util.*;
 
 import de.codecentric.psd.worblehat.domain.*;
 import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -40,9 +37,10 @@ public class Library {
 
 	@Given("a library, containing a book with isbn $isbn")
 	public void createLibraryWithSingleBookWithGivenIsbn(String isbn){
+	    //TODO: create parameter object from factory
 		Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
-		bookService.createBook(book.getTitle(), book.getAuthor(), book.getEdition(),
-				isbn, book.getYearOfPublication());
+		bookService.createBook(
+                new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), isbn, book.getYearOfPublication()));
 	}
 
 	// just an example of how a step looks that is different from another one, after the last parameter
@@ -53,8 +51,8 @@ public class Library {
 				.withISBN(isbn)
 				.withTitle(title)
 				.build();
-		bookService.createBook(book.getTitle(), book.getAuthor(), book.getEdition(),
-				isbn, book.getYearOfPublication());
+		bookService.createBook(
+                new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), isbn, book.getYearOfPublication()));
 	}
 
 	@Given("borrower $borrower has borrowed books $isbns")
@@ -67,11 +65,8 @@ public class Library {
 		List<String> isbnList = getListOfItems(isbns);
 		for (String isbn: isbnList){
 			Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
-			bookService.createBook(book.getTitle(),
-							book.getAuthor(),
-							book.getEdition(),
-							isbn,
-							book.getYearOfPublication())
+			bookService.createBook(
+                    new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), isbn, book.getYearOfPublication()))
 					.orElseThrow(IllegalStateException::new);
 
 			bookService.borrowBook(book.getIsbn(), borrower);

@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Optional;
 
 /**
  * Entity implementation class for Entity: Book
@@ -38,29 +37,16 @@ public class Book implements Serializable {
 
 	/**
 	 * Creates a new book instance.
-	 * 
-	 * @param title
-	 *            the title
-	 * @param author
-	 *            the author
-	 * @param edition
-	 *            the edition
-	 * @param isbn
-	 *            the isbn
-	 * @param yearOfPublication
-	 *            the yearOfPublication
+	 *
+	 * @param bookParameter
 	 */
-	public Book(@Nonnull String title,
-				@Nonnull String author,
-				@Nonnull String edition,
-				@Nonnull String isbn,
-				int yearOfPublication) {
+	public Book(BookParameter bookParameter) {
 		super();
-		this.title = title;
-		this.author = author;
-		this.edition = edition;
-		this.isbn = isbn;
-		this.yearOfPublication = yearOfPublication;
+		this.title = bookParameter.getTitle();
+		this.author = bookParameter.getAuthor();
+		this.edition = bookParameter.getEdition();
+		this.isbn = bookParameter.getIsbn();
+		this.yearOfPublication = bookParameter.getYearOfPublication();
 	}
 
 	public String getTitle() {

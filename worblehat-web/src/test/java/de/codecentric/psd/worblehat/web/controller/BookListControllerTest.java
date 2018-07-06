@@ -1,8 +1,8 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.StandardBookService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
@@ -21,7 +21,7 @@ public class BookListControllerTest {
 
     private BookListController bookListController;
 
-    private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
+    private static final Book TEST_BOOK = new Book(new BookParameter("title", "author", "edition", "isbn", 2016));
 
     private ModelMap modelMap;
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
 import de.codecentric.psd.worblehat.web.formdata.BorrowBookFormData;
@@ -36,7 +37,7 @@ public class BorrowBookControllerTest {
 
     private BorrowBookFormData bookBorrowFormData;
 
-    private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
+    private static final Book TEST_BOOK = new Book(new BookParameter("title", "author", "edition", "isbn", 2016));
 
     public static final String BORROWER_EMAIL = "someone@codecentric.de";
 

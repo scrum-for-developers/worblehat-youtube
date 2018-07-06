@@ -1,6 +1,5 @@
 package de.codecentric.psd.worblehat.domain;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,7 +17,7 @@ public interface BookService {
 
 	List<Book> findAllBooks();
 
-	Optional<Book> createBook(String title, String author, String edition, String isbn, int yearOfPublication);
+	Optional<Book> createBook(BookParameter bookParameter);
 
 	boolean bookExists(String isbn);
 

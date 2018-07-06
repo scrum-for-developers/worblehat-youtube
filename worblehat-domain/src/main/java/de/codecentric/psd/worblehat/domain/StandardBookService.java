@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -66,14 +65,11 @@ public class StandardBookService implements BookService {
 
 
 	@Override
-	public Optional<Book> createBook(@Nonnull String title,
-									 @Nonnull String author,
-									 @Nonnull String edition,
-									 @Nonnull String isbn,
-									 int yearOfPublication) {
-		Book book = new Book(title, author, edition, isbn, yearOfPublication);
+	public Optional<Book> createBook(BookParameter bookParameter) {
+		//TODO: ugly as hell
+		Book book = new Book(new BookParameter(bookParameter.getTitle(), bookParameter.getAuthor(), bookParameter.getEdition(), bookParameter.getIsbn(), bookParameter.getYearOfPublication()));
 
-		Optional<Book> bookFromRepo = bookRepository.findTopByIsbn(isbn);
+		Optional<Book> bookFromRepo = bookRepository.findTopByIsbn(bookParameter.getIsbn());
 
         if (!bookFromRepo.isPresent() || book.isSameCopy(bookFromRepo.get())) {
             return Optional.of(bookRepository.save(book));
