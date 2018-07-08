@@ -1,5 +1,6 @@
 package de.codecentric.psd.worblehat.web.formdata;
 
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.web.validation.ISBN;
 import de.codecentric.psd.worblehat.web.validation.Numeric;
 import org.hibernate.validator.constraints.Length;
@@ -91,4 +92,9 @@ public class InsertBookFormData {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+	public BookParameter toBookParameter() {
+		return new BookParameter(title, author, edition, isbn, new Integer(yearOfPublication), description);
+	}
+
 }

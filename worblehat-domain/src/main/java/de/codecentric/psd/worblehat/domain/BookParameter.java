@@ -45,7 +45,7 @@ public class BookParameter {
 *            the isbn
      * @param yearOfPublication
      */
-    public BookParameter(@Nonnull String title, @Nonnull String author, @Nonnull String edition, @Nonnull String isbn, int yearOfPublication, @Nonnull String description) {
+    public BookParameter(@Nonnull String title, @Nonnull String author, @Nonnull String edition, @Nonnull String isbn, int yearOfPublication, String description) {
         this.title = title;
         this.author = author;
         this.edition = edition;

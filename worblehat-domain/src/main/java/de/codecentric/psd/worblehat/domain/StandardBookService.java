@@ -66,9 +66,7 @@ public class StandardBookService implements BookService {
 
 	@Override
 	public Optional<Book> createBook(BookParameter bookParameter) {
-		//TODO: ugly as hell
 		Book book = new Book(bookParameter);
-        book.setDescription(bookParameter.getDescription());
 
 		Optional<Book> bookFromRepo = bookRepository.findTopByIsbn(bookParameter.getIsbn());
 

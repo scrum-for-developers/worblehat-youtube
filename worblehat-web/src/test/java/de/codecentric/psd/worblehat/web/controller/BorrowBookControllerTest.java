@@ -36,7 +36,7 @@ class BorrowBookControllerTest {
 
     private BorrowBookFormData bookBorrowFormData;
 
-    private static final Book TEST_BOOK = new Book(new BookParameter("title", "author", "edition", "isbn", 2016));
+    private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
     public static final String BORROWER_EMAIL = "someone@codecentric.de";
 

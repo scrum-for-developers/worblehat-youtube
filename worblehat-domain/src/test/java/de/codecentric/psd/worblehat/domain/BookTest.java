@@ -13,7 +13,7 @@ class BookTest {
         @BeforeEach
         void setup() {
         //TODO: Book.fromParameter
-        BOOK = new Book(new BookParameter("Titel", "Author", "2", "1", 1234));
+        BOOK = new Book("Titel", "Author", "2", "1", 1234);
     }
 
     @Test
@@ -31,21 +31,21 @@ class BookTest {
 
     @Test
     void shouldReturnFalseWhenAuthorisDifferent() {
-        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
+        Book anotherCopy = new Book(BOOK);
         anotherCopy.setAuthor("Bene");
         assertThat(BOOK.isSameCopy(anotherCopy), is(false));
     }
 
     @Test
     void shouldReturnFalseWhenTitleisDifferent() {
-        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
+        Book anotherCopy = new Book(BOOK);
         anotherCopy.setTitle("Lord of the Rings");
         assertThat(BOOK.isSameCopy(anotherCopy), is(false));
     }
 
     @Test
     void shouldReturnTrueWhenAllButTitleAndAuthorAreDifferent() {
-        Book anotherCopy = new Book(new BookParameter(BOOK.getTitle(), BOOK.getAuthor(), BOOK.getEdition(), BOOK.getIsbn(), BOOK.getYearOfPublication()));
+        Book anotherCopy = new Book(BOOK);
         anotherCopy.setEdition("2000");
         anotherCopy.setIsbn("123456789X");
         anotherCopy.setYearOfPublication(2010);

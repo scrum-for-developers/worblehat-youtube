@@ -1,15 +1,13 @@
 package de.codecentric.worblehat.acceptancetests.step.business;
 
 import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookParameter;
 
 public class DemoBookFactory {
 
     private Book book;
 
     private DemoBookFactory(){
-        //TODO: this needs to be cleaned up
-        this.book = new Book(new BookParameter("A book title", "A book author", "1", "1234567890", 2013, "Description"));
+        this.book = new Book("A book title", "A book author", "1", "1234567890", 2013);
     }
 
     public static DemoBookFactory createDemoBook() {
@@ -49,6 +47,5 @@ public class DemoBookFactory {
     public Book build() {
         return book;
     }
-
 
 }

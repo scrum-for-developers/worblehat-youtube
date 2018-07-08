@@ -56,13 +56,33 @@ public class Book implements Serializable {
 	 * @param bookParameter
 	 */
 	public Book(BookParameter bookParameter) {
-		super();
-		this.title = bookParameter.getTitle();
-		this.author = bookParameter.getAuthor();
-		this.edition = bookParameter.getEdition();
-		this.isbn = bookParameter.getIsbn();
-		this.yearOfPublication = bookParameter.getYearOfPublication();
+		this(
+				bookParameter.getTitle(),
+				bookParameter.getAuthor(),
+				bookParameter.getEdition(),
+				bookParameter.getIsbn(),
+				bookParameter.getYearOfPublication()
+		);
 		this.description = bookParameter.getDescription();
+	}
+
+	/*default*/ Book(Book book) {
+		this(
+				book.getTitle(),
+				book.getAuthor(),
+				book.getEdition(),
+				book.getIsbn(),
+				book.getYearOfPublication()
+		);
+	}
+
+	public Book(String title, String author, String edition, String isbn, int yearOfPublication) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.edition = edition;
+		this.isbn = isbn;
+		this.yearOfPublication = yearOfPublication;
 	}
 
 	public String getTitle() {
