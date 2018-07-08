@@ -21,7 +21,7 @@ public class BookListControllerTest {
 
     private BookListController bookListController;
 
-    private static final Book TEST_BOOK = new Book(new BookParameter("title", "author", "edition", "isbn", 2016));
+    private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
     private ModelMap modelMap;
 

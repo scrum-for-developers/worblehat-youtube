@@ -66,8 +66,7 @@ public class StandardBookService implements BookService {
 
 	@Override
 	public Optional<Book> createBook(BookParameter bookParameter) {
-		//TODO: ugly as hell
-		Book book = new Book(new BookParameter(bookParameter.getTitle(), bookParameter.getAuthor(), bookParameter.getEdition(), bookParameter.getIsbn(), bookParameter.getYearOfPublication()));
+		Book book = new Book(bookParameter);
 
 		Optional<Book> bookFromRepo = bookRepository.findTopByIsbn(bookParameter.getIsbn());
 

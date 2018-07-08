@@ -20,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,7 +34,7 @@ public class InsertBookControllerTest {
 
     private BindingResult bindingResult;
 
-    private static final Book TEST_BOOK = new Book(new BookParameter("title", "author", "edition", "isbn", 2016));
+    private static final Book TEST_BOOK = new Book("title", "author", "edition", "isbn", 2016);
 
     @Before
     public void setUp() {

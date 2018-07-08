@@ -1,7 +1,6 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
 import org.slf4j.Logger;
@@ -46,8 +45,7 @@ public class InsertBookController {
 		if (result.hasErrors()) {
 			return "insertBooks";
 		} else {
-			Optional<Book> book = bookService.createBook(
-					new BookParameter(insertBookFormData.getTitle(), insertBookFormData.getAuthor(), insertBookFormData.getEdition(), insertBookFormData.getIsbn(), Integer.parseInt(insertBookFormData.getYearOfPublication())));
+			Optional<Book> book = bookService.createBook(insertBookFormData.toBookParameter());
 			if (book.isPresent()) {
 			    LOG.info("new book instance is created: " + book.get());
             } else {
