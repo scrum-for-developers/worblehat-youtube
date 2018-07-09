@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Footer Fragment</title>
+</head>
+<body>
+
+<footer th:fragment="subpage-footer">
+    <hr />
+    <a th:href="@{/}">Back to Home</a>
+    <div th:replace="fragments/footer :: version">version</div>
+</footer>
+
+<div th:fragment="version">Version: <span th:text="${@environment.getProperty('info.version')}">1.0</span></div>
+</body>
+</html>
