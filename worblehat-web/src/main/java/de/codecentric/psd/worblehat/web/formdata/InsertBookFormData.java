@@ -3,12 +3,14 @@ package de.codecentric.psd.worblehat.web.formdata;
 import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.web.validation.ISBN;
 import de.codecentric.psd.worblehat.web.validation.Numeric;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * This class represent the form data of the add book form.
  */
+@Data
 public class InsertBookFormData {
 
 	@NotEmpty(message = "{empty.title}")
@@ -30,55 +32,8 @@ public class InsertBookFormData {
 	@NotEmpty(message = "{empty.author}")
 	private String author;
 
-	public String getYearOfPublication() {
-		return yearOfPublication;
-	}
-
-	public void setYearOfPublication(String yearOfPublication) {
-		this.yearOfPublication = yearOfPublication;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getEdition() {
-		return edition;
-	}
-
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
-
 	public BookParameter toBookParameter() {
 		return new BookParameter(title, author, edition, isbn, new Integer(yearOfPublication));
-	}
-
-	@Override
-	public String toString() {
-		return "InsertBookFormData [title=" + title + ", edition=" + edition
-				+ ", yearOfPublication=" + yearOfPublication + ", isbn=" + isbn + ", author=" + author
-				+ "]";
 	}
 
 }

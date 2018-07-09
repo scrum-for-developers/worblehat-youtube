@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -94,7 +95,7 @@ public class BorrowBookControllerTest {
         bookBorrowFormData.setEmail(BORROWER_EMAIL);
         bookBorrowFormData.setIsbn(TEST_BOOK.getIsbn());
         when(bookService.findBooksByIsbn(TEST_BOOK.getIsbn())).thenReturn(Collections.singleton(TEST_BOOK));
-        when(bookService.borrowBook(any(), any())).thenReturn(Optional.of(new Borrowing(TEST_BOOK, BORROWER_EMAIL)));
+        when(bookService.borrowBook(any(), any())).thenReturn(Optional.of(new Borrowing(TEST_BOOK, BORROWER_EMAIL, new Date())));
 
         String navigateTo = borrowBookController.processSubmit(bookBorrowFormData, bindingResult);
         verify(bookService).borrowBook(TEST_BOOK.getIsbn(), BORROWER_EMAIL);

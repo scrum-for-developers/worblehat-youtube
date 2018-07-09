@@ -2,7 +2,6 @@ package de.codecentric.psd.worblehat.domain;
 
 import java.util.*;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -25,7 +24,7 @@ public class StandardBookServiceTest {
 
 	private static final String BORROWER_EMAIL = "someone@codecentric.de";
 
-	private static final DateTime NOW = DateTime.now();
+	private static final Date NOW = new Date();
 
 	private Book aBook, aCopyofBook, anotherBook;
 
