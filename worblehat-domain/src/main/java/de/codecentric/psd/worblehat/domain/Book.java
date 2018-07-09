@@ -1,5 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
+import lombok.*;
+
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Entity implementation class for Entity: Book
  */
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Book implements Serializable {
 
     public String getDescription() {
@@ -29,26 +35,20 @@ public class Book implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private String title;
-	private String author;
-	private String edition;
+	@NonNull private String title;
+	@NonNull private String author;
+	@NonNull private String edition;
 
 	// TODO: convert String to an ISBN class, that ensures a valid ISBN
-	private String isbn;
-	private int yearOfPublication;
+	@NonNull private String isbn;
+	@NonNull private Integer yearOfPublication;
 
 	@OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
+	@ToString.Exclude @EqualsAndHashCode.Exclude
 	private Borrowing borrowing;
 
     @Column(columnDefinition = "TEXT")
     private String description;
-
-    /**
-	 * Empty constructor needed by Hibernate.
-	 */
-	private Book() {
-		super();
-	}
 
 	/**
 	 * Creates a new book instance.
@@ -76,78 +76,14 @@ public class Book implements Serializable {
 		);
 	}
 
-	public Book(String title, String author, String edition, String isbn, int yearOfPublication) {
-		super();
-		this.title = title;
-		this.author = author;
-		this.edition = edition;
-		this.isbn = isbn;
-		this.yearOfPublication = yearOfPublication;
+	boolean isSameCopy(@Nonnull Book book) {
+		return getTitle().equals(book.title) && getAuthor().equals(book.author);
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public String getEdition() {
-		return edition;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public int getYearOfPublication() {
-		return yearOfPublication;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public void setYearOfPublication(int yearOfPublication) {
-		this.yearOfPublication = yearOfPublication;
-	}
-
-    public Borrowing getBorrowing() {
-        return borrowing;
-    }
-
-    boolean isSameCopy(@Nonnull Book book) {
-        return getTitle().equals(book.title) && getAuthor().equals(book.author);
-    }
-
-    public void borrowNowByBorrower(String borrowerEmailAddress) {
-        if (borrowing == null) {
-            this.borrowing = new Borrowing(this, borrowerEmailAddress);
+	public void borrowNowByBorrower(String borrowerEmailAddress) {
+		if (borrowing == null) {
+            this.borrowing = new Borrowing(this, borrowerEmailAddress, new Date());
         }
-    }
+	}
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", edition='" + edition + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", yearOfPublication=" + yearOfPublication +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

@@ -1,5 +1,9 @@
 package de.codecentric.psd.worblehat.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
 
 import javax.persistence.Entity;
@@ -16,6 +20,9 @@ import java.util.Date;
  * Borrowing Entity
  */
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Borrowing implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,39 +31,19 @@ public class Borrowing implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; // NOSONAR
 
-    private String borrowerEmailAddress;
+	@NonNull
+	@OneToOne()
+	private Book borrowedBook;
 
-    @Temporal(TemporalType.DATE)
-    private Date borrowDate;
+	@NonNull
+	private String borrowerEmailAddress;
 
-    @OneToOne()
-    private Book borrowedBook;
+	@Temporal(TemporalType.DATE)
+	@NonNull
+	private Date borrowDate;
 
-    public String getBorrowerEmailAddress() {
-        return borrowerEmailAddress;
-    }
+	public String getBorrowerEmailAddress() {
+		return borrowerEmailAddress;
+	}
 
-    /**
-     * @param book                 The borrowed book
-     * @param borrowerEmailAddress The borrowers e-mail Address
-     * @param borrowDate           The borrow date
-     */
-    public Borrowing(Book book, String borrowerEmailAddress, DateTime borrowDate) {
-        super();
-        this.borrowedBook = book;
-        this.borrowerEmailAddress = borrowerEmailAddress;
-        this.borrowDate = borrowDate.toDate();
-    }
-
-    public Borrowing(Book book, String borrowerEmailAddress) {
-        this(book, borrowerEmailAddress, DateTime.now());
-    }
-
-    private Borrowing() {
-        // for JPA
-    }
-
-    public Book getBorrowedBook() {
-        return borrowedBook;
-    }
 }
