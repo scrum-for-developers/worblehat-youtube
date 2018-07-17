@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-class WorblehatSystemTest {
+class WorblehatSystemIT {
 
     @Test
     void shouldStartApplication() {
