@@ -2,6 +2,7 @@ package de.codecentric.psd.worblehat.web.formdata;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+
 import lombok.Data;
 
 /**
@@ -10,7 +11,7 @@ import lombok.Data;
 @Data
 public class ReturnAllBooksFormData {
 
-	@NotEmpty(message = "{empty.email}")
-	@Email(message = "{invalid.email}")
-	private String emailAddress;
+    @NotEmpty(message = "{empty.email}")
+    @Email(message = "{invalid.email}")
+    private String emailAddress;
 }
