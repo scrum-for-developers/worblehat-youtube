@@ -17,6 +17,8 @@ You can vote on the issues in order to influence the order of the Product Backlo
 
 ## Developing the application
 
+### Data base setup
+
 A PostgreSQL data base can be started locally using docker-compose:
 
 ```shell
@@ -34,3 +36,10 @@ Once the data base is started point your broser to http://localhost:8081 and log
 | Password         | worblehat-pw |
 | Data base        | postgres     |
 
+### Build process
+
+You can use the maven wrapper to compile and execute the application
+
+* Compile everything: `./mvnw clean install`
+* Run the application: `./mvnw -pl worblehat-web spring-boot:run
+* Run the acceptancetests: `./mvnw Pinclude-acceptancetests -pl worblehat-acceptancetests test`
