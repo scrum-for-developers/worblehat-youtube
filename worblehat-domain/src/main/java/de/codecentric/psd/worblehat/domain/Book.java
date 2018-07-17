@@ -1,8 +1,12 @@
 package de.codecentric.psd.worblehat.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,78 +16,66 @@ import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Entity implementation class for Entity: Book
- */
 @Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Book implements Serializable {
 
-    public String getDescription() {
-        return description;
-    }
+    private static final long serialVersionUID = 1L;
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	private static final long serialVersionUID = 1L;
+    @NonNull
+    private String title;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @NonNull
+    private String author;
 
-	@NonNull private String title;
-	@NonNull private String author;
-	@NonNull private String edition;
+    @NonNull
+    private String edition;
 
-	// TODO: convert String to an ISBN class, that ensures a valid ISBN
-	@NonNull private String isbn;
-	@NonNull private Integer yearOfPublication;
+    // TODO: convert String to an ISBN class, that ensures a valid ISBN
+    @NonNull
+    private String isbn;
 
-	@OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
-	@ToString.Exclude @EqualsAndHashCode.Exclude
-	private Borrowing borrowing;
+    @NonNull
+    private Integer yearOfPublication;
+
+    @OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Borrowing borrowing;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-	/**
-	 * Creates a new book instance.
-	 *
-	 * @param bookParameter
-	 */
-	public Book(BookParameter bookParameter) {
-		this(
-				bookParameter.getTitle(),
-				bookParameter.getAuthor(),
-				bookParameter.getEdition(),
-				bookParameter.getIsbn(),
-				bookParameter.getYearOfPublication()
-		);
-		this.description = bookParameter.getDescription();
-	}
+    public Book(BookParameter bookParameter) {
+        this(
+                bookParameter.getTitle(),
+                bookParameter.getAuthor(),
+                bookParameter.getEdition(),
+                bookParameter.getIsbn(),
+                bookParameter.getYearOfPublication()
+        );
+        this.description = bookParameter.getDescription();
+    }
 
-	/*default*/ Book(Book book) {
-		this(
-				book.getTitle(),
-				book.getAuthor(),
-				book.getEdition(),
-				book.getIsbn(),
-				book.getYearOfPublication()
-		);
-	}
+    Book(final Book book) {
+        this(book.title, book.author, book.edition, book.isbn, book.yearOfPublication);
+        this.description = book.description;
+    }
 
-	boolean isSameCopy(@Nonnull Book book) {
-		return getTitle().equals(book.title) && getAuthor().equals(book.author);
-	}
+    boolean isSameCopy(@NonNull Book book) {
+        return getTitle().equals(book.title) && getAuthor().equals(book.author);
+    }
 
-	public void borrowNowByBorrower(String borrowerEmailAddress) {
-		if (borrowing == null) {
+    public void borrowNowByBorrower(String borrowerEmailAddress) {
+        if (borrowing == null) {
             this.borrowing = new Borrowing(this, borrowerEmailAddress, new Date());
         }
-	}
+    }
 
 }
