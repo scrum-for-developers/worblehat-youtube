@@ -141,6 +141,12 @@
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>5.2.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.0</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <reporting>

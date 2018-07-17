@@ -1,10 +1,12 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
@@ -18,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,6 +42,7 @@ class InsertBookControllerTest {
         insertBookController = new InsertBookController(bookService);
         insertBookFormData = new InsertBookFormData();
         bindingResult = new MapBindingResult(new HashMap<>(), "");
+        TEST_BOOK.setDescription("Description");
     }
 
     @Test
@@ -65,7 +67,7 @@ class InsertBookControllerTest {
     void shouldCreateNewCopyOfExistingBook() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(true);
-        when(bookService.createBook(any(), any(), any(), any(), anyInt(), any())).thenReturn(Optional.of(TEST_BOOK));
+        when(bookService.createBook(any())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(insertBookFormData, bindingResult);
 
@@ -77,7 +79,7 @@ class InsertBookControllerTest {
     void shouldCreateBookAndNavigateToBookList() {
         setupFormData();
         when(bookService.bookExists(TEST_BOOK.getIsbn())).thenReturn(false);
-        when(bookService.createBook(any(), any(), any(), any(), anyInt(), any())).thenReturn(Optional.of(TEST_BOOK));
+        when(bookService.createBook(any())).thenReturn(Optional.of(TEST_BOOK));
 
         String navigateTo = insertBookController.processSubmit(insertBookFormData, bindingResult);
 
@@ -86,9 +88,15 @@ class InsertBookControllerTest {
     }
 
     private void verifyBookIsCreated() {
-        verify(bookService).createBook(TEST_BOOK.getTitle(), TEST_BOOK.getAuthor(),
-                TEST_BOOK.getEdition(), TEST_BOOK.getIsbn(), TEST_BOOK.getYearOfPublication(),
-                TEST_BOOK.getDescription());
+        ArgumentCaptor<BookParameter> bookArgumentCaptor = ArgumentCaptor.forClass(BookParameter.class);
+        verify(bookService).createBook(bookArgumentCaptor.capture());
+        BookParameter bookParameter = bookArgumentCaptor.getValue();
+        assertThat(bookParameter.getTitle(), is(TEST_BOOK.getTitle()));
+        assertThat(bookParameter.getAuthor(), is(TEST_BOOK.getAuthor()));
+        assertThat(bookParameter.getEdition(), is(TEST_BOOK.getEdition()));
+        assertThat(bookParameter.getIsbn(), is(TEST_BOOK.getIsbn()));
+        assertThat(bookParameter.getYearOfPublication(), is(TEST_BOOK.getYearOfPublication()));
+        assertThat(bookParameter.getDescription(), is(TEST_BOOK.getDescription()));
     }
 
     private void setupFormData() {
@@ -97,5 +105,6 @@ class InsertBookControllerTest {
         insertBookFormData.setEdition(TEST_BOOK.getEdition());
         insertBookFormData.setIsbn(TEST_BOOK.getIsbn());
         insertBookFormData.setYearOfPublication(String.valueOf(TEST_BOOK.getYearOfPublication()));
+        insertBookFormData.setDescription(TEST_BOOK.getDescription());
     }
 }

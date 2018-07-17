@@ -23,8 +23,8 @@ import java.util.Optional;
 @RequestMapping("/insertBooks")
 public class InsertBookController {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(InsertBookController.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(InsertBookController.class);
 
     private BookService bookService;
 
@@ -45,10 +45,7 @@ public class InsertBookController {
         if (result.hasErrors()) {
             return "insertBooks";
         } else {
-            Optional<Book> book = bookService.createBook(insertBookFormData.getTitle(), insertBookFormData.getAuthor(),
-                    insertBookFormData.getEdition(), insertBookFormData.getIsbn(),
-                    Integer.parseInt(insertBookFormData.getYearOfPublication()),
-                    insertBookFormData.getDescription());
+            Optional<Book> book = bookService.createBook(insertBookFormData.toBookParameter());
             if (book.isPresent()) {
                 LOG.info("new book instance is created: " + book.get());
             } else {

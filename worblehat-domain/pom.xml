@@ -11,6 +11,7 @@
   <artifactId>worblehat-domain</artifactId>
   <name>worblehat-domain</name>
 
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -53,6 +54,11 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
