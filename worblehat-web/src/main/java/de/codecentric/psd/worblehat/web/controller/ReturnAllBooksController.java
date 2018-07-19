@@ -2,7 +2,6 @@ package de.codecentric.psd.worblehat.web.controller;
 
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.ReturnAllBooksFormData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * Controller class for the
@@ -19,11 +19,10 @@ import javax.validation.Valid;
 @RequestMapping("/returnAllBooks")
 public class ReturnAllBooksController {
 
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
     public ReturnAllBooksController(BookService bookService) {
-        this.bookService = bookService;
+        this.bookService = Objects.requireNonNull(bookService);
     }
 
     @RequestMapping(method = RequestMethod.GET)

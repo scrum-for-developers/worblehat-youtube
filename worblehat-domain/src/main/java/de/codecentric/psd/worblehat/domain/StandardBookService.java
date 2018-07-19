@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,14 +16,9 @@ import java.util.Set;
 @Transactional
 public class StandardBookService implements BookService {
 
-    public StandardBookService() {
-
-    }
-
-    @Autowired
     public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
-        this.borrowingRepository = borrowingRepository;
-        this.bookRepository = bookRepository;
+        this.borrowingRepository = Objects.requireNonNull(borrowingRepository);
+        this.bookRepository = Objects.requireNonNull(bookRepository);
     }
 
     private BorrowingRepository borrowingRepository;

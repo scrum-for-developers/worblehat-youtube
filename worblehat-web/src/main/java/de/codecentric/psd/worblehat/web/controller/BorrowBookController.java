@@ -4,7 +4,6 @@ import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
 import de.codecentric.psd.worblehat.web.formdata.BorrowBookFormData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,11 +27,10 @@ import java.util.Set;
 public class BorrowBookController {
 
     private static final String BORROW_PAGE = "borrow";
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
     public BorrowBookController(BookService bookService) {
-        this.bookService = bookService;
+        this.bookService = Objects.requireNonNull(bookService);
     }
 
     @RequestMapping(method = RequestMethod.GET)
