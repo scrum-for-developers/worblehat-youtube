@@ -1,4 +1,4 @@
 -- liquibase formatted sql
 
 -- changeset action:drop_index
-DROP INDEX isbn ON book;
+ALTER TABLE book DROP CONSTRAINT book_isbn_key;

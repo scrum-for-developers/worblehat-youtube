@@ -15,3 +15,22 @@ You can vote on the issues in order to influence the order of the Product Backlo
 * [Most voted issues](https://github.com/scrum-for-developers/worblehat-youtube/issues?utf8=%E2%9C%93&q=is%3Aopen+sort%3Areactions-%2B1-desc)
 * [Tast Board / Product Backlog](https://github.com/scrum-for-developers/worblehat-youtube/projects/1)
 
+## Developing the application
+
+A PostgreSQL data base can be started locally using docker-compose:
+
+```shell
+docker-compose up
+```
+
+The docker compose setup includes [Adminer](https://www.adminer.org) for adminstrating the data base.
+Once the data base is started point your broser to http://localhost:8081 and log into the data base:
+
+| Setting          | Value        |
+|------------------|--------------|
+| Data base system | PostgreSQL   |
+| Server           | db           |
+| User             | postgres     |
+| Password         | worblehat-pw |
+| Data base        | postgres     |
+
