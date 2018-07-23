@@ -3,6 +3,8 @@ package de.codecentric.psd.worblehat.web.controller;
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.web.formdata.InsertBookFormData;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -21,15 +22,13 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("/insertBooks")
+@RequiredArgsConstructor
 public class InsertBookController {
 
     private static final Logger LOG = LoggerFactory.getLogger(InsertBookController.class);
 
+    @NonNull
     private final BookService bookService;
-
-    public InsertBookController(BookService bookService) {
-        this.bookService = Objects.requireNonNull(bookService);
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public void setupForm(ModelMap modelMap) {
