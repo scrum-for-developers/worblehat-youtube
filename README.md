@@ -42,4 +42,4 @@ You can use the maven wrapper to compile and execute the application
 
 * Compile everything: `./mvnw clean install`
 * Run the application: `./mvnw -pl worblehat-web spring-boot:run
-* Run the acceptancetests: `./mvnw Pinclude-acceptancetests -pl worblehat-acceptancetests test`
+* Run the acceptancetests: `./mvnw -Pinclude-acceptancetests -pl worblehat-acceptancetests test`
