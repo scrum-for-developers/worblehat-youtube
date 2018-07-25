@@ -18,7 +18,7 @@
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <selenium.version>3.0.1</selenium.version>
     <environment>local</environment>
-    <application.url>http://localhost:8080/worblehat</application.url>
+    <application.url>http://localhost:8080</application.url>
   </properties>
 
   <profiles>
