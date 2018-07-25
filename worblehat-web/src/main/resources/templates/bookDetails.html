@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Details</title>
+</head>
+<body>
+
+<h1 th:text="${book.title}">Book Title</h1>
+
+<div style="height: 300px">
+    <div style="width: 200px; float: left">
+        <img th:src="${coverUrl}">
+    </div>
+    <div style="margin-left: 200px">
+        <table>
+            <tr>
+                <td style="width: 100px">Author:</td>
+                <td th:text="${book.title}"></td>
+            </tr>
+            <tr>
+                <td>Year:</td>
+                <td th:text="${book.yearOfPublication}"></td>
+            </tr>
+            <tr>
+                <td>Edition:</td>
+                <td th:text="${book.edition}"></td>
+            </tr>
+            <tr>
+                <td>ISBN:</td>
+                <td th:text="${book.isbn}"></td>
+            </tr>
+            <tr>
+                <td>Available:</td>
+                <td>
+                    <th:block th:if="${book.borrowing == null}">YES</th:block>
+                    <th:block th:if="${book.borrowing != null}">
+                        NO - Borrowed by <a th:href="${'mailto:' + book.borrowing.borrowerEmailAddress}" th:text="${book.borrowing.borrowerEmailAddress}"></a>
+                        at <span th:text="${book.borrowing.borrowDate}"></span>
+                    </th:block>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<pre th:text="${book.description}" style="width: 500px">
+
+</pre>
+
+<div th:replace="fragments/footer :: subpage-footer">Footer</div>
+
+</body>
+</html>

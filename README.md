@@ -41,5 +41,5 @@ Once the data base is started point your broser to http://localhost:8081 and log
 You can use the maven wrapper to compile and execute the application
 
 * Compile everything: `./mvnw clean install`
-* Run the application: `./mvnw -pl worblehat-web spring-boot:run
+* Run the application: `./mvnw -pl worblehat-web spring-boot:run`
 * Run the acceptancetests: `./mvnw -Pinclude-acceptancetests -pl worblehat-acceptancetests test`

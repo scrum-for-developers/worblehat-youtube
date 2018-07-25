@@ -88,5 +88,10 @@ public class StandardBookService implements BookService {
         bookRepository.deleteAll();
     }
 
+    @Override
+    public Book get(long bookId) {
+        return bookRepository.getOne(bookId);
+    }
+
 
 }
