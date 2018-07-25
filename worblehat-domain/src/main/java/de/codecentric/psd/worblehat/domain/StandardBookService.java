@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +14,14 @@ import java.util.Set;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class StandardBookService implements BookService {
 
-    public StandardBookService() {
+    @NonNull
+    private final BorrowingRepository borrowingRepository;
 
-    }
-
-    @Autowired
-    public StandardBookService(BorrowingRepository borrowingRepository, BookRepository bookRepository) {
-        this.borrowingRepository = borrowingRepository;
-        this.bookRepository = bookRepository;
-    }
-
-    private BorrowingRepository borrowingRepository;
-
-    private BookRepository bookRepository;
+    @NonNull
+    private final BookRepository bookRepository;
 
     @Override
     public void returnAllBooksByBorrower(String borrowerEmailAddress) {

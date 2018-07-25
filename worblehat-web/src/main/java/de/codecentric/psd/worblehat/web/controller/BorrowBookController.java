@@ -4,7 +4,8 @@ import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
 import de.codecentric.psd.worblehat.web.formdata.BorrowBookFormData;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -24,18 +25,16 @@ import java.util.Set;
  */
 @RequestMapping("/borrow")
 @Controller
+@RequiredArgsConstructor
 public class BorrowBookController {
 
     private static final String BORROW_PAGE = "borrow";
-    private BookService bookService;
 
-    @Autowired
-    public BorrowBookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    @NonNull
+    private final BookService bookService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public void setupForm(final ModelMap model) {
+    public void setupForm(ModelMap model) {
         model.put("borrowFormData", new BorrowBookFormData());
     }
 
