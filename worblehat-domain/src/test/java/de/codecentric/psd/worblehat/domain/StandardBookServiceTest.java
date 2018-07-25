@@ -72,7 +72,7 @@ class StandardBookServiceTest {
         when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
                 .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
 
-        when(borrowingRepository.findBorrowingForBook(aBook)).thenReturn(null);
+        when(borrowingRepository.findByBorrowedBook(aBook)).thenReturn(Optional.empty());
 
         bookService = new StandardBookService(borrowingRepository, bookRepository);
     }
