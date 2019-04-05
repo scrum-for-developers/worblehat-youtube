@@ -6,4 +6,5 @@
 	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.0/001-initialize-db.sql" />
 	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.0/002-remove-unique-isbn-constraint.sql" />
 	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.2/001-add-description.sql"/>
+	<include file="de/codecentric/psd/worblehat/liquibase-changesets/version-1.2/002-halt-on-invalid-book-data-for-isbn-editions.xml" />
 </databaseChangeLog>
