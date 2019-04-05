@@ -3,20 +3,19 @@ package de.codecentric.worblehat.acceptancetests.step.business;
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookParameter;
 import de.codecentric.psd.worblehat.domain.BookService;
+import de.codecentric.worblehat.acceptancetests.step.StoryContext;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
 
 @Component("Library")
@@ -24,10 +23,12 @@ public class Library {
 
     private BookService bookService;
 
+    private StoryContext storyContext;
 
     @Autowired
-    public Library(ApplicationContext applicationContext) {
+    public Library(ApplicationContext applicationContext, StoryContext storyContext) {
         this.bookService = applicationContext.getBean(BookService.class);
+        this.storyContext = storyContext;
     }
 
     // *******************
@@ -39,21 +40,25 @@ public class Library {
         bookService.deleteAllBooks();
     }
 
-    @Given("a library, containing a book with isbn $isbn")
+    @Given("a library, containing only one book with isbn $isbn")
     public void createLibraryWithSingleBookWithGivenIsbn(String isbn) {
+        emptyLibrary();
         Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
-        bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()));
+        Optional<Book> createdBook = bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()));
+        createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
     }
 
     // just an example of how a step looks that is different from another one, after the last parameter
     // see configuration in AllAcceptanceTestStories
-    @Given("a library, containing a book with isbn $isbn and title $title")
+    @Given("a library, containing only one book with isbn $isbn and title $title")
     public void createLibraryWithSingleBookWithGivenIsbnAndTitle(String isbn, String title) {
+        emptyLibrary();
         Book book = DemoBookFactory.createDemoBook()
                 .withISBN(isbn)
                 .withTitle(title)
                 .build();
-        bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()));
+        Optional<Book> createdBook = bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()));
+        createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
     }
 
     @Given("borrower $borrower has borrowed books $isbns")
@@ -92,6 +97,17 @@ public class Library {
     @Then("the library contains $copies of the book with $isbn")
     public void shouldContainCopiesOfBook(Integer copies, String isbn) {
         waitForServerResponse();
+        assertNumberOfCopies(isbn, copies);
+    }
+
+    @Then("the new book $can be added")
+    public void shouldNotHaveCreatedANewCopy(String can) {
+        Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
+        int numberOfCopies = "CAN".equals(can) ? 2 : 1;
+        assertNumberOfCopies(lastInsertedBook.getIsbn(), numberOfCopies);
+    }
+
+    private void assertNumberOfCopies(String isbn, int copies) {
         Set<Book> books = bookService.findBooksByIsbn(isbn);
         assertThat(books.size(), is(copies));
         assertThat(books, everyItem(hasProperty("isbn", is(isbn))));
