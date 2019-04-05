@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Worblehat Bookmanager</title>
+</head>
+<body>
+<h1><span th:text="${book.title}"></span></h1>
+
+<table>
+    <tr>
+        <td>ISBN:</td>
+        <td th:text="${book.isbn}">ISBN</td>
+    </tr>
+    <tr>
+        <td>Author:</td>
+        <td th:text="${book.author}">Author</td>
+    </tr>
+    <tr>
+        <td>Year:</td>
+        <td th:text="${book.yearOfPublication}">Year</td>
+    </tr>
+    <tr>
+        <td>Edition:</td>
+        <td th:text="${book.edition}">Year</td>
+    </tr>
+    <tr>
+        <td colspan="2">Description:</td>
+    </tr>
+    <tr>
+        <td colspan="2" th:text="${book.description}">Description</td>
+    </tr>
+</table>
+<footer>
+    <div th:replace="fragments/footer :: subpage-footer">Footer</div>
+</footer>
+
+</body>
+</html>

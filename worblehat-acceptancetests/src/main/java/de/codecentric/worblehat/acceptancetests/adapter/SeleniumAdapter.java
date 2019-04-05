@@ -56,7 +56,16 @@ public class SeleniumAdapter {
     }
 
     public void gotoPage(Page page) {
-        String concreteUrl = Config.getApplicationURL() + "/" + page.getUrl();
+        goToUrl(page.getUrl());
+    }
+
+    public void gotoPageWithParameter(Page page, String parameter) {
+        String url = page.getUrl(parameter);
+        goToUrl(url);
+    }
+
+    private void goToUrl(String url) {
+        String concreteUrl = Config.getApplicationURL() + "/" + url;
         driver.get(concreteUrl);
     }
 
@@ -110,5 +119,9 @@ public class SeleniumAdapter {
             LOGGER.error("Could not take screenshot!", e);
         }
 
+    }
+
+    public boolean containsTextOnPage(String text) {
+        return driver.getPageSource().contains(text);
     }
 }
