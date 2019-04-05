@@ -10,6 +10,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,12 +42,13 @@ public class BookDetailsPage {
         String isbn = storyContext.get("LAST_BROWSED_BOOK_DETAILS");
         Set<Book> books = bookService.findBooksByIsbn(isbn);
         assertThat(books, hasSize(greaterThanOrEqualTo(1)));
-        Book next = books.iterator().next();
-        assertThat(seleniumAdapter.containsTextOnPage(next.getIsbn()), is(true));
-        assertThat(seleniumAdapter.containsTextOnPage(next.getAuthor()), is(true));
-        assertThat(seleniumAdapter.containsTextOnPage(next.getDescription()), is(true));
-        assertThat(seleniumAdapter.containsTextOnPage(next.getTitle()), is(true));
-        assertThat(seleniumAdapter.containsTextOnPage(next.getEdition()), is(true));
-        assertThat(seleniumAdapter.containsTextOnPage(String.valueOf(next.getYearOfPublication())), is(true));
+        Book book = books.iterator().next();
+        String description = book.getDescription();
+        assertThat(seleniumAdapter.containsTextOnPage(book.getIsbn()), is(true));
+        assertThat(seleniumAdapter.containsTextOnPage(book.getAuthor()), is(true));
+        assertThat(seleniumAdapter.containsTextOnPage(book.getTitle()), is(true));
+        assertThat(seleniumAdapter.containsTextOnPage(book.getEdition()), is(true));
+        assertThat(seleniumAdapter.containsTextOnPage(String.valueOf(book.getYearOfPublication())), is(true));
+        Optional.ofNullable(description).ifPresent(desc -> assertThat(seleniumAdapter.containsTextOnPage(description), is(true)));
     }
 }
