@@ -14,6 +14,7 @@
 			<th>ISBN</th>
 			<th>Description</th>
 			<th>Borrower</th>
+			<th>Details</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,6 +26,7 @@
 			<td th:text="${book.isbn}">123456</td>
 			<td style="white-space: pre-wrap;" th:text="${book.description}">Description</td>
 			<td th:text="${book?.borrowing?.borrowerEmailAddress}">someone@codecentric.de</td>
+			<td><a th:class="'detailsLink-' + ${book.isbn}" th:href="@{/bookDetails(isbn=${book.isbn})}">Details</a></td>
 		</tr>
 	</tbody>
 	</table>

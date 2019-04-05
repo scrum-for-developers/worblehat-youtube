@@ -4,7 +4,8 @@ public enum Page {
     BOOKLIST("bookList"),
     INSERTBOOKS("insertBooks"),
     BORROWBOOK("borrow"),
-    RETURNBOOKS("returnAllBooks");
+    RETURNBOOKS("returnAllBooks"),
+    BOOKDETAILS("bookDetails?isbn=%s");
 
     private String url;
 
@@ -14,5 +15,9 @@ public enum Page {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getUrl(String parameter) {
+        return String.format(url, parameter);
     }
 }

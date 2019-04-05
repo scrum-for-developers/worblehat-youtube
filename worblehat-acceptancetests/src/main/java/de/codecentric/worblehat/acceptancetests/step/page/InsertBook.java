@@ -1,5 +1,6 @@
 package de.codecentric.worblehat.acceptancetests.step.page;
 
+import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.PageElement;
@@ -9,6 +10,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
@@ -17,12 +20,12 @@ public class InsertBook {
 
     private final SeleniumAdapter seleniumAdapter;
 
-    private final StoryContext context;
+    private StoryContext storyContext;
 
     @Autowired
-    public InsertBook(SeleniumAdapter seleniumAdapter, StoryContext context) {
+    public InsertBook(SeleniumAdapter seleniumAdapter, StoryContext storyContext) {
         this.seleniumAdapter = seleniumAdapter;
-        this.context = context;
+        this.storyContext = storyContext;
     }
 
     // *******************
@@ -54,6 +57,31 @@ public class InsertBook {
         insertAndSubmitBook(title, author, edition, year, description, isbn);
     }
 
+    @When("a librarian tries to add a similar book with different $title, $author and $edition")
+    public void whenASimilarBookIsAdded(String title,
+                                        String author,
+                                        String edition) {
+        Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
+        insertAndSubmitBook(title,
+                author,
+                edition,
+                String.valueOf(lastInsertedBook.getYearOfPublication()),
+                lastInsertedBook.getDescription(),
+                lastInsertedBook.getIsbn());
+    }
+
+    @When("a librarian tries to add a similar book with same title, author and edition")
+    public void whenASimilarBookIsAdded() {
+        Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
+        insertAndSubmitBook(lastInsertedBook.getTitle(),
+                lastInsertedBook.getAuthor(),
+                lastInsertedBook.getEdition(),
+                String.valueOf(lastInsertedBook.getYearOfPublication()),
+                lastInsertedBook.getDescription(),
+                lastInsertedBook.getIsbn());
+
+    }
+
     // *****************
     // *** T H E N *****
     // *****************
@@ -76,8 +104,7 @@ public class InsertBook {
                                      String isbn) {
         seleniumAdapter.gotoPage(Page.INSERTBOOKS);
         fillInsertBookForm(title, author, edition, isbn, year, description);
-        seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
-        context.putObject("LAST_INSERTED_BOOK", isbn);
+        seleniumAdapter.clickOnPageElementById(PageElement.ADDBOOKBUTTON);
     }
 
     private void fillInsertBookForm(String title, String author, String edition, String isbn,
@@ -87,7 +114,7 @@ public class InsertBook {
         seleniumAdapter.typeIntoField("isbn", isbn);
         seleniumAdapter.typeIntoField("author", author);
         seleniumAdapter.typeIntoField("yearOfPublication", year);
-        seleniumAdapter.typeIntoField("description", description);
+        Optional.ofNullable(description).ifPresent(desc -> seleniumAdapter.typeIntoField("description", description));
     }
 
 
