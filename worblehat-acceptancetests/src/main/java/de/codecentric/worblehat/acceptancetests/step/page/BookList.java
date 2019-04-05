@@ -7,6 +7,7 @@ import de.codecentric.worblehat.acceptancetests.adapter.wrapper.HtmlBookList;
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.worblehat.acceptancetests.adapter.wrapper.PageElement;
 import de.codecentric.worblehat.acceptancetests.step.business.DemoBookFactory;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,11 @@ public class BookList {
     @Autowired
     public BookList(SeleniumAdapter seleniumAdapter) {
         this.seleniumAdapter = seleniumAdapter;
+    }
+
+    @Given("I browse the list of all books")
+    public void browseBookList() {
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
     }
 
     @Then("the booklist contains a book with values title $title, author $author, year $year, edition $edition, isbn $isbn")
