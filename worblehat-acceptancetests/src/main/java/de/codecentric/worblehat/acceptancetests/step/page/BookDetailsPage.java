@@ -32,7 +32,7 @@ public class BookDetailsPage {
 
     @When("I navigate to the detail page of the book with the isbn $isbn")
     public void navigateToDetailPage(String isbn) {
-        seleniumAdapter.gotoPageWithParameter(Page.BOOKDETAILS, isbn);
+        seleniumAdapter.clickOnPageElementByClassName("detailsLink-" + isbn);
         storyContext.put("LAST_BROWSED_BOOK_DETAILS", isbn);
     }
 

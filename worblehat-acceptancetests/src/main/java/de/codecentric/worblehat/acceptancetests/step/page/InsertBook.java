@@ -76,7 +76,7 @@ public class InsertBook {
                                      String isbn) {
         seleniumAdapter.gotoPage(Page.INSERTBOOKS);
         fillInsertBookForm(title, author, edition, isbn, year, description);
-        seleniumAdapter.clickOnPageElement(PageElement.ADDBOOKBUTTON);
+        seleniumAdapter.clickOnPageElementById(PageElement.ADDBOOKBUTTON);
         context.putObject("LAST_INSERTED_BOOK", isbn);
     }
 

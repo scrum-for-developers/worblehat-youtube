@@ -80,9 +80,15 @@ public class SeleniumAdapter {
         return new HtmlBookList(table);
     }
 
-    public void clickOnPageElement(PageElement pageElement) {
+    public void clickOnPageElementById(PageElement pageElement) {
         WebElement element = driver.findElement(By.id(pageElement.getElementId()));
         element.click();
+    }
+
+    public void clickOnPageElementByClassName(String className) {
+        WebElement element = driver.findElement(By.className(className));
+        element.click();
+
     }
 
     public List<String> findAllStringsForElement(PageElement pageElement) {
