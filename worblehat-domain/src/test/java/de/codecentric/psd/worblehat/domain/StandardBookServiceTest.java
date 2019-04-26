@@ -69,7 +69,7 @@ class StandardBookServiceTest {
         bookRepository = mock(BookRepository.class);
 
         borrowingRepository = mock(BorrowingRepository.class);
-        when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
+        when(borrowingRepository.findByBorrowerEmailAddress(BORROWER_EMAIL))
                 .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
 
         when(borrowingRepository.findByBorrowedBook(aBook)).thenReturn(Optional.empty());
