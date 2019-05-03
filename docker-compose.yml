@@ -3,7 +3,7 @@ version: '3.1'
 services:
   db:
     image: postgres
-    restart: always
+    restart: unless-stopped
     ports:
       - 5432:5432
     environment:
@@ -11,7 +11,7 @@ services:
 
   adminer:
     image: adminer
-    restart: always
+    restart: unless-stopped
     ports:
       - 8081:8080
     depends_on:
