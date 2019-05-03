@@ -9,19 +9,23 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.ClassRule;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.testcontainers.Testcontainers;
+import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.lifecycle.TestDescription;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 
 /**
  * Itegrates Selenium into the tests.
@@ -35,24 +39,15 @@ public class SeleniumAdapter {
 
     private String folderName;
 
-    @BeforeStories
-    public void initSelenium() throws Exception {
-        String seleniumProvider = Config.getEnvironment();
-        try {
-            if ("local".equalsIgnoreCase(seleniumProvider)) {
-                driver = DriverEnum.CHROME.getDriver();
-            } else {
-                driver = DriverEnum.PHANTOMJS.getDriver();
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error initializing Webdriver", e);
-            throw e;
-        }
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
 
+    @BeforeStories
+    public void initSelenium() {
         folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat(File.separator);
         folderName = "target" + File.separator + "screenshots" + File.separator + folderName;
         new File(folderName).mkdirs();
-
     }
 
     public void gotoPage(Page page) {
@@ -98,12 +93,6 @@ public class SeleniumAdapter {
             strings.add(element.getText());
         }
         return strings;
-    }
-
-    @AfterStories
-    public void afterStories() {
-        // Close the browser
-        driver.quit();
     }
 
     @AfterScenario(uponType = ScenarioType.EXAMPLE)
