@@ -5,17 +5,25 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.Testcontainers;
+import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.lifecycle.TestDescription;
 
+import java.io.File;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 
 public enum DriverEnum {
 
-    CHROME, PHANTOMJS;
+    CHROME, PHANTOMJS, TESTCONTAINERS;
 
     private Logger LOGGER = LoggerFactory.getLogger(DriverEnum.class);
 
@@ -33,12 +41,43 @@ public enum DriverEnum {
     private static String PHANTOMJSDRIVER_WIN = "windows/phantomjs/64bit/phantomjs.exe";
 
     private static String PHANTOMJSDRIVER_LINUX = "linux/phantomjs/64bit/phantomjs";
+    private BrowserWebDriverContainer chromeContainer;
 
     WebDriver getDriver() throws Exception {
         if (name().equals(CHROME.name())) {
             return createChromeDriver();
+        } else if (name().equals(TESTCONTAINERS.name())) {
+            return createTestcontainersDriver();
         }
         return createPhantomJSDriver();
+    }
+
+    void afterTest() {
+        if (chromeContainer != null) {
+            chromeContainer.afterTest(new TestDescription() {
+                @Override
+                public String getTestId() {
+                    return "id";
+                }
+
+                @Override
+                public String getFilesystemFriendlyName() {
+                    return "myTest";
+                }
+            }, Optional.empty());
+        }
+    }
+
+    private WebDriver createTestcontainersDriver() {
+        Testcontainers.exposeHostPorts(8080);
+
+        //noinspection rawtypes
+        chromeContainer = new BrowserWebDriverContainer<>()
+                .withCapabilities(new ChromeOptions())
+                .withRecordingMode(RECORD_ALL, new File("./target/"));
+
+        chromeContainer.start();
+        return chromeContainer.getWebDriver();
     }
 
     private WebDriver createPhantomJSDriver() throws Exception {

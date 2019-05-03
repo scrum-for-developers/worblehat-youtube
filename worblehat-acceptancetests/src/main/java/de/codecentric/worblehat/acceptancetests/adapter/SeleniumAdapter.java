@@ -9,11 +9,7 @@ import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -41,6 +37,8 @@ public class SeleniumAdapter {
         try {
             if ("local".equalsIgnoreCase(seleniumProvider)) {
                 driver = DriverEnum.CHROME.getDriver();
+            } else if ("testcontainers".equalsIgnoreCase(seleniumProvider)) {
+                driver = DriverEnum.TESTCONTAINERS.getDriver();
             } else {
                 driver = DriverEnum.PHANTOMJS.getDriver();
             }
@@ -103,6 +101,7 @@ public class SeleniumAdapter {
     @AfterStories
     public void afterStories() {
         // Close the browser
+        DriverEnum.TESTCONTAINERS.afterTest();
         driver.quit();
     }
 

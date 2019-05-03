@@ -35,6 +35,13 @@
         <application.url>http://localhost/worblehat-test</application.url>
       </properties>
     </profile>
+    <profile>
+      <id>testcontainers</id>
+      <properties>
+          <environment>testcontainers</environment>
+          <application.url>http://host.testcontainers.internal:8080</application.url>
+      </properties>
+    </profile>
   </profiles>
 
   <dependencies>
@@ -86,6 +93,10 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>selenium</artifactId>
     </dependency>
   </dependencies>
 
