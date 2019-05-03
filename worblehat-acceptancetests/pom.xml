@@ -17,32 +17,8 @@
     <jbehave.core.version>4.1.3</jbehave.core.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <selenium.version>3.14.0</selenium.version>
-    <environment>local</environment>
-    <application.url>http://localhost:8080</application.url>
+    <application.url>http://host.testcontainers.internal:8080</application.url>
   </properties>
-
-  <profiles>
-    <profile>
-      <id>headless</id>
-      <!-- forces the use of phantomjs in SeleniumAdapter -->
-      <properties>
-        <environment>jenkins</environment>
-      </properties>
-    </profile>
-    <profile>
-      <id>jenkins</id>
-      <properties>
-        <application.url>http://localhost/worblehat-test</application.url>
-      </properties>
-    </profile>
-    <profile>
-      <id>testcontainers</id>
-      <properties>
-          <environment>testcontainers</environment>
-          <application.url>http://host.testcontainers.internal:8080</application.url>
-      </properties>
-    </profile>
-  </profiles>
 
   <dependencies>
     <dependency>
@@ -112,26 +88,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>com.lazerycode.selenium</groupId>
-        <artifactId>driver-binary-downloader-maven-plugin</artifactId>
-        <version>1.0.17</version>
-        <configuration>
-          <!-- root directory that downloaded driver binaries will be stored in -->
-          <rootStandaloneServerDirectory>target/binaries</rootStandaloneServerDirectory>
-          <!-- Where you want to store downloaded zip files -->
-          <downloadedZipFileDirectory>target/zips</downloadedZipFileDirectory>
-          <!-- Location of a custom repository map -->
-          <customRepositoryMap>${project.basedir}/repo.xml</customRepositoryMap>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>selenium</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

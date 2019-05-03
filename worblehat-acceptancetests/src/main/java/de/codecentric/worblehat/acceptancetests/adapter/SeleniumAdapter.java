@@ -10,14 +10,21 @@ import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
 import org.joda.time.LocalDateTime;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.testcontainers.Testcontainers;
+import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.lifecycle.TestDescription;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 
 /**
  * Itegrates Selenium into the tests.
@@ -27,30 +34,46 @@ public class SeleniumAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);
 
+    @SuppressWarnings("rawtypes")
+    private BrowserWebDriverContainer chromeContainer;
+
     private WebDriver driver;
 
     private String folderName;
 
     @BeforeStories
-    public void initSelenium() throws Exception {
-        String seleniumProvider = Config.getEnvironment();
-        try {
-            if ("local".equalsIgnoreCase(seleniumProvider)) {
-                driver = DriverEnum.CHROME.getDriver();
-            } else if ("testcontainers".equalsIgnoreCase(seleniumProvider)) {
-                driver = DriverEnum.TESTCONTAINERS.getDriver();
-            } else {
-                driver = DriverEnum.PHANTOMJS.getDriver();
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error initializing Webdriver", e);
-            throw e;
-        }
-
+    public void initSelenium() {
+        driver = createTestcontainersDriver();
         folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat(File.separator);
         folderName = "target" + File.separator + "screenshots" + File.separator + folderName;
         new File(folderName).mkdirs();
+    }
 
+    private WebDriver createTestcontainersDriver() {
+        Testcontainers.exposeHostPorts(8080);
+
+        chromeContainer = new BrowserWebDriverContainer<>()
+                .withCapabilities(new ChromeOptions())
+                .withRecordingMode(RECORD_ALL, new File("./target/"));
+
+        chromeContainer.start();
+        return chromeContainer.getWebDriver();
+    }
+
+    @AfterStories
+    private void saveVncRecordingAndStopContainer() {
+        chromeContainer.afterTest(new TestDescription() {
+            @Override
+            public String getTestId() {
+                return "id";
+            }
+
+            @Override
+            public String getFilesystemFriendlyName() {
+                return "myTest";
+            }
+        }, Optional.empty());
+        chromeContainer.stop();
     }
 
     public void gotoPage(Page page) {
@@ -96,13 +119,6 @@ public class SeleniumAdapter {
             strings.add(element.getText());
         }
         return strings;
-    }
-
-    @AfterStories
-    public void afterStories() {
-        // Close the browser
-        DriverEnum.TESTCONTAINERS.afterTest();
-        driver.quit();
     }
 
     @AfterScenario(uponType = ScenarioType.EXAMPLE)
