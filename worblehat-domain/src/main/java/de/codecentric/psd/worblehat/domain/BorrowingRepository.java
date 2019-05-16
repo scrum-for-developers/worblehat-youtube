@@ -12,8 +12,6 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
 
     Optional<Borrowing> findByBorrowedBook(Book book);
 
-    List<Borrowing> findByBorrowerEmailAddress(String borrowerEmailAddress);
-
     @Modifying
     void deleteByBorrowerEmailAddress(String borrowerEmailAddress);
 }
