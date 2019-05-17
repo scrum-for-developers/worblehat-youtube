@@ -113,7 +113,7 @@ public class BookList {
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         Collection<HtmlBook> books = htmlBookList.getHtmlBooks().values();
         for (HtmlBook book : books) {
-            assertThat(book.getCover(),containsString(".jpg"));
+            assertThat(book.getCover(), containsString(book.getIsbn()));
         }
     }
 

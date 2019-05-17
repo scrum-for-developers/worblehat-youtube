@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Controller class for the book table result.
@@ -26,7 +28,15 @@ public class BookListController {
     public String setupForm(ModelMap modelMap) {
         List<Book> books = bookService.findAllBooks();
         modelMap.addAttribute("books", books);
+        Map<String, String> covers = getCoverURLsForBooks(books);
+        modelMap.addAttribute("covers", covers);
         return "bookList";
+    }
+
+    protected Map<String, String> getCoverURLsForBooks(List<Book> books) {
+        return books.stream().collect(
+                Collectors.toMap(
+                        Book::getIsbn, book -> "http://covers.openlibrary.org/b/isbn/" + book.getIsbn() + "-S.jpg"));
     }
 
 }
