@@ -20,7 +20,7 @@
 	</thead>
 	<tbody>
 		<tr th:each="book : ${books}">
-			<td><img th:src="${covers[book.isbn]}" /></td>
+			<td style="height: 50px"><img th:src="${covers[book.isbn]}" /></td>
 			<td th:text="${book.title}">Harry Potter</td>
 			<td th:text="${book.author}">J.K. Rowling</td>
 			<td th:text="${book.yearOfPublication}">2002</td>
