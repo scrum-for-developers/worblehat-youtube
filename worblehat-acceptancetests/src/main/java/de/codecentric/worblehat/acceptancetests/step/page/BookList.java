@@ -57,13 +57,13 @@ public class BookList {
                                               final String description) {
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
-        assertThat(title, is(htmlBook.getTitle()));
-        assertThat(author, is(htmlBook.getAuthor()));
-        assertThat(year, is(htmlBook.getYearOfPublication()));
-        assertThat(edition, is(htmlBook.getEdition()));
-        assertThat(isbn, is(htmlBook.getIsbn()));
-        assertThat(description, is(htmlBook.getDescription()));
+        HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn.trim());
+        assertThat(title, containsString(htmlBook.getTitle()));
+        assertThat(author, containsString(htmlBook.getAuthor()));
+        assertThat(year, containsString(htmlBook.getYearOfPublication()));
+        assertThat(edition, containsString(htmlBook.getEdition()));
+        assertThat(isbn, containsString(htmlBook.getIsbn()));
+        assertThat(description, containsString(htmlBook.getDescription()));
     }
 
     @Then("The library contains no books")

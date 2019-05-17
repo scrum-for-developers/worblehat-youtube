@@ -20,3 +20,9 @@ Examples:
 | isbn       | borrower      | message                        |
 | 0552131075 | user@test.com | The book is already borrowed.  |
 
+Scenario: Borrow ignores whitespaces
+
+Given a library, containing only one book with isbn 0552131075
+When user " test@me.com " borrows the book " 0552131075 "
+Then the booklist lists the user test@me.com as borrower for the book with isbn 0552131075
+
