@@ -27,7 +27,7 @@ public class ReturnAllBooks {
     @When("borrower $borrower returns all his books")
     public void whenUseruserReturnsAllHisBooks(String borrower1) {
         seleniumAdapter.gotoPage(Page.RETURNBOOKS);
-        seleniumAdapter.typeIntoField("emailAddress", borrower1);
+        seleniumAdapter.typeIntoField("emailAddress", borrower1.replace("\"", ""));
         seleniumAdapter.clickOnPageElementById(PageElement.RETURNALLBOOKSBUTTON);
     }
 

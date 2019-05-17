@@ -32,8 +32,8 @@ public class BorrowBook {
     @When("user $borrower borrows the book $isbn")
     public void whenUseruserBorrowsTheBookisbn(String user, String isbn) {
         seleniumAdapter.gotoPage(Page.BORROWBOOK);
-        seleniumAdapter.typeIntoField("email", user);
-        seleniumAdapter.typeIntoField("isbn", isbn);
+        seleniumAdapter.typeIntoField("email", user.replace("\"",""));
+        seleniumAdapter.typeIntoField("isbn", isbn.replace("\"",""));
         seleniumAdapter.clickOnPageElementById(PageElement.BORROWBOOKBUTTON);
     }
 
