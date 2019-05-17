@@ -17,6 +17,7 @@
     <modules>
         <module>worblehat-domain</module>
         <module>worblehat-web</module>
+        <module>worblehat-acceptancetests</module>
     </modules>
 
     <distributionManagement>
@@ -191,17 +192,6 @@
                 -->
                 <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
             </properties>
-        </profile>
-        <profile>
-            <id>include-acceptancetests</id>
-            <activation>
-                <property>
-                    <name>include-acceptancetests</name>
-                </property>
-            </activation>
-            <modules>
-                <module>worblehat-acceptancetests</module>
-            </modules>
         </profile>
         <profile>
             <id>coverage</id>
