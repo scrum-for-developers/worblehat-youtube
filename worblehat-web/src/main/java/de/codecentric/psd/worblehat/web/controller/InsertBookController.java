@@ -30,10 +30,7 @@ public class InsertBookController {
 
     private static final Logger LOG = LoggerFactory.getLogger(InsertBookController.class);
 
-    @InitBinder("insertBookFormData")
-    public void customizeBinding(WebDataBinder binder) {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-    }
+
 
     @NonNull
     private final BookService bookService;
