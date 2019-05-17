@@ -2,7 +2,6 @@ package de.codecentric.worblehat.acceptancetests.suite;
 
 import de.codecentric.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import org.jbehave.core.Embeddable;
-import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;
@@ -17,7 +16,6 @@ import org.jbehave.core.steps.StepCollector;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -77,7 +75,8 @@ public class AllAcceptanceTestStories extends JUnitStories {
     @SuppressWarnings("rawtypes")
     public static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
-            .withRecordingMode(RECORD_ALL, new File("./target/"));;
+            .withRecordingMode(RECORD_ALL, new File("./target/"));
+
 
     @Before
     public void setup() {
