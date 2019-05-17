@@ -44,7 +44,7 @@ public class InsertBook {
                                  String edition,
                                  String year,
                                  String isbn) {
-        insertAndSubmitBook(title, author, edition, year, "", isbn);
+        insertAndSubmitBook(title.replace("\"",""), author.replace("\"",""), edition.replace("\"",""), year.replace("\"",""), "", isbn.replace("\"",""));
     }
 
     @When("a librarian adds a book with title $title, author $author, edition $edition, year $year, description $description and isbn $isbn")
@@ -54,7 +54,7 @@ public class InsertBook {
                                  String year,
                                  String description,
                                  String isbn) {
-        insertAndSubmitBook(title, author, edition, year, description, isbn);
+        insertAndSubmitBook(title.replace("\"",""), author.replace("\"",""), edition.replace("\"",""), year.replace("\"",""), description.replace("\"",""), isbn.replace("\"",""));
     }
 
     @When("a librarian tries to add a similar book with different $title, $author and $edition")
