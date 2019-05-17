@@ -12,15 +12,10 @@ import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.*;
 
 @Component("BookList")
 public class BookList {
@@ -109,6 +104,16 @@ public class BookList {
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         for (String isbn : isbnList) {
             assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(borrower2));
+        }
+    }
+
+    @Then("for every book the booklist contains a cover")
+    public void checkCover() {
+        seleniumAdapter.gotoPage(Page.BOOKLIST);
+        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+        Collection<HtmlBook> books = htmlBookList.getHtmlBooks().values();
+        for (HtmlBook book : books) {
+            assertThat(book.getCover(), containsString(book.getIsbn()));
         }
     }
 
