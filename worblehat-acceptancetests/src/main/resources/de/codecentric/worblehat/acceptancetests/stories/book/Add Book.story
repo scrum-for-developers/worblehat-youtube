@@ -15,9 +15,10 @@ And for every book the booklist contains a cover
 
 Examples:
 
-| isbn       | author           | title     | edition   | year  | description      |
-| 0552131075 | Terry Pratchett  | Sourcery  | 1         | 1989  |                  |
-| 0552131075 | Terry Pratchett  | Sourcery  | 1         | 1989  | A description    |
+| isbn          | author           | title               | edition   | year  | description            |
+| 0552131075    | Terry Pratchett  | Sourcery            | 1         | 1989  |                        |
+| 0552131075    | Terry Pratchett  | Sourcery            | 1         | 1989  | A description          |
+| 9783827317247 | Andreas Thiel    | Komponentenmodelle  | 1         | 2000  | Komponentenmodelle FTW |
 
 Scenario: Different books must have different properties (ISBN, title, author, edition)
 
