@@ -21,6 +21,8 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -69,6 +71,8 @@ public class AllAcceptanceTestStories extends JUnitStories {
         Testcontainers.exposeHostPorts(8080);
     }
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllAcceptanceTestStories.class);
+
     @ClassRule
     @SuppressWarnings("rawtypes")
     public static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
@@ -78,6 +82,7 @@ public class AllAcceptanceTestStories extends JUnitStories {
     @Before
     public void setup() {
         seleniumAdapter.setDriver(chromeContainer.getWebDriver());
+        LOGGER.info("Connect to VNC via " + chromeContainer.getVncAddress());
     }
 
     @Override
