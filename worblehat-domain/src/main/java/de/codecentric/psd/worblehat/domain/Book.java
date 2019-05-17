@@ -1,18 +1,8 @@
 package de.codecentric.psd.worblehat.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -54,11 +44,11 @@ public class Book implements Serializable {
 
     public Book(BookParameter bookParameter) {
         this(
-                bookParameter.getTitle(),
-                bookParameter.getAuthor(),
-                bookParameter.getEdition(),
-                bookParameter.getIsbn(),
-                bookParameter.getYearOfPublication()
+            bookParameter.getTitle(),
+            bookParameter.getAuthor(),
+            bookParameter.getEdition(),
+            bookParameter.getIsbn(),
+            bookParameter.getYearOfPublication()
         );
         this.description = bookParameter.getDescription();
     }
@@ -70,7 +60,7 @@ public class Book implements Serializable {
 
     boolean isSameCopy(@NonNull Book book) {
         return getTitle().equals(book.title) && getAuthor().equals(book.author)
-                && getEdition().equals(book.edition);
+            && getEdition().equals(book.edition);
     }
 
     public void borrowNowByBorrower(String borrowerEmailAddress) {

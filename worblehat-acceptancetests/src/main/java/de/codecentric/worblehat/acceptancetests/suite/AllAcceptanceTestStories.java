@@ -54,9 +54,9 @@ import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordi
 @EnableJpaRepositories("de.codecentric.psd.worblehat.domain")
 @EntityScan("de.codecentric.psd.worblehat.domain")
 @ComponentScan(
-        basePackages = {
-                "de.codecentric.worblehat.acceptancetests",
-                "de.codecentric.psd.worblehat.domain"})
+    basePackages = {
+        "de.codecentric.worblehat.acceptancetests",
+        "de.codecentric.psd.worblehat.domain"})
 public class AllAcceptanceTestStories extends JUnitStories {
 
     @Autowired
@@ -74,8 +74,8 @@ public class AllAcceptanceTestStories extends JUnitStories {
     @ClassRule
     @SuppressWarnings("rawtypes")
     public static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
-            .withCapabilities(new ChromeOptions())
-            .withRecordingMode(RECORD_ALL, new File("./target/"));
+        .withCapabilities(new ChromeOptions())
+        .withRecordingMode(RECORD_ALL, new File("./target/"));
 
 
     @Before
@@ -91,9 +91,9 @@ public class AllAcceptanceTestStories extends JUnitStories {
 
             // prepare ReportBuilder
             StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-                    .withFailureTrace(true)
-                    .withFailureTraceCompression(true)
-                    .withFormats(Format.CONSOLE, Format.HTML, Format.STATS);
+                .withFailureTrace(true)
+                .withFailureTraceCompression(true)
+                .withFormats(Format.CONSOLE, Format.HTML, Format.STATS);
 
             // necessary to match steps correctly that only differ after the last parameter
             // see http://jbehave.org/reference/stable/prioritising-steps.html
@@ -103,10 +103,10 @@ public class AllAcceptanceTestStories extends JUnitStories {
 
             // general JBehave configuration
             Configuration configuration = new MostUsefulConfiguration()
-                    .useStepCollector(usefulStepCollector)
-                    .useStoryControls(
-                            new StoryControls().doResetStateBeforeScenario(false))
-                    .useStoryReporterBuilder(reporterBuilder);
+                .useStepCollector(usefulStepCollector)
+                .useStoryControls(
+                    new StoryControls().doResetStateBeforeScenario(false))
+                .useStoryReporterBuilder(reporterBuilder);
 
             useConfiguration(configuration);
 
@@ -123,8 +123,8 @@ public class AllAcceptanceTestStories extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
-                codeLocationFromClass(this.getClass()), "**/*.story",
-                "");
+            codeLocationFromClass(this.getClass()), "**/*.story",
+            "");
     }
 
 }

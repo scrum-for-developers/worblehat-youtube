@@ -31,8 +31,8 @@ public class ReturnAllBooksController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String returnAllBooks(
-            @ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
-            BindingResult result) {
+        @ModelAttribute("returnAllBookFormData") @Valid ReturnAllBooksFormData formData,
+        BindingResult result) {
         if (result.hasErrors()) {
             return "returnAllBooks";
         } else {

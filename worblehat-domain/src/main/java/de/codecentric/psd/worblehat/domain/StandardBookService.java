@@ -26,7 +26,7 @@ public class StandardBookService implements BookService {
     @Override
     public void returnAllBooksByBorrower(String borrowerEmailAddress) {
         List<Borrowing> borrowingsByUser = borrowingRepository
-                .findBorrowingsByBorrower(borrowerEmailAddress);
+            .findBorrowingsByBorrower(borrowerEmailAddress);
         for (Borrowing borrowing : borrowingsByUser) {
             borrowingRepository.delete(borrowing);
         }
@@ -37,8 +37,8 @@ public class StandardBookService implements BookService {
         Set<Book> books = bookRepository.findByIsbn(isbn);
 
         Optional<Book> unborrowedBook = books.stream()
-                .filter(book -> book.getBorrowing() == null)
-                .findFirst();
+            .filter(book -> book.getBorrowing() == null)
+            .findFirst();
 
         return unborrowedBook.map(book -> {
             book.borrowNowByBorrower(borrower);

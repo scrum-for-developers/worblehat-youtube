@@ -4,29 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
-import static org.hamcrest.CoreMatchers.either;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class StandardBookServiceTest {
 
@@ -70,7 +55,7 @@ class StandardBookServiceTest {
 
         borrowingRepository = mock(BorrowingRepository.class);
         when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
-                .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
+            .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
 
         when(borrowingRepository.findByBorrowedBook(aBook)).thenReturn(Optional.empty());
 
@@ -80,7 +65,7 @@ class StandardBookServiceTest {
     private void givenALibraryWith(Book... books) {
         Map<String, Set<Book>> bookCopies = new HashMap<>();
         for (Book book : books
-                ) {
+        ) {
             if (!bookCopies.containsKey(book.getIsbn())) {
                 bookCopies.put(book.getIsbn(), new HashSet<>());
             }
@@ -148,7 +133,7 @@ class StandardBookServiceTest {
     void shouldCreateBook() {
         when(bookRepository.save(any(Book.class))).thenReturn(aBook);
         bookService.createBook(
-                new BookParameter(aBook.getTitle(), aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
+            new BookParameter(aBook.getTitle(), aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
 
         // assert that book was saved to repository
         ArgumentCaptor<Book> bookArgumentCaptor = ArgumentCaptor.forClass(Book.class);
@@ -167,7 +152,7 @@ class StandardBookServiceTest {
     void shouldCreateAnotherCopyOfExistingBook() {
         when(bookRepository.save(any(Book.class))).thenReturn(aBook);
         bookService.createBook(
-                new BookParameter(aBook.getTitle(), aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
+            new BookParameter(aBook.getTitle(), aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
         verify(bookRepository, times(1)).save(any(Book.class));
     }
 
@@ -175,7 +160,7 @@ class StandardBookServiceTest {
     void shouldNotCreateAnotherCopyOfExistingBookWithDifferentTitle() {
         givenALibraryWith(aBook);
         bookService.createBook(
-                new BookParameter(aBook.getTitle() + "X", aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
+            new BookParameter(aBook.getTitle() + "X", aBook.getAuthor(), aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
         verify(bookRepository, times(0)).save(any(Book.class));
     }
 
@@ -183,7 +168,7 @@ class StandardBookServiceTest {
     void shouldNotCreateAnotherCopyOfExistingBookWithDifferentAuthor() {
         givenALibraryWith(aBook);
         bookService.createBook(
-                new BookParameter(aBook.getTitle(), aBook.getAuthor() + "X", aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
+            new BookParameter(aBook.getTitle(), aBook.getAuthor() + "X", aBook.getEdition(), aBook.getIsbn(), aBook.getYearOfPublication(), aBook.getDescription()));
         verify(bookRepository, times(0)).save(any(Book.class));
     }
 

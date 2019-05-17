@@ -1,18 +1,18 @@
 version: '3.1'
 
 services:
-  db:
-    image: postgres
-    restart: unless-stopped
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_PASSWORD: worblehat-pw
+    db:
+        image: postgres
+        restart: unless-stopped
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: worblehat-pw
 
-  adminer:
-    image: adminer
-    restart: unless-stopped
-    ports:
-      - 8081:8080
-    depends_on:
-      - db
+    adminer:
+        image: adminer
+        restart: unless-stopped
+        ports:
+            - 8081:8080
+        depends_on:
+            - db

@@ -1,20 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Return All Books - Worblehat Bookmanager</title>
+    <title>Return All Books - Worblehat Bookmanager</title>
 </head>
 <body>
-	<h1>Return all Books</h1>
+<h1>Return all Books</h1>
 
-	<form th:object="${returnAllBookFormData}" method="POST">
-		 Email Address:<input id="emailAddress" type="text" th:field="*{emailAddress}" />
-		<span id="email.error" th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></span>
-		<br />
-		<input type="submit" id="returnAllBooks" value="Return All Books" />
+<form th:object="${returnAllBookFormData}" method="POST">
+    Email Address:<input id="emailAddress" type="text" th:field="*{emailAddress}"/>
+    <span id="email.error" th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></span>
+    <br/>
+    <input type="submit" id="returnAllBooks" value="Return All Books"/>
 
-	</form>
+</form>
 
-	<div th:replace="fragments/footer :: subpage-footer">Footer</div>
+<div th:replace="fragments/footer :: subpage-footer">Footer</div>
 
 </body>
 </html>

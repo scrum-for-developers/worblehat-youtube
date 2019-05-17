@@ -63,22 +63,22 @@ public class InsertBook {
                                         String edition) {
         Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
         insertAndSubmitBook(title,
-                author,
-                edition,
-                String.valueOf(lastInsertedBook.getYearOfPublication()),
-                lastInsertedBook.getDescription(),
-                lastInsertedBook.getIsbn());
+            author,
+            edition,
+            String.valueOf(lastInsertedBook.getYearOfPublication()),
+            lastInsertedBook.getDescription(),
+            lastInsertedBook.getIsbn());
     }
 
     @When("a librarian tries to add a similar book with same title, author and edition")
     public void whenASimilarBookIsAdded() {
         Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
         insertAndSubmitBook(lastInsertedBook.getTitle(),
-                lastInsertedBook.getAuthor(),
-                lastInsertedBook.getEdition(),
-                String.valueOf(lastInsertedBook.getYearOfPublication()),
-                lastInsertedBook.getDescription(),
-                lastInsertedBook.getIsbn());
+            lastInsertedBook.getAuthor(),
+            lastInsertedBook.getEdition(),
+            String.valueOf(lastInsertedBook.getYearOfPublication()),
+            lastInsertedBook.getDescription(),
+            lastInsertedBook.getIsbn());
 
     }
 

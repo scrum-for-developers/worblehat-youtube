@@ -35,8 +35,8 @@ public class BookListController {
 
     protected Map<String, String> getCoverURLsForBooks(List<Book> books) {
         return books.stream().collect(
-                Collectors.toMap(
-                        Book::getIsbn, book -> "http://covers.openlibrary.org/b/isbn/" + book.getIsbn() + "-S.jpg"));
+            Collectors.toMap(
+                Book::getIsbn, book -> "http://covers.openlibrary.org/b/isbn/" + book.getIsbn() + "-S.jpg"));
     }
 
 }

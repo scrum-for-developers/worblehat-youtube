@@ -20,8 +20,8 @@ public class WorblehatDev {
 
     private static void initPostgresContainer() {
         PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer<>()
-                .withUsername("foo")
-                .withPassword("bar");
+            .withUsername("foo")
+            .withPassword("bar");
 
         postgreSQLContainer.start();
 

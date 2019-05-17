@@ -2,5 +2,5 @@ language: java
 sudo: false
 
 jdk:
-  - openjdk11
+    - openjdk11
 

@@ -1,28 +1,28 @@
 <document xmlns="http://maven.apache.org/changes/1.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
-	<properties>
-		<title>Changes for Worblehat Webapp</title>
-		<author email="markus.bonsch@codecentric.de">Markus Bonsch</author>
-	</properties>
-	<body>
-		<release version="0.8" date="2011-04-05" description="First release">
-			<action dev="betaworblers" type="update">
-				Adding new books.
-			</action>
-		</release>
-		<release version="0.9" date="2011-04-06"
-			description="Second Release with much improved functionality">
-			<action dev="betaworblers" type="update">
-				Borrowing books.
-			</action>
-		</release>
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+    <properties>
+        <title>Changes for Worblehat Webapp</title>
+        <author email="markus.bonsch@codecentric.de">Markus Bonsch</author>
+    </properties>
+    <body>
+        <release version="0.8" date="2011-04-05" description="First release">
+            <action dev="betaworblers" type="update">
+                Adding new books.
+            </action>
+        </release>
+        <release version="0.9" date="2011-04-06"
+                 description="Second Release with much improved functionality">
+            <action dev="betaworblers" type="update">
+                Borrowing books.
+            </action>
+        </release>
 
-		<release version="1.0" date="2011-04-06"
-			description="Release with much improved functionality">
-			<action dev="betaworblers" type="update">
-				Return all borrowed books by one member.
-			</action>
-		</release>
-	</body>
+        <release version="1.0" date="2011-04-06"
+                 description="Release with much improved functionality">
+            <action dev="betaworblers" type="update">
+                Return all borrowed books by one member.
+            </action>
+        </release>
+    </body>
 </document>

@@ -78,7 +78,7 @@ public class BookList {
                                                    final String isbn) {
         Book book = DemoBookFactory.createDemoBook().build();
         Map<String, String> wantedRow = createRowMap(book.getTitle(), book.getAuthor(),
-                String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
+            String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);

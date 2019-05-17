@@ -15,7 +15,6 @@ import java.util.*;
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
 
 @Component("Library")
@@ -54,9 +53,9 @@ public class Library {
     public void createLibraryWithSingleBookWithGivenIsbnAndTitle(String isbn, String title) {
         emptyLibrary();
         Book book = DemoBookFactory.createDemoBook()
-                .withISBN(isbn)
-                .withTitle(title)
-                .build();
+            .withISBN(isbn)
+            .withTitle(title)
+            .build();
         Optional<Book> createdBook = bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()));
         createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
     }
@@ -68,7 +67,7 @@ public class Library {
         for (String isbn : isbnList) {
             Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
             bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()))
-                    .orElseThrow(IllegalStateException::new);
+                .orElseThrow(IllegalStateException::new);
 
             bookService.borrowBook(book.getIsbn(), borrower);
         }

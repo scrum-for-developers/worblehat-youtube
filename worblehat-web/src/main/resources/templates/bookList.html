@@ -1,39 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Show all Books</title>
+    <title>Show all Books</title>
 </head>
 <body>
-	<table class="bookList">
-	<thead>
-		<tr>
-			<th>Cover</th>
-			<th>Title</th>
-			<th>Author</th>
-			<th>Year</th>
-			<th>Edition</th>
-			<th>ISBN</th>
-			<th>Description</th>
-			<th>Borrower</th>
-			<th>Details</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr th:each="book : ${books}">
-			<td style="height: 50px"><img th:src="${covers[book.isbn]}" /></td>
-			<td th:text="${book.title}">Harry Potter</td>
-			<td th:text="${book.author}">J.K. Rowling</td>
-			<td th:text="${book.yearOfPublication}">2002</td>
-			<td th:text="${book.edition}">1st</td>
-			<td th:text="${book.isbn}">123456</td>
-			<td style="white-space: pre-wrap;" th:text="${book.description}">Description</td>
-			<td th:text="${book?.borrowing?.borrowerEmailAddress}">someone@codecentric.de</td>
-			<td><a th:class="'detailsLink-' + ${book.isbn}" th:href="@{/bookDetails(isbn=${book.isbn})}">Details</a></td>
-		</tr>
-	</tbody>
-	</table>
+<table class="bookList">
+    <thead>
+        <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Edition</th>
+            <th>ISBN</th>
+            <th>Description</th>
+            <th>Borrower</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="book : ${books}">
+            <td style="height: 50px"><img th:src="${covers[book.isbn]}"/></td>
+            <td th:text="${book.title}">Harry Potter</td>
+            <td th:text="${book.author}">J.K. Rowling</td>
+            <td th:text="${book.yearOfPublication}">2002</td>
+            <td th:text="${book.edition}">1st</td>
+            <td th:text="${book.isbn}">123456</td>
+            <td style="white-space: pre-wrap;" th:text="${book.description}">Description</td>
+            <td th:text="${book?.borrowing?.borrowerEmailAddress}">someone@codecentric.de</td>
+            <td><a th:class="'detailsLink-' + ${book.isbn}" th:href="@{/bookDetails(isbn=${book.isbn})}">Details</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-	<div th:replace="fragments/footer :: subpage-footer">Footer</div>
+<div th:replace="fragments/footer :: subpage-footer">Footer</div>
 
 </body>
 </html>

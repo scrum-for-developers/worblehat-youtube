@@ -11,7 +11,7 @@ public class Config {
     private static final String BUNDLE_NAME = "de.codecentric.worblehat.acceptancetests.adapter.config"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-            .getBundle(BUNDLE_NAME);
+        .getBundle(BUNDLE_NAME);
 
     public Config() {
     }

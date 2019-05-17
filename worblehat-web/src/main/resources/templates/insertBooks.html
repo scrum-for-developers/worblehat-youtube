@@ -1,33 +1,36 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"><head>
-<title>Add Book - Worblehat Bookmanager</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Book - Worblehat Bookmanager</title>
 </head>
 <body>
-	<h1>Add Book</h1>
+<h1>Add Book</h1>
 
-	<form th:object="${insertBookFormData}" method="POST">
-			Title:<input type="text" th:field="*{title}" />
-		<span id="title.error" class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-		<br />
-			Edition:<input type="text" th:field="*{edition}" />
-		<span id="edition.error" class="error" th:if="${#fields.hasErrors('edition')}" th:errors="*{edition}"></span>
-		<br />
-			ISBN:<input type="text" th:field="*{isbn}" />
-		<span id="isbn.error" class="error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
-		<br />
-			Author:<input type="text" th:field="*{author}" />
-		<span id="author.error" class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
-		<br />
-			Year:<input type="text" th:field="*{yearOfPublication}" />
-		<span id="yearOfPublication.error" class="error" th:if="${#fields.hasErrors('yearOfPublication')}" th:errors="*{yearOfPublication}"></span>
-		<br />
-		Description:<textarea th:field="*{description}" ></textarea>
-		<span id="description.error" class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-		<br />
-		<input type="submit" id="addBook" value="Add Book" />
-	</form>
+<form th:object="${insertBookFormData}" method="POST">
+    Title:<input type="text" th:field="*{title}"/>
+    <span id="title.error" class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    <br/>
+    Edition:<input type="text" th:field="*{edition}"/>
+    <span id="edition.error" class="error" th:if="${#fields.hasErrors('edition')}" th:errors="*{edition}"></span>
+    <br/>
+    ISBN:<input type="text" th:field="*{isbn}"/>
+    <span id="isbn.error" class="error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+    <br/>
+    Author:<input type="text" th:field="*{author}"/>
+    <span id="author.error" class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+    <br/>
+    Year:<input type="text" th:field="*{yearOfPublication}"/>
+    <span id="yearOfPublication.error" class="error" th:if="${#fields.hasErrors('yearOfPublication')}"
+        th:errors="*{yearOfPublication}"></span>
+    <br/>
+    Description:<textarea th:field="*{description}"></textarea>
+    <span id="description.error" class="error" th:if="${#fields.hasErrors('description')}"
+        th:errors="*{description}"></span>
+    <br/>
+    <input type="submit" id="addBook" value="Add Book"/>
+</form>
 
-	<div th:replace="fragments/footer :: subpage-footer">Footer</div>
+<div th:replace="fragments/footer :: subpage-footer">Footer</div>
 
 </body>
 </html>

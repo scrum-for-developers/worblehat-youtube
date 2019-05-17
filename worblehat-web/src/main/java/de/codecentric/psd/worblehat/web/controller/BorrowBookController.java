@@ -53,11 +53,11 @@ public class BorrowBookController {
         Optional<Borrowing> borrowing = bookService.borrowBook(borrowFormData.getIsbn(), borrowFormData.getEmail());
 
         return borrowing
-                .map(b -> "home")
-                .orElseGet(() -> {
-                    result.rejectValue("isbn", "noBorrowableBooks");
-                    return BORROW_PAGE;
-                });
+            .map(b -> "home")
+            .orElseGet(() -> {
+                result.rejectValue("isbn", "noBorrowableBooks");
+                return BORROW_PAGE;
+            });
     }
 
     @ExceptionHandler(Exception.class)

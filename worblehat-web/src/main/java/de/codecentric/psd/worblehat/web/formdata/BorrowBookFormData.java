@@ -1,11 +1,10 @@
 package de.codecentric.psd.worblehat.web.formdata;
 
 import de.codecentric.psd.worblehat.web.validation.ISBN;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
-import lombok.Data;
 
 /**
  * Form data object from the borrow view.

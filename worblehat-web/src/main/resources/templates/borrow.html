@@ -1,22 +1,22 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Borrow book - Worblehat Bookmanager</title>
+    <title>Borrow book - Worblehat Bookmanager</title>
 </head>
 <body>
-	<h1>Borrow Book</h1>
+<h1>Borrow Book</h1>
 
-	<form th:object="${borrowFormData}" method="POST">
-		ISBN:<input id="isbn" type="text" th:field="*{isbn}" />
-		<span id="isbn.error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
-		<br />
-		Email:<input id="email" type="text" th:field="*{email}" />
-		<span id="email.error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-		<br />
-		<input type="submit" id="borrowBook" value="Borrow Book" />
-	</form>
+<form th:object="${borrowFormData}" method="POST">
+    ISBN:<input id="isbn" type="text" th:field="*{isbn}"/>
+    <span id="isbn.error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+    <br/>
+    Email:<input id="email" type="text" th:field="*{email}"/>
+    <span id="email.error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <br/>
+    <input type="submit" id="borrowBook" value="Borrow Book"/>
+</form>
 
-	<div th:replace="fragments/footer :: subpage-footer">Footer</div>
+<div th:replace="fragments/footer :: subpage-footer">Footer</div>
 
 
 </body>
