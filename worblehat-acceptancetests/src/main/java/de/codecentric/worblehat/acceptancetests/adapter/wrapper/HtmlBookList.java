@@ -48,6 +48,10 @@ public class HtmlBookList {
                         break;
                     case "Description":
                         book.setDescription(cells.get(currentColumn).getText());
+                        break;
+                    case "Cover":
+                        book.setCover(cells.get(currentColumn).findElement(By.tagName("img")).getAttribute("src"));
+                        break;
 
                 }
                 currentColumn++;

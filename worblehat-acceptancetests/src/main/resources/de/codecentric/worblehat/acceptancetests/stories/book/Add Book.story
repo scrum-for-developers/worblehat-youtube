@@ -11,6 +11,7 @@ Scenario:
 Given an empty library
 When a librarian adds a book with title <title>, author <author>, edition <edition>, year <year>, description <description> and isbn <isbn>
 Then the booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn> and description <description>
+And for every book the booklist contains a cover
 
 Examples:
 

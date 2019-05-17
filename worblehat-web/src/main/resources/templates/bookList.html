@@ -7,6 +7,7 @@
 	<table class="bookList">
 	<thead>
 		<tr>
+			<th>Cover</th>
 			<th>Title</th>
 			<th>Author</th>
 			<th>Year</th>
@@ -19,6 +20,7 @@
 	</thead>
 	<tbody>
 		<tr th:each="book : ${books}">
+			<td><img src="test.jpg" /></td>
 			<td th:text="${book.title}">Harry Potter</td>
 			<td th:text="${book.author}">J.K. Rowling</td>
 			<td th:text="${book.yearOfPublication}">2002</td>
