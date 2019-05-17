@@ -35,14 +35,26 @@ class ISBNConstraintValidatorTest {
     }
 
     @Test
-    void shouldReturnTrueIfValidISBN() throws Exception {
+    void shouldReturnTrueIfValidISBN10() throws Exception {
         boolean actual = isbnConstraintValidator.isValid("0132350882", constraintValidatorContext);
         assertTrue(actual);
     }
 
     @Test
-    void shouldReturnFalseIfInvalidISBN() throws Exception {
+    void shouldReturnFalseIfInvalidISBN10() throws Exception {
         boolean actual = isbnConstraintValidator.isValid("0123459789", constraintValidatorContext);
+        assertFalse(actual);
+    }
+
+    @Test
+    void shouldReturnTrueForValid13DigitISBN() throws Exception {
+        boolean actual = isbnConstraintValidator.isValid("9783827317247", constraintValidatorContext);
+        assertTrue(actual);
+    }
+
+    @Test
+    void shouldReturnFalseForInvalisISBN13() {
+        boolean actual = isbnConstraintValidator.isValid("1234567890XXX", constraintValidatorContext);
         assertFalse(actual);
     }
 
