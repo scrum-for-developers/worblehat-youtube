@@ -41,5 +41,66 @@ Once the data base is started point your broser to http://localhost:8081 and log
 You can use the maven wrapper to compile and execute the application
 
 * Compile everything: `./mvnw clean install`
-* Run the application: `./mvnw -pl worblehat-web spring-boot:run
-* Run the acceptancetests: `./mvnw -Pinclude-acceptancetests -pl worblehat-acceptancetests test`
+* Run the application: `./mvnw -pl worblehat-web spring-boot:run`
+* Run the acceptancetests _(The application needs to be running, if you do this.)_: \
+ `./mvnw verify`
+  
+
+### Acceptance Tests
+
+When the acceptance tests are running, a chrome browser is started within a test container. While it's 
+running, it is recording a video, which can later be found in `./target`. If you want to connect to the 
+container, you can do so via vnc. The URL is logged while the tests are starting up, for example:
+
+```...
+16:06:53.354 [main] INFO  d.c.w.a.s.AllAcceptanceTestStories - Connect to VNC via vnc://vnc:secret@localhost:33148
+...
+``` 
+
+The most simple way (at least for macs) to open the vnc connection is on the terminal with `open vnc://vnc:secret@localhost:33148`.
+
+#### Running a single Story or Scenario
+
+If you want to run a single Story or Scenario, add the Meta-Tag `@Solo`.
+
+For example, if this is your `Add Book.story`, you can tag the whole Story:
+
+```
+Meta:
+@themes Book
+@Solo
+
+Narrative:
+In order to add new books to the library
+As a librarian
+I want to add books through the website
+
+Scenario:
+
+Given an empty library
+When a librarian adds a book with title <title>, author <author>, edition <edition>, year <year>, description <description> and isbn <isbn>
+Then the booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn> and description <description>
+
+```
+
+or just a single scenario:
+
+```
+Meta:
+@themes Book
+
+Narrative:
+In order to add new books to the library
+As a librarian
+I want to add books through the website
+
+Scenario:
+
+Meta: 
+@Solo
+
+Given an empty library
+When a librarian adds a book with title <title>, author <author>, edition <edition>, year <year>, description <description> and isbn <isbn>
+Then the booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn> and description <description>
+
+```

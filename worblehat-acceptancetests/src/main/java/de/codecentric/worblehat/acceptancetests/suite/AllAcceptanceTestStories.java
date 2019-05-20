@@ -1,13 +1,15 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
 import de.codecentric.worblehat.acceptancetests.adapter.SeleniumAdapter;
+import org.jbehave.core.ConfigurableEmbedder;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
+import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
-import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -17,6 +19,7 @@ import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
@@ -57,7 +60,7 @@ import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordi
     basePackages = {
         "de.codecentric.worblehat.acceptancetests",
         "de.codecentric.psd.worblehat.domain"})
-public class AllAcceptanceTestStories extends JUnitStories {
+public class AllAcceptanceTestStories extends ConfigurableEmbedder {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -82,6 +85,32 @@ public class AllAcceptanceTestStories extends JUnitStories {
     public void setup() {
         seleniumAdapter.setDriver(chromeContainer.getWebDriver());
         LOGGER.info("Connect to VNC via " + chromeContainer.getVncAddress());
+    }
+
+
+    @Test
+    public void run() throws Throwable {
+        Embedder embedder = configuredEmbedder();
+        try {
+            StoryManager storyManager = embedder.storyManager();
+
+            long soloStories = storyPaths().stream()
+                .map(path -> storyManager.storyOfPath(path))
+                .filter(story -> (
+                    story.getMeta().hasProperty("Solo") ||
+                    story.getScenarios().stream().filter(
+                        scenario -> scenario.getMeta().hasProperty("Solo")
+                    ).count()>0
+                )).count();
+
+            if (soloStories > 0) {
+                LOGGER.info("Found {} Scenarios or Stories marked as '@Solo', activating Meta-Filter.", soloStories);
+                embedder.useMetaFilters(List.of("+Solo"));
+            }
+            embedder.runStoriesAsPaths(storyPaths());
+        } finally {
+            embedder.generateCrossReference();
+        }
     }
 
     @Override
@@ -120,7 +149,6 @@ public class AllAcceptanceTestStories extends JUnitStories {
         return new SpringStepsFactory(configuration(), applicationContext);
     }
 
-    @Override
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
             codeLocationFromClass(this.getClass()), "**/*.story",
