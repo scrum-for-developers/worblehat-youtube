@@ -6,8 +6,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 import java.util.Map;
@@ -24,19 +24,23 @@ public class BookListController {
     @NonNull
     private final BookService bookService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String setupForm(ModelMap modelMap) {
         List<Book> books = bookService.findAllBooks();
         modelMap.addAttribute("books", books);
-        Map<String, String> covers = getCoverURLsForBooks(books);
+        Map<String, String> covers = getCoverURLsForBooks(books.stream().map(Book::getIsbn).collect(Collectors.toList()));
         modelMap.addAttribute("covers", covers);
         return "bookList";
     }
 
-    protected Map<String, String> getCoverURLsForBooks(List<Book> books) {
-        return books.stream().collect(
+    protected Map<String, String> getCoverURLsForBooks(List<String> isbns) {
+        return isbns.stream()
+            .collect(
             Collectors.toMap(
-                Book::getIsbn, book -> "http://covers.openlibrary.org/b/isbn/" + book.getIsbn() + "-S.jpg"));
+                isbn -> isbn,
+                isbn -> "http://covers.openlibrary.org/b/isbn/" +
+                    isbn.trim().replace("-", "").replace(" ", "")
+                    + "-S.jpg"));
     }
 
 }

@@ -4,6 +4,8 @@ import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -15,7 +17,6 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.mockito.Mockito.when;
 
 @MockitoSettings
@@ -61,11 +62,20 @@ class BookListControllerTest {
         assertThat(actualCovers.values(), hasSize(1));
     }
 
-    @Test
-    void shouldBuildCoverMapForBooks() {
-        List<Book> testBooks = List.of(TEST_BOOK, TEST_BOOK2);
-        Map<String, String> coverURLsForBooks = bookListController.getCoverURLsForBooks(testBooks);
-        assertThat(coverURLsForBooks.keySet(), hasSize(2));
-        assertThat(coverURLsForBooks.values(), containsInAnyOrder("http://covers.openlibrary.org/b/isbn/" + TEST_BOOK.getIsbn() + "-S.jpg", "http://covers.openlibrary.org/b/isbn/" + TEST_BOOK2.getIsbn() + "-S.jpg"));
+    @ParameterizedTest
+    @CsvSource({
+        "isbn, http://covers.openlibrary.org/b/isbn/isbn-S.jpg",
+        "isbn2, http://covers.openlibrary.org/b/isbn/isbn2-S.jpg",
+        "123456789X, http://covers.openlibrary.org/b/isbn/123456789X-S.jpg",
+        "99921-58-10-7, http://covers.openlibrary.org/b/isbn/9992158107-S.jpg",
+        "960 425 059 0, http://covers.openlibrary.org/b/isbn/9604250590-S.jpg",
+        "9780306406157, http://covers.openlibrary.org/b/isbn/9780306406157-S.jpg",
+        "978-0-306-40615-7, http://covers.openlibrary.org/b/isbn/9780306406157-S.jpg",
+        "978 0 306 40615 7, http://covers.openlibrary.org/b/isbn/9780306406157-S.jpg",
+    })
+    void shouldBuildCoverMapForBooks(String isbn, String URL) {
+
+        Map<String, String> coverURLsForBooks = bookListController.getCoverURLsForBooks(List.of(isbn));
+        assertThat(coverURLsForBooks.get(isbn), is(URL));
     }
 }
