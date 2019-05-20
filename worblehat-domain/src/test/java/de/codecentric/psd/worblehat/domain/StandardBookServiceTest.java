@@ -54,8 +54,6 @@ class StandardBookServiceTest {
         bookRepository = mock(BookRepository.class);
 
         borrowingRepository = mock(BorrowingRepository.class);
-        when(borrowingRepository.findBorrowingsByBorrower(BORROWER_EMAIL))
-            .thenReturn(Arrays.asList(aBorrowing, anotherBorrowing));
 
         when(borrowingRepository.findByBorrowedBook(aBook)).thenReturn(Optional.empty());
 
@@ -80,8 +78,7 @@ class StandardBookServiceTest {
     @Test
     void shouldReturnAllBooksOfOnePerson() {
         bookService.returnAllBooksByBorrower(BORROWER_EMAIL);
-        verify(borrowingRepository).delete(aBorrowing);
-        verify(borrowingRepository).delete(anotherBorrowing);
+        verify(borrowingRepository).deleteByBorrowerEmailAddress(BORROWER_EMAIL);
     }
 
     @Test
