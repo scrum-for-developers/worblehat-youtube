@@ -85,25 +85,21 @@ public class BookList {
         assertThat(htmlBook.getBorrower(), is(borrower));
     }
 
-    @Then("books $isbns are not borrowed anymore by borrower $borrower")
-    public void booksAreNotBorrowedByBorrower1(String isbns,
+    @Then("books $isbns are $borrowStatus by borrower $borrower")
+    public void booksAreNotBorrowedByBorrower1(List<String> isbns,
+                                               String borrowStatus,
                                                String borrower) {
-        List<String> isbnList = getListOfItems(isbns);
-        seleniumAdapter.gotoPage(Page.BOOKLIST);
-        HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        for (String isbn : isbnList) {
-            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(isEmptyOrNullString()));
-        }
-    }
+        boolean shouldNotBeBorrowed = borrowStatus.contains("not borrowed");
 
-    @Then("books $isbns are still borrowed by borrower $borrower")
-    public void booksAreStillBorrowedByBorrower2(String isbns,
-                                                 String borrower2) {
-        List<String> isbnList = getListOfItems(isbns);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
-        for (String isbn : isbnList) {
-            assertThat(htmlBookList.getBookByIsbn(isbn).getBorrower(), is(borrower2));
+        for (String isbn : isbns) {
+            String actualBorrower = htmlBookList.getBookByIsbn(isbn).getBorrower();
+            if (shouldNotBeBorrowed) {
+                assertThat(actualBorrower, is (isEmptyOrNullString()));
+            } else {
+                assertThat(actualBorrower, is (borrower));
+            }
         }
     }
 

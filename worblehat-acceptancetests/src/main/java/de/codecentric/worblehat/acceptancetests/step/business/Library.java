@@ -62,9 +62,8 @@ public class Library {
 
     @Given("borrower $borrower has borrowed books $isbns")
     public void borrower1HasBorrowerdBooks(String borrower,
-                                           String isbns) {
-        List<String> isbnList = getListOfItems(isbns);
-        for (String isbn : isbnList) {
+                                           List<String> isbns) {
+        for (String isbn : isbns) {
             Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
             bookService.createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(), book.getYearOfPublication(), book.getDescription()))
                 .orElseThrow(IllegalStateException::new);
