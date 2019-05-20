@@ -1,6 +1,7 @@
 package de.codecentric.worblehat.acceptancetests.suite;
 
 import de.codecentric.worblehat.acceptancetests.adapter.SeleniumAdapter;
+import de.codecentric.worblehat.acceptancetests.adapter.wrapper.Page;
 import org.jbehave.core.ConfigurableEmbedder;
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
@@ -76,7 +77,7 @@ public class AllAcceptanceTestStories extends ConfigurableEmbedder {
 
     @ClassRule
     @SuppressWarnings("rawtypes")
-    public static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
+    public static final BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
         .withCapabilities(new ChromeOptions())
         .withRecordingMode(RECORD_ALL, new File("./target/"));
 
@@ -84,7 +85,7 @@ public class AllAcceptanceTestStories extends ConfigurableEmbedder {
     @Before
     public void setup() {
         seleniumAdapter.setDriver(chromeContainer.getWebDriver());
-        LOGGER.info("Connect to VNC via " + chromeContainer.getVncAddress());
+        LOGGER.info("Connect to VNC via %{}", chromeContainer.getVncAddress());
     }
 
 
@@ -92,24 +93,33 @@ public class AllAcceptanceTestStories extends ConfigurableEmbedder {
     public void run() throws Throwable {
         Embedder embedder = configuredEmbedder();
         try {
-            StoryManager storyManager = embedder.storyManager();
 
-            long soloStories = storyPaths().stream()
-                .map(path -> storyManager.storyOfPath(path))
-                .filter(story -> (
-                    story.getMeta().hasProperty("Solo") ||
-                    story.getScenarios().stream().filter(
-                        scenario -> scenario.getMeta().hasProperty("Solo")
-                    ).count()>0
-                )).count();
+            checkForRunningWorblehat();
 
-            if (soloStories > 0) {
-                LOGGER.info("Found {} Scenarios or Stories marked as '@Solo', activating Meta-Filter.", soloStories);
+            if (isSoloApplied(embedder)) {
+                LOGGER.info("Found Scenarios or Stories marked as '@Solo', activating Meta-Filter.");
                 embedder.useMetaFilters(List.of("+Solo"));
             }
             embedder.runStoriesAsPaths(storyPaths());
         } finally {
             embedder.generateCrossReference();
+        }
+    }
+
+    private boolean isSoloApplied(Embedder embedder) {
+        StoryManager storyManager = embedder.storyManager();
+
+        return storyPaths().stream()
+            .map(storyManager::storyOfPath).anyMatch(story -> (
+                story.getMeta().hasProperty("Solo") ||
+                    story.getScenarios().stream().anyMatch(scenario -> scenario.getMeta().hasProperty("Solo"))
+            ));
+    }
+
+    private void checkForRunningWorblehat() {
+        seleniumAdapter.gotoPage(Page.HOME);
+        if (!seleniumAdapter.containsTextOnPage("Worblehat")) {
+            throw new IllegalStateException("Worblehat doesn't seem to be running. Please start the application first");
         }
     }
 

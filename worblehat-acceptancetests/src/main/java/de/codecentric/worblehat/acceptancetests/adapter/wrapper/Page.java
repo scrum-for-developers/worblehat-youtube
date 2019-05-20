@@ -1,6 +1,7 @@
 package de.codecentric.worblehat.acceptancetests.adapter.wrapper;
 
 public enum Page {
+    HOME("/"),
     BOOKLIST("bookList"),
     INSERTBOOKS("insertBooks"),
     BORROWBOOK("borrow"),
