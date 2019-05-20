@@ -37,6 +37,7 @@ import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -85,6 +86,11 @@ public class AllAcceptanceTestStories extends ConfigurableEmbedder {
     @Before
     public void setup() {
         seleniumAdapter.setDriver(chromeContainer.getWebDriver());
+        try {
+            Runtime.getRuntime().exec("open " + chromeContainer.getVncAddress());
+        } catch (IOException e) {
+            // silently fail, if it's not working – e.printStackTrace();
+        }
         LOGGER.info("Connect to VNC via %{}", chromeContainer.getVncAddress());
     }
 
