@@ -47,5 +47,6 @@ Examples:
 Scenario:
 
 Given an empty library
-When a librarian adds a book with title "Komponentenmodelle ", author "Andreas Thiel ", edition "1 ", year "2000 ", description "Komponentenmodelle FTW " and isbn "9783827317247  "
+!-- Note the whitespace at the end of parameters in the following step
+When a librarian adds a book with title Komponentenmodelle    , author Andreas Thiel   , edition 1     , year 2000      , description Komponentenmodelle FTW       and isbn 9783827317247
 Then the booklist contains a book with values title Komponentenmodelle, author Andreas Thiel, year 2000, edition 1, isbn 9783827317247 and description Komponentenmodelle FTW

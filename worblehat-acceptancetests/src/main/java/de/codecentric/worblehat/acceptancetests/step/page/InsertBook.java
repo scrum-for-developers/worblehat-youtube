@@ -36,15 +36,13 @@ public class InsertBook {
     // *** W H E N *****
     // *****************
 
-    // TODO: write story that contains whitespaces in examples table
-
     @When("a librarian adds a book with title $title, author $author, edition $edition, year $year and isbn $isbn")
     public void whenABookIsAdded(String title,
                                  String author,
                                  String edition,
                                  String year,
                                  String isbn) {
-        insertAndSubmitBook(title.replace("\"",""), author.replace("\"",""), edition.replace("\"",""), year.replace("\"",""), "", isbn.replace("\"",""));
+        insertAndSubmitBook(title, author, edition, year, "", isbn);
     }
 
     @When("a librarian adds a book with title $title, author $author, edition $edition, year $year, description $description and isbn $isbn")
@@ -54,7 +52,7 @@ public class InsertBook {
                                  String year,
                                  String description,
                                  String isbn) {
-        insertAndSubmitBook(title.replace("\"",""), author.replace("\"",""), edition.replace("\"",""), year.replace("\"",""), description.replace("\"",""), isbn.replace("\"",""));
+        insertAndSubmitBook(title, author, edition, year, description, isbn);
     }
 
     @When("a librarian tries to add a similar book with different $title, $author and $edition")

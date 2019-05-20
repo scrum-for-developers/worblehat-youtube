@@ -26,5 +26,6 @@ Examples:
 Scenario: Returning books ignores whitespaces
 Given an empty library
 And borrower test@me.com has borrowed books 1234567962
-When borrower " test@me.com " returns all his books
+!-- Note the whitespace at the start and end of parameters in the following step
+When borrower       test@me.com        returns all his books
 Then books 1234567962 are not borrowed anymore by borrower test@me.com
