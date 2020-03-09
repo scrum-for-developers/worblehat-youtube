@@ -7,12 +7,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +27,6 @@ public class InsertBookController {
 
     private static final Logger LOG = LoggerFactory.getLogger(InsertBookController.class);
 
-
-
     @NonNull
     private final BookService bookService;
 
@@ -42,7 +37,7 @@ public class InsertBookController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String processSubmit(@ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
-                                BindingResult result) {
+            BindingResult result) {
 
         if (result.hasErrors()) {
             return "insertBooks";

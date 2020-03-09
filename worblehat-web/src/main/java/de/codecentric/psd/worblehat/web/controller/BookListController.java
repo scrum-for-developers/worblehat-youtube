@@ -40,7 +40,9 @@ public class BookListController {
                 isbn -> isbn,
                 isbn -> "http://covers.openlibrary.org/b/isbn/" +
                     isbn.trim().replace("-", "").replace(" ", "")
-                    + "-S.jpg"));
+                    + "-S.jpg",
+                (x1, x2) -> x1
+                    ));
     }
 
 }
