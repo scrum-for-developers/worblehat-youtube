@@ -44,6 +44,7 @@
         <psd.dbserver.url>jdbc:mysql://localhost/worblehat_test</psd.dbserver.url>
         <psd.dbserver.username>worblehat</psd.dbserver.username>
         <psd.dbserver.password>worblehat</psd.dbserver.password>
+        <skipITs>false</skipITs>
     </properties>
 
     <repositories>
@@ -100,6 +101,22 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skipITs>${skipITs}</skipITs>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
