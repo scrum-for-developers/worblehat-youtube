@@ -16,7 +16,7 @@ import java.io.IOException;
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(strict = true, stepNotifications = true, plugin = {"pretty", "html:target/cucumber", "junit:target/cucumber.xml"})
+@CucumberOptions(strict = true, stepNotifications = true, plugin = {"pretty", "html:target/cucumber", "junit:target/cucumber.xml",  "json:target/cucumber-report.json"})
 public class AcceptanceTestsIT {
 
 }
