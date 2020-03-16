@@ -44,7 +44,7 @@
         <psd.dbserver.url>jdbc:mysql://localhost/worblehat_test</psd.dbserver.url>
         <psd.dbserver.username>worblehat</psd.dbserver.username>
         <psd.dbserver.password>worblehat</psd.dbserver.password>
-        <skipITs>false</skipITs>
+        <skipITs>true</skipITs>
     </properties>
 
     <repositories>
@@ -196,6 +196,12 @@
         </plugins>
     </reporting>
     <profiles>
+        <profile>
+            <id>runITs</id>
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
+        </profile>
         <profile>
             <id>jenkins</id>
 

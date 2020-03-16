@@ -45,9 +45,9 @@ Once the data base is started point your broser to http://localhost:8081 and log
 
 You can use the maven wrapper to compile and execute the application
 
-* Compile everything: `./mvnw -DskipITs clean install`
+* Compile everything: `./mvnw clean install`
 * Run the application: `./mvnw -pl worblehat-web spring-boot:run`
-* Run the acceptancetests: `./mvnw verify`
+* Run the acceptancetests: `./mvnw -P runITs verify`
 
 Maven comes bundled with the maven wrapper scripts, no need for manual installation before.
 
@@ -55,8 +55,8 @@ Maven comes bundled with the maven wrapper scripts, no need for manual installat
 
 1. Make sure the database is running (see above)
 1. Run the application.:
-  * Either run `./mvnw -pl worblehat-web spring-boot:run` (will automatically compile & package the application before)
-  * Or start as plain Java main class in worblehat-web: `de.codecentric.psd.Worblehat`
+    * Either run `./mvnw -pl worblehat-web spring-boot:run` (will automatically compile & package the application before)
+    * Or use your IDE to start the main class in worblehat-web: `de.codecentric.psd.Worblehat`
 1. Access the application at <http://localhost:8080/>
 
 ## Running tests
@@ -68,7 +68,8 @@ All tests are executed via JUnit, but can be conceptually divided in unit and in
 1. Unit tests are run with `./mvnw test`
 1. The [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin) includes
  [all these tests](https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#includes) by default:
- ```
+
+ ```xml
 <includes>
     <include>**/Test*.java</include>
     <include>**/*Test.java</include>
@@ -79,14 +80,14 @@ All tests are executed via JUnit, but can be conceptually divided in unit and in
 
 ### Acceptance Tests
 
-1. Acceptance tests are run with `./mvnw verify`.
+1. Acceptance tests are run by activating the required profile `./mvnw -P runITs verify`.
 
-   Note: The `verify` lifecycle is executed before `install`. If you want to skip acceptance tests, consider to:
-   * run up to lifecycle phase `package`
-   * skip integration tests with `./mvnw -DskipITs install`
+   Note: The `verify` lifecycle is executed before `install`. Integration tests are only included, if the `runITs` profile is activated.
+
 1. The [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin) includes
  [all these tests](https://maven.apache.org/surefire/maven-failsafe-plugin/integration-test-mojo.html#includes) by default:
- ```
+
+ ```xml
 <includes>
     <include>**/IT*.java</include>
     <include>**/*IT.java</include>
