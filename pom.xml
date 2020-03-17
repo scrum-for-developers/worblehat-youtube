@@ -192,6 +192,7 @@
                             <report>index</report>
                             <report>dependencies</report>
                             <report>dependency-convergence</report>
+                            <report>dependency-management</report> <!-- TODO this report really takes a lot of time, is it really necessary?! -->
                             <report>summary</report>
                             <report>modules</report>
                         </reports>
