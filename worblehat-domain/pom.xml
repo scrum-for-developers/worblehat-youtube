@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>worblehat-domain</artifactId>
-    <name>worblehat-domain</name>
+    <name>Worblehat Domain-Model</name>
 
 
     <dependencies>

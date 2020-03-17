@@ -10,7 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>worblehat-acceptancetests</artifactId>
-    <name>worblehat-acceptancetests</name>
+    <name>Worblehat Automated Acceptance Tests</name>
 
     <properties>
         <cucumber.version>5.5.0</cucumber.version>
