@@ -37,7 +37,7 @@ public class HtmlBookList {
             book.setYearOfPublication(cells.get(currentColumn).getText());
             break;
           case "Edition":
-            book.setEdition(cells.get(currentColumn).getText());
+            book.setEdition(Integer.parseInt(cells.get(currentColumn).getText()));
             break;
           case "Borrower":
             book.setBorrower(cells.get(currentColumn).getText());

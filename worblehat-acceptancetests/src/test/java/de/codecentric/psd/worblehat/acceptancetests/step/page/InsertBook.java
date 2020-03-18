@@ -8,6 +8,7 @@ import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.PageElement;
 import de.codecentric.psd.worblehat.acceptancetests.step.StoryContext;
 import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookParameter;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.util.Optional;
@@ -33,42 +34,41 @@ public class InsertBook {
   // *** W H E N *****
   // *****************
 
-  @When(
-      "a librarian adds a book with title {string}, author {string}, edition {string}, year {string} and isbn {string}")
+  @When("a librarian adds a book with {string}, {string}, {string}, {int}, and {string}")
   public void whenABookWithISBNisbnIsAdded(
-      String title, String author, String edition, String year, String isbn) {
-    insertAndSubmitBook(title, author, edition, year, "", isbn);
+      String isbn, String title, String author, Integer edition, String year) {
+    insertAndSubmitBook(isbn, title, author, edition, year, "");
   }
-
-  @When(
-      "a librarian adds a book with title {string}, author {string}, edition {string}, year {string}, description {string} and isbn {string}")
+  @When("a librarian adds a book with {string}, {string}, {string}, {int}, {string}, and {string}")
   public void whenABookIsAdded(
-      String title, String author, String edition, String year, String description, String isbn) {
-    insertAndSubmitBook(title, author, edition, year, description, isbn);
+      String isbn, String title, String author, Integer edition, String year, String description) {
+    insertAndSubmitBook(isbn, title, author, edition, year, description);
   }
 
-  @When("a librarian tries to add a similar book with different {string}, {string} and {string}")
-  public void whenASimilarBookIsAdded(String title, String author, String edition) {
+  @When("a librarian tries to add a similar book with different {string}, {string} and {int}")
+  public void whenASimilarBookIsAdded(String title, String author, Integer edition) {
     Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
     insertAndSubmitBook(
+        lastInsertedBook.getIsbn(),
         title,
         author,
         edition,
         String.valueOf(lastInsertedBook.getYearOfPublication()),
-        lastInsertedBook.getDescription(),
-        lastInsertedBook.getIsbn());
+        lastInsertedBook.getDescription()
+        );
   }
 
   @When("a librarian tries to add a similar book with same title, author and edition")
   public void whenASimilarBookIsAdded() {
     Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
     insertAndSubmitBook(
+        lastInsertedBook.getIsbn(),
         lastInsertedBook.getTitle(),
         lastInsertedBook.getAuthor(),
-        lastInsertedBook.getEdition(),
+        Integer.parseInt(lastInsertedBook.getEdition()),
         String.valueOf(lastInsertedBook.getYearOfPublication()),
-        lastInsertedBook.getDescription(),
-        lastInsertedBook.getIsbn());
+        lastInsertedBook.getDescription()
+        );
   }
 
   // *****************
@@ -76,9 +76,7 @@ public class InsertBook {
   // *****************
   @Then("the page contains error message for field {string}")
   public void pageContainsErrorMessage(String field) {
-    String errorMessage =
-        seleniumAdapter.getTextFromElement(
-            ("isbn".equals(field) ? PageElement.ISBN_ERROR : PageElement.EDITION_ERROR));
+    String errorMessage = seleniumAdapter.getTextFromElement(PageElement.errorFor(field));
     assertThat(errorMessage, notNullValue());
   }
 
@@ -87,16 +85,17 @@ public class InsertBook {
   // *****************
 
   private void insertAndSubmitBook(
-      String title, String author, String edition, String year, String description, String isbn) {
+      String isbn, String title, String author, Integer edition, String year, String description) {
     seleniumAdapter.gotoPage(Page.INSERTBOOKS);
     fillInsertBookForm(title, author, edition, isbn, year, description);
     seleniumAdapter.clickOnPageElementById(PageElement.ADDBOOKBUTTON);
+    storyContext.putObject("LAST_INSERTED_BOOK", new Book(new BookParameter(title, author, edition.toString(), isbn, Integer.parseInt(year.trim()), description)));
   }
 
   private void fillInsertBookForm(
-      String title, String author, String edition, String isbn, String year, String description) {
+      String title, String author, Integer edition, String isbn, String year, String description) {
     seleniumAdapter.typeIntoField("title", title);
-    seleniumAdapter.typeIntoField("edition", edition);
+    seleniumAdapter.typeIntoField("edition", edition.toString());
     seleniumAdapter.typeIntoField("isbn", isbn);
     seleniumAdapter.typeIntoField("author", author);
     seleniumAdapter.typeIntoField("yearOfPublication", year);

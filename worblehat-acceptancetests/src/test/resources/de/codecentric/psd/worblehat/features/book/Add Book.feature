@@ -3,8 +3,8 @@ Feature: Adding a new book to the library
     Scenario Outline: Adding a new book
 
         Given an empty library
-        When a librarian adds a book with title "<title>", author "<author>", edition "<edition>", year "<year>", description "<description>" and isbn "<isbn>"
-        Then the booklist contains a book with values title "<title>", author "<author>", year "<year>", edition "<edition>", isbn "<isbn>" and description "<description>"
+        When a librarian adds a book with "<isbn>", "<title>", "<author>", <edition>, "<year>", and "<description>"
+        Then the booklist contains a book with all the properties from the last inserted book
         And for every book the booklist contains a cover
 
         Examples:
@@ -18,7 +18,7 @@ Feature: Adding a new book to the library
     Scenario Outline: Different books must have different properties (ISBN, title, author, edition)
 
         Given a library, containing only one book with isbn "<isbn>"
-        When a librarian tries to add a similar book with different "<title>", "<author>" and "<edition>"
+        When a librarian tries to add a similar book with different "<title>", "<author>" and <edition>
         Then the new book "CAN NOT" be added
 
         Examples:
@@ -40,5 +40,5 @@ Feature: Adding a new book to the library
 
         Given an empty library
         # Note the whitespace at the end of parameters in the following step
-        When a librarian adds a book with title "Komponentenmodelle    ", author "Andreas Thiel   ", edition "1     ", year "2000      ", description "Komponentenmodelle FTW      " and isbn " 9783827317247  "
-        Then the booklist contains a book with values title "Komponentenmodelle", author "Andreas Thiel", year "2000", edition "1", isbn "9783827317247" and description "Komponentenmodelle FTW"
+        When a librarian adds a book with " 9783827317247  ", "Komponentenmodelle    ", "Andreas Thiel   ", 1, "2000      ", and "Komponentenmodelle FTW      "
+        Then the booklist contains a book with "9783827317247", "Komponentenmodelle", "Andreas Thiel", 1, "2000", and "Komponentenmodelle FTW"

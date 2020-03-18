@@ -15,7 +15,6 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-// @Component("Library")
 public class Library {
 
   @Autowired(required = true)
@@ -54,26 +53,7 @@ public class Library {
     createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
   }
 
-  // just an example of how a step looks that is different from another one, after the last
-  // parameter
-  // see configuration in AllAcceptanceTestStories
-  @Given("a library, containing only one book with isbn $isbn and title $title")
-  public void createLibraryWithSingleBookWithGivenIsbnAndTitle(String isbn, String title) {
-    emptyLibrary();
-    Book book = DemoBookFactory.createDemoBook().withISBN(isbn).withTitle(title).build();
-    Optional<Book> createdBook =
-        bookService.createBook(
-            new BookParameter(
-                book.getTitle(),
-                book.getAuthor(),
-                book.getEdition(),
-                book.getIsbn(),
-                book.getYearOfPublication(),
-                book.getDescription()));
-    createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
-  }
-
-  @Given("borrower {string} has borrowed books {string}")
+  @Given("{string} has borrowed books {string}")
   public void borrower1HasBorrowerdBooks(String borrower, String isbns) {
     borrowerHasBorrowedBooks(borrower, isbns);
   }
@@ -108,20 +88,6 @@ public class Library {
   // *** T H E N *****
   // *****************
 
-  @Then("the library contains only the book with {string}")
-  public void shouldContainOnlyOneBook(String isbn) {
-    waitForServerResponse();
-    List<Book> books = bookService.findAllBooks();
-    assertThat(books.size(), is(1));
-    assertThat(books.get(0).getIsbn(), is(isbn));
-  }
-
-  @Then("the library contains {int} of the book with {string}")
-  public void shouldContainCopiesOfBook(Integer copies, String isbn) {
-    waitForServerResponse();
-    assertNumberOfCopies(isbn, copies);
-  }
-
   @Then("the new book {string} be added")
   public void shouldNotHaveCreatedANewCopy(String can) {
     Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
@@ -129,20 +95,10 @@ public class Library {
     assertNumberOfCopies(lastInsertedBook.getIsbn(), numberOfCopies);
   }
 
-  private void assertNumberOfCopies(String isbn, int copies) {
+  private void assertNumberOfCopies(String isbn, int nrOfCopies) {
     Set<Book> books = bookService.findBooksByIsbn(isbn);
-    assertThat(books.size(), is(copies));
+    assertThat(books.size(), is(nrOfCopies));
     assertThat(books, everyItem(hasProperty("isbn", is(isbn))));
   }
 
-  private void waitForServerResponse() {
-    // normally you would have much better mechanisms for waiting for a
-    // server response. We are choosing a simple solution for the sake of this
-    // training
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      // pass
-    }
-  }
 }

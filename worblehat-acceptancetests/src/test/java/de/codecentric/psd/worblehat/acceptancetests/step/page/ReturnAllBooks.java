@@ -18,7 +18,7 @@ public class ReturnAllBooks {
   // *** W H E N *****
   // *****************
 
-  @When("borrower {string} returns all his books")
+  @When("{string} returns all books")
   public void whenUseruserReturnsAllHisBooks(String borrower1) {
     seleniumAdapter.gotoPage(Page.RETURNBOOKS);
     seleniumAdapter.typeIntoField("emailAddress", borrower1);

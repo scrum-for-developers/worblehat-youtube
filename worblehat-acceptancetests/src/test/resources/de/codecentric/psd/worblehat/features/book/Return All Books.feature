@@ -3,11 +3,11 @@ Feature: Returning - giving back - borrowed books
     Scenario Outline: Returning all books at once
 
         Given an empty library
-        And borrower "<borrower1>" has borrowed books "<isbns1>"
-        And borrower "<borrower2>" has borrowed books "<isbns2>"
-        When borrower "<borrower1>" returns all his books
-        Then books "<isbns1>" are "not borrowed anymore" by borrower "<borrower1>"
-        And books "<isbns2>" are "still borrowed" by borrower "<borrower2>"
+        And "<borrower1>" has borrowed books "<isbns1>"
+        And "<borrower2>" has borrowed books "<isbns2>"
+        When "<borrower1>" returns all books
+        Then books "<isbns1>" are "not borrowed anymore" by "<borrower1>"
+        But books "<isbns2>" are "still borrowed" by "<borrower2>"
 
         Examples:
 
@@ -21,4 +21,4 @@ Feature: Returning - giving back - borrowed books
         Given an empty library
         And borrower "test@me.com" has borrowed books "1234567962"
         When borrower "      test@me.com       " returns all his books
-        Then books "1234567962" are "not borrowed anymore" by borrower "test@me.com"
+        Then books "1234567962" are "not borrowed anymore" by "test@me.com"

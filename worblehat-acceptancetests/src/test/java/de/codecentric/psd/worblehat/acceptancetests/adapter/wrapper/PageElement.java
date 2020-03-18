@@ -9,7 +9,7 @@ public enum PageElement {
   AUTHOR_ERROR("author.error"),
   EDITION_ERROR("edition.error"),
   TITLE_ERROR("title.error"),
-  YEAR_ERROR("year.error"),
+  YEAR_ERROR("yearOfPublication.error"),
   RETURNALLBOOKSBUTTON("returnAllBooks"),
   ERROR("error");
 
@@ -17,6 +17,19 @@ public enum PageElement {
 
   PageElement(String elementId) {
     this.elementId = elementId;
+  }
+
+  public static PageElement errorFor(String field) {
+    switch (field) {
+      case "isbn":
+        return PageElement.ISBN_ERROR;
+      case "edition":
+        return PageElement.EDITION_ERROR;
+      case "year":
+        return PageElement.YEAR_ERROR;
+      default:
+        throw new IllegalArgumentException("Could not find error element for " + field);
+    }
   }
 
   public String getElementId() {
