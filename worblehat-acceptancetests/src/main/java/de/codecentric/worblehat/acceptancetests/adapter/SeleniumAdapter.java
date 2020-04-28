@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.ScenarioType;
-import org.joda.time.LocalDateTime;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ import java.util.List;
  */
 @Component("SeleniumAdapter")
 public class SeleniumAdapter {
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);
 
@@ -36,8 +39,7 @@ public class SeleniumAdapter {
 
     @BeforeStories
     public void initSelenium() {
-        folderName = LocalDateTime.now().toString("yyyy-MM-dd HH:mm").concat(File.separator);
-        folderName = "target" + File.separator + "screenshots" + File.separator + folderName;
+        folderName = "target" + File.separator + "screenshots" + File.separator + SIMPLE_DATE_FORMAT.format(new Date()) + File.separator;;
         new File(folderName).mkdirs();
     }
 
