@@ -3,8 +3,10 @@ bin/
 .project
 .classpath
 .metadata
+.factorypath
 local.properties
 .settings/
+.vscode/
 *.versionsBackup
 *.idea
 *.iml
