@@ -68,7 +68,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>chaos-monkey-spring-boot</artifactId>
-            <version>2.0.2</version>
+            <version>2.2.0</version>
         </dependency>
         <!-- Test -->
         <dependency>
@@ -113,10 +113,6 @@
                     <classifier>executable</classifier>
                     <executable>true</executable>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

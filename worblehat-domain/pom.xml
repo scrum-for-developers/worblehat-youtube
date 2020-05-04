@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>22.0</version>
+            <version>29.0-jre</version>
         </dependency>
         <dependency>
             <groupId>com.github.npathai</groupId>
@@ -70,10 +70,6 @@
                     <username>${psd.dbserver.username}</username>
                     <password>${psd.dbserver.password}</password>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
