@@ -1,10 +1,9 @@
 package de.codecentric.psd.worblehat.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
@@ -12,61 +11,55 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class Book implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-    @NonNull
-    private String title;
+  @NonNull private String title;
 
-    @NonNull
-    private String author;
+  @NonNull private String author;
 
-    @NonNull
-    private String edition;
+  @NonNull private String edition;
 
-    // TODO: convert String to an ISBN class, that ensures a valid ISBN
-    @NonNull
-    private String isbn;
+  // TODO: convert String to an ISBN class, that ensures a valid ISBN
+  @NonNull private String isbn;
 
-    @NonNull
-    private Integer yearOfPublication;
+  @NonNull private Integer yearOfPublication;
 
-    @OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Borrowing borrowing;
+  @OneToOne(mappedBy = "borrowedBook", orphanRemoval = true)
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  private Borrowing borrowing;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+  @Column(columnDefinition = "TEXT")
+  private String description;
 
-    public Book(BookParameter bookParameter) {
-        this(
-            bookParameter.getTitle(),
-            bookParameter.getAuthor(),
-            bookParameter.getEdition(),
-            bookParameter.getIsbn(),
-            bookParameter.getYearOfPublication()
-        );
-        this.description = bookParameter.getDescription();
+  public Book(BookParameter bookParameter) {
+    this(
+        bookParameter.getTitle(),
+        bookParameter.getAuthor(),
+        bookParameter.getEdition(),
+        bookParameter.getIsbn(),
+        bookParameter.getYearOfPublication());
+    this.description = bookParameter.getDescription();
+  }
+
+  Book(final Book book) {
+    this(book.title, book.author, book.edition, book.isbn, book.yearOfPublication);
+    this.description = book.description;
+  }
+
+  boolean isSameCopy(@NonNull Book book) {
+    return getTitle().equals(book.title)
+        && getAuthor().equals(book.author)
+        && getEdition().equals(book.edition);
+  }
+
+  public void borrowNowByBorrower(String borrowerEmailAddress) {
+    if (borrowing == null) {
+      this.borrowing = new Borrowing(this, borrowerEmailAddress, new Date());
     }
-
-    Book(final Book book) {
-        this(book.title, book.author, book.edition, book.isbn, book.yearOfPublication);
-        this.description = book.description;
-    }
-
-    boolean isSameCopy(@NonNull Book book) {
-        return getTitle().equals(book.title) && getAuthor().equals(book.author)
-            && getEdition().equals(book.edition);
-    }
-
-    public void borrowNowByBorrower(String borrowerEmailAddress) {
-        if (borrowing == null) {
-            this.borrowing = new Borrowing(this, borrowerEmailAddress, new Date());
-        }
-    }
-
+  }
 }

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 @ControllerAdvice
 public class ControllerSetup {
-    @InitBinder
-    public void customizeBinding(WebDataBinder binder) {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-    }
+  @InitBinder
+  public void customizeBinding(WebDataBinder binder) {
+    binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+  }
 }
