@@ -7,6 +7,21 @@
  * in the user manual at https://docs.gradle.org/6.4/userguide/multi_project_builds.html
  */
 
+plugins {
+  id("com.gradle.enterprise").version("3.3")
+}
+
 rootProject.name = "worblehat"
 
 include(":worblehat-domain")
+include(":worblehat-web")
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+
+        publishAlways()
+    }
+}
+
