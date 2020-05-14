@@ -1,6 +1,9 @@
 plugins {
-    application // TODO replace with spring boot plugin?
+    java
+	id("org.springframework.boot") version "2.1.4.RELEASE"
 }
+
+apply(plugin = "io.spring.dependency-management")
 
 repositories {
   mavenCentral()
@@ -8,7 +11,6 @@ repositories {
 
 dependencies {
     implementation(project(":worblehat-domain"))
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -17,11 +19,8 @@ dependencies {
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
-    // postgresql
-    // lombok
     implementation("org.apache.commons:commons-lang3")
     implementation("commons-validator:commons-validator:1.6")
-    // validation-api
     compileOnly("org.projectlombok:lombok:1.18.12")
     annotationProcessor("org.projectlombok:lombok:1.18.12")
 
@@ -36,6 +35,12 @@ dependencies {
 }
 
 tasks {
+  jar {
+      enabled = true
+  }
+  bootJar {
+      classifier = "executable"
+  }
   test {
     useJUnitPlatform()
   }
@@ -44,8 +49,4 @@ tasks {
       expand(project.properties)
     }
   }
-}
-
-application {
-  mainClass.set("de.codecentric.psd.Worblehat")
 }
