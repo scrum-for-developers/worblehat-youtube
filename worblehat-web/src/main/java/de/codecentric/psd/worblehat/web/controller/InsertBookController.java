@@ -12,9 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /** Handles requests for the application home page. */
 @Controller
@@ -26,12 +27,12 @@ public class InsertBookController {
 
   @NonNull private final BookService bookService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @GetMapping
   public void setupForm(ModelMap modelMap) {
     modelMap.put("insertBookFormData", new InsertBookFormData());
   }
 
-  @RequestMapping(method = RequestMethod.POST)
+  @PostMapping
   public String processSubmit(
       @ModelAttribute("insertBookFormData") @Valid InsertBookFormData insertBookFormData,
       BindingResult result) {

@@ -15,9 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /** Controller for BorrowingBook */
 @RequestMapping("/borrow")
@@ -29,13 +30,13 @@ public class BorrowBookController {
 
   @NonNull private final BookService bookService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @GetMapping
   public void setupForm(ModelMap model) {
     model.put("borrowFormData", new BorrowBookFormData());
   }
 
   @Transactional
-  @RequestMapping(method = RequestMethod.POST)
+  @PostMapping
   public String processSubmit(
       @ModelAttribute("borrowFormData") @Valid BorrowBookFormData borrowFormData,
       BindingResult result) {
