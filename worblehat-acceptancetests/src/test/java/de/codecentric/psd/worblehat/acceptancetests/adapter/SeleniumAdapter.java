@@ -110,6 +110,7 @@ public class SeleniumAdapter {
   private void goToUrl(String url) {
     String concreteUrl = "http://host.testcontainers.internal:" + port + "/" + url;
     driver.get(concreteUrl);
+    if (driver.getPageSource().contains("Whitelabel Error Page")) throw new IllegalStateException("Page could not be found: " + url);
   }
 
   public void typeIntoField(String id, String value) {
