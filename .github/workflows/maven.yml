@@ -5,9 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -22,5 +20,7 @@ jobs:
         java-version: 11
     - name: Maven Install
       run: ./mvnw clean install
+    - name: Unit Tests
+      run: ./mvnw test
     - name: Testcontainers E2E Tests
       run: ./mvnw -P runITs verify
