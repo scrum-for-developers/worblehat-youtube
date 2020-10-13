@@ -43,7 +43,7 @@ Once the data base is started point your broser to http://localhost:8081 and log
 
 ### Build process
 
-You can use the maven wrapper to compile and execute the application
+You can use the maven wrapper to compile and execute the application, when using `vscode` make sure to install the [Lombok](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok) extension 
 
 * Compile everything: `./mvnw clean install`
 * Run the application: `./mvnw -pl worblehat-web spring-boot:run`
