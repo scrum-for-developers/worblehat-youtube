@@ -20,8 +20,30 @@ jobs:
         java-version: 11
     - name: Maven Install & Unit Tests
       run: ./mvnw install
-    - name: Testcontainers E2E Tests
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Unit Test Results
+        files: worblehat-*/target/surefire-reports/TEST*.xml
+        report_individual_runs: true
+        deduplicate_classes_by_file_name: false
+
+    - name: Run Acceptance Tests
       run: ./mvnw -P runITs verify
+
+    - name: Publish Acceptance Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Acceptance Test Results
+        files: worblehat-acceptancetests/target/cucumber.xml
+        report_individual_runs: true
+        deduplicate_classes_by_file_name: false
+
     - uses: actions/upload-artifact@v2
       with:
         name: Video
