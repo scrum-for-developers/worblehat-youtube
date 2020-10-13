@@ -18,9 +18,15 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Maven Install
-      run: ./mvnw clean install
-    - name: Unit Tests
-      run: ./mvnw test
+    - name: Maven Install & Unit Tests
+      run: ./mvnw install
     - name: Testcontainers E2E Tests
       run: ./mvnw -P runITs verify
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Video
+        path: worblehat-acceptancetests/target/*.flv
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Acceptance Test Report
+        path: worblehat-acceptancetests/target/cucumber
