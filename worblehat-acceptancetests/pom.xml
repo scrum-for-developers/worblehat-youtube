@@ -14,7 +14,7 @@
 
     <properties>
         <cucumber.version>6.8.1</cucumber.version>
-        <selenium.version>3.14.0</selenium.version>
+        <selenium.version>3.141.59</selenium.version>
     </properties>
 
     <profiles>

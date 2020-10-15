@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
@@ -151,16 +150,6 @@ public class SeleniumAdapter {
   public String getTextFromElement(PageElement pageElement) {
     WebElement element = driver.findElement(By.id(pageElement.getElementId()));
     return element.getText();
-  }
-
-  public void takeScreenShot(String filename) {
-
-    try {
-      File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-      FileUtils.copyFile(scrFile, new File(folderName.concat(filename).concat(".png")));
-    } catch (IOException e) {
-      LOGGER.error("Could not take screenshot!", e);
-    }
   }
 
   public boolean containsTextOnPage(String text) {
