@@ -16,3 +16,15 @@ services:
             - 8081:8080
         depends_on:
             - db
+    
+    worblehat:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        environment:
+            DATABASE_HOST: db
+            DATABASE_PORT: 5432
+        ports:
+            - 8080:8080
+        depends_on:
+            - db
