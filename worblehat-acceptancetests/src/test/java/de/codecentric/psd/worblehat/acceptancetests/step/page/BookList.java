@@ -108,7 +108,7 @@ public class BookList {
     assertThat(htmlBook.getBorrower(), is(borrower));
   }
 
-  @Then("books {string} are {string} by {string}")
+  @Then("book(s) {string} is/are {string} by {string}")
   public void booksAreNotBorrowedByBorrower1(String isbns, String borrowStatus, String borrower) {
     boolean shouldNotBeBorrowed = borrowStatus.contains("not borrowed");
 
