@@ -13,5 +13,6 @@ import org.junit.runner.RunWith;
       "html:target/cucumber",
       "junit:target/cucumber.xml",
       "json:target/cucumber-report.json"
-    })
+    },
+    publish = false)
 public class AcceptanceTestsIT {}

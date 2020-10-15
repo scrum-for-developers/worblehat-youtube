@@ -19,6 +19,6 @@ Feature: Returning - giving back - borrowed books
 
     Scenario Outline: Returning books ignores whitespaces
         Given an empty library
-        And borrower "test@me.com" has borrowed books "1234567962"
-        When borrower "      test@me.com       " returns all his books
+        And "test@me.com" has borrowed books "1234567962"
+        When "      test@me.com       " returns all books
         Then books "1234567962" are "not borrowed anymore" by "test@me.com"
