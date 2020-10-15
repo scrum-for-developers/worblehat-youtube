@@ -29,7 +29,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.14.1"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.14.3"))
     testImplementation("org.testcontainers:postgresql")
     testImplementation("com.google.guava:guava:29.0-jre") // TODO, replace with Set.of
 }
