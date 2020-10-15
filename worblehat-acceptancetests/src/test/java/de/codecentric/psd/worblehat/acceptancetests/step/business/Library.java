@@ -53,7 +53,7 @@ public class Library {
     createdBook.ifPresent(b -> storyContext.putObject("LAST_INSERTED_BOOK", b));
   }
 
-  @Given("{string} has borrowed books {string}")
+  @Given("{string} has borrowed book(s) {string}")
   public void borrower1HasBorrowerdBooks(String borrower, String isbns) {
     borrowerHasBorrowedBooks(borrower, isbns);
   }
