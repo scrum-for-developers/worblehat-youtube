@@ -90,14 +90,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M4</version>
+                <version>3.0.0-M5</version>
                 <dependencies>
                 <!-- force failsafe / surefire to use JUnit4.7 as platform provider, otherwise it won't pick up the result of executed tests
                       see http://maven.apache.org/surefire/maven-surefire-plugin/examples/junit.html#Provider_Selection -->
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit47</artifactId>
-                        <version>3.0.0-M4</version>
+                        <version>3.0.0-M5</version>
                     </dependency>
                 </dependencies>
             </plugin>
