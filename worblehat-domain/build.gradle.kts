@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-  implementation(platform("org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE"))
+  implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   runtimeOnly("org.postgresql:postgresql")
   runtimeOnly("org.liquibase:liquibase-core")
