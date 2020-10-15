@@ -1,0 +1,12 @@
+
+
+
+                                                              .o8       oooo            oooo                      .
+                                                             "888       `888            `888                    .o8
+                         oooo oooo    ooo  .ooooo.  oooo d8b  888oooo.   888   .ooooo.   888 .oo.    .oooo.   .o888oo
+                          `88. `88.  .8'  d88' `88b `888""8P  d88' `88b  888  d88' `88b  888P"Y88b  `P  )88b    888
+                           `88..]88..8'   888   888  888      888   888  888  888ooo888  888   888   .oP"888    888
+                            `888'`888'    888   888  888      888   888  888  888    .o  888   888  d8(  888    888 .
+                             `8'  `8'     `Y8bod8P' d888b     `Y8bod8P' o888o `Y8bod8P' o888o o888o `Y888""8o   "888"
+                                                                       ${spring.application.name} – Version ${info.version}
+                                                                       © codecentric AG 2010-2020
