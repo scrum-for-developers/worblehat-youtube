@@ -19,15 +19,36 @@ You can vote on the issues in order to influence the order of the Product Backlo
 
 Technical requirements:
 
-* JDK 11+
+* JDK 11+ (not required when using docker)
 * Docker
+
+### Complete setup
+
+The whole service can be started locally using docker-compose:
+
+```shell
+docker-compose up
+```
+
+After updating sources always rebuild your images
+```shell
+docker-compose down
+docker-compose build
+docker-compose up
+```
 
 ### Data base setup
 
 A PostgreSQL data base can be started locally using docker-compose:
 
 ```shell
-docker-compose up
+docker-compose run db
+```
+
+The `adminer` and `database` services can be started locally using docker-compose:
+
+```shell
+docker-compose run adminer
 ```
 
 The docker compose setup includes [Adminer](https://www.adminer.org) for adminstrating the data base.
