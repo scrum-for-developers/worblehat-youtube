@@ -32,7 +32,7 @@ public class BorrowBook {
     seleniumAdapter.gotoPage(Page.BORROWBOOK);
     seleniumAdapter.typeIntoField("email", user);
     seleniumAdapter.typeIntoField("isbn", isbn);
-    seleniumAdapter.clickOnPageElementById(PageElement.BORROWBOOKBUTTON);
+    seleniumAdapter.clickOnPageElementById(PageElement.BORROW_BOOK_BUTTON);
   }
 
   // *****************
@@ -45,7 +45,7 @@ public class BorrowBook {
     seleniumAdapter.gotoPage(Page.BORROWBOOK);
     seleniumAdapter.typeIntoField("email", borrower);
     seleniumAdapter.typeIntoField("isbn", isbn);
-    seleniumAdapter.clickOnPageElementById(PageElement.BORROWBOOKBUTTON);
+    seleniumAdapter.clickOnPageElementById(PageElement.BORROW_BOOK_BUTTON);
     String errorMessage = seleniumAdapter.getTextFromElement(PageElement.ISBN_ERROR);
     assertThat(errorMessage, is(message));
   }

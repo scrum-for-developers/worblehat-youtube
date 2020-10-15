@@ -1,16 +1,18 @@
 package de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper;
 
 public enum PageElement {
-  ADDBOOKBUTTON("addBook"),
-  BOOKLIST("bookList"),
-  BORROWBOOKBUTTON("borrowBook"),
+  ADD_BOOK_BUTTON("addBook"),
+  BOOK_LIST("bookList"),
+  BORROW_BOOK_BUTTON("borrowBook"),
   ISBN_ERROR("isbn.error"),
   EMAIL_ERROR("email.error"),
   AUTHOR_ERROR("author.error"),
   EDITION_ERROR("edition.error"),
   TITLE_ERROR("title.error"),
   YEAR_ERROR("yearOfPublication.error"),
-  RETURNALLBOOKSBUTTON("returnAllBooks"),
+  RETURN_ALL_BOOKS_BUTTON("returnAllBooks"),
+  BORROWING_LIST("borrowingsList"),
+  SHOW_BORROWED_BOOKS_BUTTON("showBorrowedBooks"),
   ERROR("error");
 
   private String elementId;

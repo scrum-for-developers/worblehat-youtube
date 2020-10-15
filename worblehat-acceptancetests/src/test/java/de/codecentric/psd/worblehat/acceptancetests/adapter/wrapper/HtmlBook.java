@@ -1,5 +1,8 @@
 package de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class HtmlBook {
 
   private String title;
@@ -10,6 +13,7 @@ public class HtmlBook {
   private String borrower;
   private String description;
   private String cover;
+  private LocalDate dueDate;
 
   public HtmlBook() {
     title = author = isbn = yearOfPublication = borrower = "";
@@ -93,5 +97,13 @@ public class HtmlBook {
 
   public void setCover(String cover) {
     this.cover = cover;
+  }
+
+  public void setDueDate(LocalDate dueDate) {
+      this.dueDate = dueDate;
+  }
+
+  public LocalDate getDueDate() {
+      return dueDate;
   }
 }

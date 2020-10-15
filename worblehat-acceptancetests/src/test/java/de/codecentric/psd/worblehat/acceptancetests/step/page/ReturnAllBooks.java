@@ -22,6 +22,6 @@ public class ReturnAllBooks {
   public void whenUseruserReturnsAllHisBooks(String borrower1) {
     seleniumAdapter.gotoPage(Page.RETURNBOOKS);
     seleniumAdapter.typeIntoField("emailAddress", borrower1);
-    seleniumAdapter.clickOnPageElementById(PageElement.RETURNALLBOOKSBUTTON);
+    seleniumAdapter.clickOnPageElementById(PageElement.RETURN_ALL_BOOKS_BUTTON);
   }
 }

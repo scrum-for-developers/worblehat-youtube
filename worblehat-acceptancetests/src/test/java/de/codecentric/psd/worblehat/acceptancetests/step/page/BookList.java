@@ -9,7 +9,6 @@ import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.HtmlBook;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.HtmlBookList;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.PageElement;
-import de.codecentric.psd.worblehat.acceptancetests.step.business.DemoBookFactory;
 import de.codecentric.psd.worblehat.domain.Book;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -41,7 +40,7 @@ public class BookList {
       final Integer edition,
       final String isbn) {
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
     assertThat(title, is(htmlBook.getTitle()));
     assertThat(author, is(htmlBook.getAuthor()));
@@ -54,7 +53,7 @@ public class BookList {
   public void justAsLastInserted() {
       Book lastInserted = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     HtmlBook htmlBook = htmlBookList.getBookByIsbn(lastInserted.getIsbn());
     assertThat(lastInserted.getTitle(), containsString(htmlBook.getTitle()));
     assertThat(lastInserted.getAuthor(), containsString(htmlBook.getAuthor()));
@@ -73,7 +72,7 @@ public class BookList {
       final String year,
       final String description) {
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn.trim());
     assertThat(title, containsString(htmlBook.getTitle()));
     assertThat(author, containsString(htmlBook.getAuthor()));
@@ -86,24 +85,14 @@ public class BookList {
   @Then("The library contains no books")
   public void libraryIsEmpty() {
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     assertThat(htmlBookList.size(), is(0));
   }
 
   @Then("the booklist lists {string} as borrower for the book with isbn {string}")
   public void bookListHasBorrowerForBookWithIsbn(final String borrower, final String isbn) {
-    Book book = DemoBookFactory.createDemoBook().build();
-    // TODO - this is strange, why aren't we using the wantedRow? looks like a good idea for multiple copies
-    Map<String, String> wantedRow =
-        createRowMap(
-            book.getTitle(),
-            book.getAuthor(),
-            String.valueOf(book.getYearOfPublication()),
-            book.getEdition(),
-            isbn,
-            borrower);
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
     assertThat(htmlBook.getBorrower(), is(borrower));
   }
@@ -114,7 +103,7 @@ public class BookList {
 
     List<String> isbnList = getListOfItems(isbns);
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     for (String isbn : isbnList) {
       String actualBorrower = htmlBookList.getBookByIsbn(isbn).getBorrower();
       if (shouldNotBeBorrowed) {
@@ -128,7 +117,7 @@ public class BookList {
   @Then("for every book the booklist contains a cover")
   public void checkCover() {
     seleniumAdapter.gotoPage(Page.BOOKLIST);
-    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
+    HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     Collection<HtmlBook> books = htmlBookList.getHtmlBooks().values();
     for (HtmlBook book : books) {
       assertThat(book.getCover(), containsString(book.getIsbn()));
@@ -139,22 +128,4 @@ public class BookList {
     return isbns.isEmpty() ? Collections.emptyList() : Arrays.asList(isbns.split(" "));
   }
 
-  private HashMap<String, String> createRowMap(
-      final String title,
-      final String author,
-      final String year,
-      final String edition,
-      final String isbn,
-      final String borrower) {
-    return new HashMap<String, String>() {
-      {
-        put("Title", title);
-        put("Author", author);
-        put("Year", year);
-        put("Edition", edition);
-        put("ISBN", isbn);
-        put("Borrower", borrower);
-      }
-    };
-  }
 }

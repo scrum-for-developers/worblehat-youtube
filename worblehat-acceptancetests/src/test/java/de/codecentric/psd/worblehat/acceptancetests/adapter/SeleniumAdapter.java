@@ -7,6 +7,7 @@ import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.PageElement;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class SeleniumAdapter {
   static final Thread afterAllThread =
       new Thread() {
 
+        @SuppressWarnings("unchecked")
         public void run() {
           chromeContainer.afterTest(
               new TestDescription() {

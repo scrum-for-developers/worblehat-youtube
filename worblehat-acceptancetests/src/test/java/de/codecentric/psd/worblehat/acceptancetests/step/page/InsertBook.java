@@ -88,7 +88,7 @@ public class InsertBook {
       String isbn, String title, String author, Integer edition, String year, String description) {
     seleniumAdapter.gotoPage(Page.INSERTBOOKS);
     fillInsertBookForm(title, author, edition, isbn, year, description);
-    seleniumAdapter.clickOnPageElementById(PageElement.ADDBOOKBUTTON);
+    seleniumAdapter.clickOnPageElementById(PageElement.ADD_BOOK_BUTTON);
     storyContext.putObject("LAST_INSERTED_BOOK", new Book(new BookParameter(title, author, edition.toString(), isbn, Integer.parseInt(year.trim()), description)));
   }
 

@@ -3,6 +3,7 @@ package de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper;
 public enum Page {
   HOME("/"),
   BOOKLIST("bookList"),
+  BORROWED_BOOK_LIST("borrowedBooks"),
   INSERTBOOKS("insertBooks"),
   BORROWBOOK("borrow"),
   RETURNBOOKS("returnAllBooks"),
