@@ -21,7 +21,7 @@ dependencies {
 
     implementation("org.apache.commons:commons-lang3")
     implementation("commons-validator:commons-validator:1.7")
-    compileOnly("org.projectlombok:lombok:1.18.14")
+    compileOnly("org.projectlombok:lombok:1.18.16")
     annotationProcessor("org.projectlombok:lombok:1.18.12")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
