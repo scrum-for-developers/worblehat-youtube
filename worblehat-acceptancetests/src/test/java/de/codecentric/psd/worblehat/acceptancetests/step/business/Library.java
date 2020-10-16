@@ -90,6 +90,11 @@ public class Library {
     // *** T H E N *****
     // *****************
 
+    @Then("the library contains {int} books")
+    public void shouldContainNumberOfBooks(int books) {
+        assertThat(bookRepository.count(), is(books));
+    }
+
     @Then("the new book {string} be added")
     public void shouldNotHaveCreatedANewCopy(String can) {
         Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");

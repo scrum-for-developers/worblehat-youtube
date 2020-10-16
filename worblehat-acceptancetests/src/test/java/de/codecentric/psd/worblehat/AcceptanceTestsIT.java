@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+//    features = "features/book/Remove Book.feature",
+    tags = "@Focus",
     strict = true,
     stepNotifications = true,
     plugin = {
