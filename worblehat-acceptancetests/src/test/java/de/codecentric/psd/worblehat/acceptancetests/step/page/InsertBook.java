@@ -1,7 +1,7 @@
 package de.codecentric.psd.worblehat.acceptancetests.step.page;
 
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import de.codecentric.psd.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;

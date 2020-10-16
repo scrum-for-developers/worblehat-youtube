@@ -13,7 +13,8 @@ public enum PageElement {
   RETURN_ALL_BOOKS_BUTTON("returnAllBooks"),
   BORROWING_LIST("borrowingsList"),
   SHOW_BORROWED_BOOKS_BUTTON("showBorrowedBooks"),
-  ERROR("error");
+  ERROR("error"),
+  REMOVE_BOOK_BUTTON("removeBook");
 
   private String elementId;
 
