@@ -42,13 +42,13 @@ docker-compose up
 A PostgreSQL data base can be started locally using docker-compose:
 
 ```shell
-docker-compose run db
+docker-compose up db
 ```
 
 The `adminer` and `database` services can be started locally using docker-compose:
 
 ```shell
-docker-compose run adminer
+docker-compose up adminer
 ```
 
 The docker compose setup includes [Adminer](https://www.adminer.org) for adminstrating the data base.
@@ -64,7 +64,7 @@ Once the data base is started point your broser to http://localhost:8081 and log
 
 ### Build process
 
-You can use the maven wrapper to compile and execute the application, when using `vscode` make sure to install the [Lombok](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok) extension 
+You can use the maven wrapper to compile and execute the application, when using `vscode` make sure to install the [Lombok](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok) extension
 
 * Compile everything: `./mvnw clean install`
 * Run the application: `./mvnw -pl worblehat-web spring-boot:run`

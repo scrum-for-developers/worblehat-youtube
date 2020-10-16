@@ -5,7 +5,7 @@ COPY . /usr/local/src/worblehat_youtube
 
 RUN mvn clean install
 
-FROM openjdk:11-slim
+FROM openjdk:11-jre-slim
 
 ENV PORT=8080 DATABASE_PORT=5432 DATABASE_HOST=localhost
 
