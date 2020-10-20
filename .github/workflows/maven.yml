@@ -27,7 +27,7 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-        
+
     - name: Maven Install & Unit Tests
       run: ./mvnw install
 
@@ -61,4 +61,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Acceptance Test Report
-        path: worblehat-acceptancetests/target/cucumber
+        path: worblehat-acceptancetests/target/cucumber.html
