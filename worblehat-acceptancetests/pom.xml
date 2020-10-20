@@ -91,8 +91,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/Tag*IT.java</exclude>
+                    </excludes>
+                </configuration>
                 <dependencies>
-                <!-- force failsafe / surefire to use JUnit4.7 as platform provider, otherwise it won't pick up the result of executed tests
+                    <!-- force failsafe / surefire to use JUnit4.7 as platform provider, otherwise it won't pick up the result of executed tests
                       see http://maven.apache.org/surefire/maven-surefire-plugin/examples/junit.html#Provider_Selection -->
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>

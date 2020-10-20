@@ -1,7 +1,7 @@
 Feature: Remove a copy of a book from the library
 
     @Focus
-    Scenario Outline: Remove a new book
+    Scenario Outline: Remove a book
 
         Given a library, containing only one book with isbn "123456789X"
         And "user1@discworld.dw" has borrowed books "<user1_isbns>"
