@@ -94,8 +94,8 @@ public class Library {
     // *** T H E N *****
     // *****************
 
-    @Then("the library contains {int} books")
-    public void shouldContainNumberOfBooks(int books) {
+    @Then("the library contains {long} books")
+    public void shouldContainNumberOfBooks(long books) {
         assertThat(bookRepository.count(), is(books));
     }
 
