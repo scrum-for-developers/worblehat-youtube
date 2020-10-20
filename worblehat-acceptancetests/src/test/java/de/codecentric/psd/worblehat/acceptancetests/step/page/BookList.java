@@ -13,6 +13,9 @@ import de.codecentric.psd.worblehat.domain.Book;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import java.util.*;
+
+import com.google.common.base.Splitter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BookList {
@@ -99,33 +102,25 @@ public class BookList {
 
   @Then("book(s) {string} is/are {string} by {string}")
   public void booksAreNotBorrowedByBorrower1(String isbns, String borrowStatus, String borrower) {
-    boolean shouldNotBeBorrowed = borrowStatus.contains("not borrowed");
-
-    List<String> isbnList = getListOfItems(isbns);
     seleniumAdapter.gotoPage(Page.BOOKLIST);
     HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
-    for (String isbn : isbnList) {
-      String actualBorrower = htmlBookList.getBookByIsbn(isbn).getBorrower();
-      if (shouldNotBeBorrowed) {
-        assertThat(actualBorrower, is(isEmptyOrNullString()));
-      } else {
-        assertThat(actualBorrower, is(borrower));
-      }
-    }
-  }
 
-  @Then("for every book the booklist contains a cover")
-  public void checkCover() {
+    long booksInWrongBorrowingState = Splitter.on(" ").omitEmptyStrings().splitToList(isbns).stream().filter(isbn -> {
+        String actualBorrower = htmlBookList.getBookByIsbn(isbn).getBorrower();
+        return !borrowStatus.contains("not borrowed") != borrower.equals(actualBorrower);
+    }).count();
+
+    assertThat(booksInWrongBorrowingState, is(0L));
+}
+
+@Then("for every book the booklist contains a cover")
+public void checkCover() {
     seleniumAdapter.gotoPage(Page.BOOKLIST);
     HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOK_LIST);
     Collection<HtmlBook> books = htmlBookList.getHtmlBooks().values();
     for (HtmlBook book : books) {
-      assertThat(book.getCover(), containsString(book.getIsbn()));
+        assertThat(book.getCover(), containsString(book.getIsbn()));
     }
-  }
-
-  private List<String> getListOfItems(String isbns) {
-    return isbns.isEmpty() ? Collections.emptyList() : Arrays.asList(isbns.split(" "));
-  }
+}
 
 }

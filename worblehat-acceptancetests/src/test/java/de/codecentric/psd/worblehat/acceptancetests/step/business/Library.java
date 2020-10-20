@@ -18,6 +18,9 @@ import io.cucumber.java.en.Then;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+
+import com.google.common.base.Splitter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -65,7 +68,7 @@ public class Library {
 
     @Given("{string} has borrowed books {string} on {date}")
     public void has_borrowed_books_on(String borrower, String isbns, LocalDate borrowDate) {
-        Arrays.stream(isbns.split(" ")).forEach(isbn -> {
+        Splitter.on(" ").omitEmptyStrings().splitToList(isbns).stream().forEach(isbn -> {
             Book book = DemoBookFactory.createDemoBook().withISBN(isbn).build();
             Book newBook = bookService
                     .createBook(new BookParameter(book.getTitle(), book.getAuthor(), book.getEdition(), book.getIsbn(),
