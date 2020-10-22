@@ -16,7 +16,7 @@ dependencies {
   implementation("com.google.guava:guava:30.0-jre")
 
   compileOnly("org.projectlombok:lombok:1.18.16")
-  annotationProcessor("org.projectlombok:lombok:1.18.12")
+  annotationProcessor("org.projectlombok:lombok:1.18.16")
 
   testImplementation("org.mockito:mockito-core")
   testImplementation("com.github.npathai:hamcrest-optional:2.0.0")
