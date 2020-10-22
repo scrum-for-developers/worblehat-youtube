@@ -1,9 +1,7 @@
 plugins {
     java
-	id("org.springframework.boot") version "2.3.4.RELEASE"
+    id("org.springframework.boot") version "2.3.4.RELEASE"
 }
-
-apply(plugin = "io.spring.dependency-management")
 
 repositories {
   mavenCentral()
@@ -12,8 +10,10 @@ repositories {
 dependencies {
     implementation(project(":worblehat-domain"))
 
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework:spring-tx")
     implementation("javax.persistence:javax.persistence-api")
 
