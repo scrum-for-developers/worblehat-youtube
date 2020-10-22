@@ -18,6 +18,8 @@ dependencies {
     implementation("javax.persistence:javax.persistence-api")
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
+    runtimeOnly("de.codecentric:chaos-monkey-spring-boot:2.2.0")
 
     implementation("org.apache.commons:commons-lang3")
     implementation("commons-validator:commons-validator:1.7")
