@@ -45,7 +45,8 @@ public class SeleniumAdapter {
   public static BrowserWebDriverContainer chromeContainer =
       new BrowserWebDriverContainer<>()
           .withCapabilities(new ChromeOptions())
-          .withRecordingMode(RECORD_ALL, new File("./target/"));
+          .withRecordingMode(RECORD_ALL, new File(System.getProperty("testcontainers.vnc.recordingDirectory")))
+          .withRecordingFileFactory((dir, prefix, succeeded) -> new File(dir, prefix + ".flv"));
 
   // a class that extends thread that is to be called when program is exiting
   static final Thread afterAllThread =

@@ -32,7 +32,7 @@ dependencies {
 }
 
 tasks.test {
-    jvmArgumentProviders += CucumberOptions(project.layout.buildDirectory.dir("cucumber"))
+    jvmArgumentProviders += listOf(CucumberOptions(project.layout.buildDirectory.dir("cucumber")), VncRecordingDirectoryProvider(project.layout.buildDirectory.dir("testcontainers")))
 }
 
 open class CucumberOptions(@OutputDirectory val outputs: Provider<Directory>) : CommandLineArgumentProvider {
@@ -48,4 +48,9 @@ open class CucumberOptions(@OutputDirectory val outputs: Provider<Directory>) : 
 
     override fun asArguments() =
         listOf("-Dcucumber.plugin=pretty,html:${htmlReport.get().asFile},junit:${junitReport.get().asFile},json:${jsonReport.get().asFile}")
+}
+
+open class VncRecordingDirectoryProvider(@OutputDirectory val outputDirectory: Provider<Directory>) : CommandLineArgumentProvider {
+
+    override fun asArguments() = listOf("-Dtestcontainers.vnc.recordingDirectory=${outputDirectory.get().asFile}")
 }
