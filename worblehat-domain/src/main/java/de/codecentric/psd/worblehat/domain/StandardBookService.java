@@ -75,7 +75,6 @@ public class StandardBookService implements BookService {
 
   @Override
   public List<Borrowing> findAllBorrowingsByEmailAddress(String emailAddress) {
-      Book aBook = new Book("Title", "Author", "1", "123456789X", 2020);
-      return List.of(new Borrowing(aBook, "auser@adomain.com", new Date()));
+      return borrowingRepository.findByBorrowerEmailAddress(emailAddress);
   }
 }

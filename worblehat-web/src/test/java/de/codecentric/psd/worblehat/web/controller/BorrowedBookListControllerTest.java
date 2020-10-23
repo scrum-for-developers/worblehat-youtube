@@ -1,7 +1,6 @@
 package de.codecentric.psd.worblehat.web.controller;
 
 
-import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import de.codecentric.psd.worblehat.domain.Borrowing;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,10 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.MapBindingResult;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static de.codecentric.psd.worblehat.web.controller.BorrowingTestData.borrowingWith;
 import static de.codecentric.psd.worblehat.web.controller.ReturnAllBooksFormTestData.emailAddress;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -42,11 +41,7 @@ class BorrowedBookListControllerTest {
     @Test
     void shouldReturnOneBorrowedBook(){
         String emailAddress = "sandra@worblehat.net";
-
-        Book aBook = new Book("Title", "Author", "1", "isbn", 2020);
-        Borrowing aBorrowing = new Borrowing(aBook, emailAddress, new Date());
-
-        when(bookServiceMock.findAllBorrowingsByEmailAddress(emailAddress)).thenReturn(List.of(aBorrowing));
+        when(bookServiceMock.findAllBorrowingsByEmailAddress(emailAddress)).thenReturn(List.of(borrowingWith(emailAddress)));
 
         var borrowedBookList = new ModelMap();
         String page = controllerUnderTest.findBorrowedBooksByEmailAddress(emailAddress(emailAddress), new MapBindingResult(new HashMap<>(), ""), borrowedBookList);
