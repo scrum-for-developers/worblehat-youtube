@@ -1,5 +1,7 @@
 package de.codecentric.psd.worblehat.domain;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -69,5 +71,11 @@ public class StandardBookService implements BookService {
   public void deleteAllBooks() {
     borrowingRepository.deleteAll();
     bookRepository.deleteAll();
+  }
+
+  @Override
+  public List<Borrowing> findAllBorrowingsByEmailAddress(String emailAddress) {
+      Book aBook = new Book("Title", "Author", "1", "123456789X", 2020);
+      return List.of(new Borrowing(aBook, "auser@adomain.com", new Date()));
   }
 }

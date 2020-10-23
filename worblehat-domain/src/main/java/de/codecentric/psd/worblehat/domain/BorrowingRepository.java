@@ -10,4 +10,6 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
 
   @Modifying
   void deleteByBorrowerEmailAddress(String borrowerEmailAddress);
+
+  //TODO new findBy
 }

@@ -2,6 +2,7 @@ package de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper;
 
 public enum PageElement {
   ADD_BOOK_BUTTON("addBook"),
+  BORROWED_BOOK_LIST("borrowedBookList"),
   BOOK_LIST("bookList"),
   BORROW_BOOK_BUTTON("borrowBook"),
   ISBN_ERROR("isbn.error"),
