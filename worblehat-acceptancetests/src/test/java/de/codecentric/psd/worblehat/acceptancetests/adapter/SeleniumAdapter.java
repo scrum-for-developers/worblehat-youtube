@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +35,6 @@ public class SeleniumAdapter {
   private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumAdapter.class);
 
   private WebDriver driver;
-
-  private String folderName;
 
   public void setDriver(WebDriver driver) {
     this.driver = driver;
@@ -91,19 +88,6 @@ public class SeleniumAdapter {
       }
     }
     setDriver(chromeContainer.getWebDriver());
-  }
-
-  @Before
-  public void initSelenium() {
-    folderName =
-        "target"
-            + File.separator
-            + "screenshots"
-            + File.separator
-            + SIMPLE_DATE_FORMAT.format(new Date())
-            + File.separator;
-    ;
-    new File(folderName).mkdirs();
   }
 
   public void gotoPage(Page page) {
