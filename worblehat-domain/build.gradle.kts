@@ -8,7 +8,9 @@ repositories {
 
 dependencies {
   implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
-  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+  api("org.springframework.boot:spring-boot-starter-data-jpa") {
+      because("Public types like BookRepository extend from Spring Data JPA types")
+  }
   runtimeOnly("org.postgresql:postgresql")
   runtimeOnly("org.liquibase:liquibase-core")
 
