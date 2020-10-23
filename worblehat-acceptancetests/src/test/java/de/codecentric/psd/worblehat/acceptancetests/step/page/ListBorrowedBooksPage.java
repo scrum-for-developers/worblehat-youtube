@@ -10,6 +10,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ListBorrowedBooksPage {
@@ -30,12 +32,15 @@ public class ListBorrowedBooksPage {
         seleniumAdapter.clickOnPageElementById(PageElement.SHOW_BORROWED_BOOKS_BUTTON);
     }
 
-    @Then("the list shows the books {string}")
-    public void the_list_shows_the_books(String isbns) {
+    @Then("the list shows the books {string} with due date {date}")
+    public void the_list_shows_the_books(String isbns, LocalDate dueDate) {
         HtmlBookList tableContent = seleniumAdapter.getTableContent(PageElement.BORROWED_BOOK_LIST);
         HtmlBook bookByIsbn = tableContent.getBookByIsbn(isbns);
 
         assertThat(bookByIsbn).isNotNull();
+        assertThat(bookByIsbn)
+            .hasFieldOrPropertyWithValue("dueDate", dueDate)
+            .hasFieldOrPropertyWithValue("isbn", isbns);
     }
 
 
