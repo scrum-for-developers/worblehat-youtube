@@ -30,3 +30,22 @@ dependencies {
     testImplementation("com.google.guava:guava:30.0-jre")
     testImplementation("org.apache.commons:commons-lang3:3.11")
 }
+
+tasks.test {
+    jvmArgumentProviders += CucumberOptions(project.layout.buildDirectory.dir("cucumber"))
+}
+
+open class CucumberOptions(@OutputDirectory val outputs: Provider<Directory>) : CommandLineArgumentProvider {
+
+    @Internal
+    val htmlReport = outputs.map { it.file("cucumber.html") }
+
+    @Internal
+    val junitReport = outputs.map { it.file("cucumber.xml") }
+
+    @Internal
+    val jsonReport = outputs.map { it.file("cucumber.json") }
+
+    override fun asArguments() =
+        listOf("-Dcucumber.plugin=pretty,html:${htmlReport.get().asFile},junit:${junitReport.get().asFile},json:${jsonReport.get().asFile}")
+}
