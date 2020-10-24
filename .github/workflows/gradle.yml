@@ -1,0 +1,80 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Gradle Build
+      uses: eskatos/gradle-command-action@v1.3.3
+      id: gradle
+      with:
+        arguments: check
+
+    - name: "Comment build scan url"
+      uses: actions/github-script@v3
+      if: github.event_name == 'pull_request' && failure()
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ ${{ github.workflow }} failed: ${{ steps.gradle.outputs.build-scan-url }}'
+          })
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Unit Test Results
+        files: worblehat-*/build/test-results/test/TEST*.xml
+        report_individual_runs: true
+        deduplicate_classes_by_file_name: false
+
+    - name: Publish Acceptance Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Acceptance Test Results
+        files: worblehat-acceptancetests/build/cucumber/cucumber.xml
+        report_individual_runs: true
+        deduplicate_classes_by_file_name: false
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Video
+        path: worblehat-acceptancetests/build/testcontainers/*.flv
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Acceptance Test Report
+        path: worblehat-acceptancetests/build/cucumber/cucumber.html
