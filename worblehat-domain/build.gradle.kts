@@ -1,9 +1,5 @@
 plugins {
-    `java-library`
-}
-
-repositories {
-    mavenCentral()
+    id("worblehat.java-module")
 }
 
 dependencies {
@@ -24,10 +20,4 @@ dependencies {
     testImplementation("com.github.npathai:hamcrest-optional")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
-
-tasks {
-    test {
-        useJUnitPlatform()
-    }
 }

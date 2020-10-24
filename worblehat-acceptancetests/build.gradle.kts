@@ -1,9 +1,5 @@
 plugins {
-    `java-library`
-}
-
-repositories {
-    mavenCentral()
+    id("worblehat.java-module")
 }
 
 dependencies {

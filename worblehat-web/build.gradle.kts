@@ -1,10 +1,6 @@
 plugins {
-    java
+    id("worblehat.java-module")
     id("org.springframework.boot") version "2.3.4.RELEASE"
-}
-
-repositories {
-  mavenCentral()
 }
 
 dependencies {
@@ -41,9 +37,6 @@ tasks {
   }
   bootJar {
       classifier = "executable"
-  }
-  test {
-    useJUnitPlatform()
   }
   processResources {
     filesMatching("*.properties") {
