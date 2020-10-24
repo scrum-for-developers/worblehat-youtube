@@ -10,10 +10,16 @@ on:
     branches: ["master"]
 
 jobs:
-  build:
-
+  wrapper-validation:
+    name: "Gradle Wrapper validation"
     runs-on: ubuntu-latest
+    steps:
+        -   uses: actions/checkout@v2
+        -   uses: gradle/wrapper-validation-action@v1.0.3
 
+  build:
+    name: "Gradle CI build"
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
