@@ -15,6 +15,7 @@ rootProject.name = "worblehat"
 
 include(":worblehat-domain")
 include(":worblehat-web")
+include(":worblehat-platform")
 include(":worblehat-acceptancetests")
 
 gradleEnterprise {

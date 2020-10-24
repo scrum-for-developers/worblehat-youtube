@@ -8,9 +8,9 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(project(":worblehat-platform")))
     implementation(project(":worblehat-domain"))
 
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -19,10 +19,10 @@ dependencies {
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
-    runtimeOnly("de.codecentric:chaos-monkey-spring-boot:2.2.0")
+    runtimeOnly("de.codecentric:chaos-monkey-spring-boot")
 
     implementation("org.apache.commons:commons-lang3")
-    implementation("commons-validator:commons-validator:1.7")
+    implementation("commons-validator:commons-validator")
     compileOnly("org.projectlombok:lombok:1.18.16")
     annotationProcessor("org.projectlombok:lombok:1.18.16")
 
@@ -31,9 +31,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0-rc2"))
     testImplementation("org.testcontainers:postgresql")
-    testImplementation("com.google.guava:guava:30.0-jre") // TODO, replace with Set.of
+    testImplementation("com.google.guava:guava") // TODO, replace with Set.of
 }
 
 tasks {
