@@ -6,7 +6,7 @@
 Worblehat is a training application for the [Scrum for Developers](https://github.com/scrum-for-developers) training
 held by [codecentric AG](https://www.codecentric.de/), as well as for the [Professional Scrum Developer](https://www.codecentric.de/schulung/professional-scrum-developer/#schulung-detail) training when given by codecentric.
 
-## YouTube Let's Code with Bene and Andreas
+## YouTube Let's Code with Andreas and guests
 
 In a [series of livestreams](https://www.youtube.com/playlist?list=PLD9VybHH2wnY6AdGpGinjwzq5brwRn85K), Bene and Andreas will implement the complete Backlog that is usually used during the training.
 
@@ -64,56 +64,26 @@ Once the data base is started point your broser to http://localhost:8081 and log
 
 ### Build process
 
-You can use the maven wrapper to compile and execute the application, when using `vscode` make sure to install the [Lombok](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok) extension
+[Gradle](https://gradle.org) is used to compile and execute the application, when using `vscode` make sure to install the [Lombok](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok) extension
 
-* Compile everything: `./mvnw clean install`
-* Run the application: `./mvnw -pl worblehat-web spring-boot:run`
-* Run the acceptancetests: `./mvnw -P runITs verify`
-
-Maven comes bundled with the maven wrapper scripts, no need for manual installation before.
+* Run unit tests: `./gradlew quickCheck`
+* Run the application: `./gradlew :worblehat-web:bootRun`
+* Build the executable application jar: `./gradlew :worblehat-web:assemble`
+* Run all tests including the acceptancetests: `./gradlew check`
 
 ## Running the application
 
 1. Make sure the database is running (see above)
 1. Run the application.:
-    * Either run `./mvnw -pl worblehat-web spring-boot:run` (will automatically compile & package the application before)
+    * Either run `./gradlew :worblehat-web:bootRun` (will automatically compile & package the application before)
     * Or use your IDE to start the main class in worblehat-web: `de.codecentric.psd.Worblehat`
 1. Access the application at <http://localhost:8080/>
 
 ## Running tests
 
-All tests are executed via JUnit, but can be conceptually divided in unit and integration tests. They are bound to different maven lifecycle phases, are executed by differen maven plugins, and follow a different naming scheme.
+All tests are executed via JUnit, but can be conceptually divided in unit and integration tests. They are bound to different Gradle tasks to be able to execute them individually.
 
-### Unit Tests
-
-1. Unit tests are run with `./mvnw test`
-1. The [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin) includes
- [all these tests](https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#includes) by default:
-
- ```xml
-<includes>
-    <include>**/Test*.java</include>
-    <include>**/*Test.java</include>
-    <include>**/*Tests.java</include>
-    <include>**/*TestCase.java</include>
-</includes>
-```
-
-### Acceptance Tests
-
-1. Acceptance tests are run by activating the required profile `./mvnw -P runITs verify`.
-
-   Note: The `verify` lifecycle is executed before `install`. Integration tests are only included, if the `runITs` profile is activated.
-
-1. The [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin) includes
- [all these tests](https://maven.apache.org/surefire/maven-failsafe-plugin/integration-test-mojo.html#includes) by default:
-
- ```xml
-<includes>
-    <include>**/IT*.java</include>
-    <include>**/*IT.java</include>
-    <include>**/*ITCase.java</include>
-</includes>
-```
-
-The acceptance tests spin docker containers for all required dependencies (Database & Browser) via [Testcontainers](https://www.testcontainers.org/).
+- To run the unit tests execute `./gradlew quickCheck`. This will execute the test tasks from the worblehat-domain and worblehat-web projects.
+- To run acceptance tests only execute `./gradlew :worblehat-acceptancetests:check`.
+  The acceptance tests spin docker containers for all required dependencies (Database & Browser) via [Testcontainers](https://www.testcontainers.org/).
+- To run all tests execute `./gradlew check`
