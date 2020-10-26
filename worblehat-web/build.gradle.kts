@@ -35,7 +35,7 @@ tasks {
         enabled = true
     }
     bootJar {
-        classifier = "executable"
+        archiveClassifier.set("executable")
     }
     processResources {
         filesMatching("*.properties") {
