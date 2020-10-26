@@ -1,5 +1,6 @@
 plugins {
     id("worblehat.java-module")
+    id("worblehat.lombok")
 }
 
 dependencies {
@@ -12,9 +13,6 @@ dependencies {
 
     implementation("com.google.code.findbugs:jsr305")
     implementation("com.google.guava:guava")
-
-    compileOnly("org.projectlombok:lombok:1.18.16")
-    annotationProcessor("org.projectlombok:lombok:1.18.16")
 
     testImplementation("org.mockito:mockito-core")
     testImplementation("com.github.npathai:hamcrest-optional")

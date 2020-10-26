@@ -1,5 +1,6 @@
 plugins {
     id("worblehat.java-module")
+    id("worblehat.lombok")
     id("org.springframework.boot") version "2.3.4.RELEASE"
 }
 
@@ -19,8 +20,6 @@ dependencies {
 
     implementation("org.apache.commons:commons-lang3")
     implementation("commons-validator:commons-validator")
-    compileOnly("org.projectlombok:lombok:1.18.16")
-    annotationProcessor("org.projectlombok:lombok:1.18.16")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-junit-jupiter")

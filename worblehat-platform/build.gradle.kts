@@ -24,6 +24,7 @@ dependencies {
         api("org.apache.commons:commons-lang3:3.11")
         api("com.google.guava:guava:30.0-jre")
         api("com.google.code.findbugs:jsr305:3.0.2")
+        api("org.projectlombok:lombok:1.18.16")
 
         api("com.github.npathai:hamcrest-optional:2.0.0")
         api("org.mockito:mockito-core:3.5.15")
