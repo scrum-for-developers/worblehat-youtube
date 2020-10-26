@@ -83,7 +83,7 @@ Once the data base is started point your broser to http://localhost:8081 and log
 
 All tests are executed via JUnit, but can be conceptually divided in unit and integration tests. They are bound to different Gradle tasks to be able to execute them individually.
 
-- To run the unit tests execute `./gradlew quickCheck`. This will execute the test tasks from the worblehat-domain and worblehat-web projects.
+- To run the unit tests execute `./gradlew quickTest`. This will execute the test tasks from the worblehat-domain and worblehat-web projects excluding integration tests.
 - To run acceptance tests only execute `./gradlew :worblehat-acceptancetests:check`.
   The acceptance tests spin docker containers for all required dependencies (Database & Browser) via [Testcontainers](https://www.testcontainers.org/).
 - To run all tests execute `./gradlew check`

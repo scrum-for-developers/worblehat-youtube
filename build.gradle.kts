@@ -1,5 +1,5 @@
 apply(from = "gradle/build-scan-data.gradle")
 
-tasks.register("quickCheck") {
-    dependsOn(":worblehat-domain:check", ":worblehat-web:check")
+tasks.register("quickTest") {
+    dependsOn(":worblehat-domain:test", ":worblehat-web:quickTest")
 }

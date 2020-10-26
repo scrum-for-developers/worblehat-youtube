@@ -31,15 +31,18 @@ dependencies {
 }
 
 tasks {
-  jar {
-      enabled = true
-  }
-  bootJar {
-      classifier = "executable"
-  }
-  processResources {
-    filesMatching("*.properties") {
-      expand(project.properties)
+    jar {
+        enabled = true
     }
-  }
+    bootJar {
+        classifier = "executable"
+    }
+    processResources {
+        filesMatching("*.properties") {
+            expand(project.properties)
+        }
+    }
+    register<Test>("quickTest") {
+        exclude("**/*IT.class")
+    }
 }
