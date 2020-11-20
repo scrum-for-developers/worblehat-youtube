@@ -1,7 +1,7 @@
 package de.codecentric.psd.worblehat.acceptancetests.step.page;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 
 import de.codecentric.psd.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
@@ -39,6 +39,7 @@ public class InsertBook {
       String isbn, String title, String author, Integer edition, String year) {
     insertAndSubmitBook(isbn, title, author, edition, year, "");
   }
+
   @When("a librarian adds a book with {string}, {string}, {string}, {int}, {string}, and {string}")
   public void whenABookIsAdded(
       String isbn, String title, String author, Integer edition, String year, String description) {
@@ -54,8 +55,7 @@ public class InsertBook {
         author,
         edition,
         String.valueOf(lastInsertedBook.getYearOfPublication()),
-        lastInsertedBook.getDescription()
-        );
+        lastInsertedBook.getDescription());
   }
 
   @When("a librarian tries to add a similar book with same title, author and edition")
@@ -67,8 +67,7 @@ public class InsertBook {
         lastInsertedBook.getAuthor(),
         Integer.parseInt(lastInsertedBook.getEdition()),
         String.valueOf(lastInsertedBook.getYearOfPublication()),
-        lastInsertedBook.getDescription()
-        );
+        lastInsertedBook.getDescription());
   }
 
   // *****************
@@ -89,7 +88,16 @@ public class InsertBook {
     seleniumAdapter.gotoPage(Page.INSERTBOOKS);
     fillInsertBookForm(title, author, edition, isbn, year, description);
     seleniumAdapter.clickOnPageElementById(PageElement.ADD_BOOK_BUTTON);
-    storyContext.putObject("LAST_INSERTED_BOOK", new Book(new BookParameter(title, author, edition.toString(), isbn, Integer.parseInt(year.trim()), description)));
+    storyContext.putObject(
+        "LAST_INSERTED_BOOK",
+        new Book(
+            new BookParameter(
+                title,
+                author,
+                edition.toString(),
+                isbn,
+                Integer.parseInt(year.trim()),
+                description)));
   }
 
   private void fillInsertBookForm(

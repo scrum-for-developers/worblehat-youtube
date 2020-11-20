@@ -39,7 +39,8 @@ public class BorrowBook {
   // *** T H E N *****
   // *****************
 
-  @Then("there's an error {string}, when {string} tries to borrow the book with isbn {string} again")
+  @Then(
+      "there's an error {string}, when {string} tries to borrow the book with isbn {string} again")
   public void whenBorrowerBorrowsBorrowedBookShowErrorMessage(
       String message, String borrower, String isbn) {
     seleniumAdapter.gotoPage(Page.BORROWBOOK);

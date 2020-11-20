@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     strict = true,
     stepNotifications = true,
+    //    tags = '@Focus',
     plugin = {
       "pretty",
       "html:target/cucumber.html",

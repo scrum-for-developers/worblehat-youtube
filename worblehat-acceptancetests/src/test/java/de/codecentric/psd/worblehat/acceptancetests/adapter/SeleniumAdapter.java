@@ -7,7 +7,6 @@ import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.PageElement;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -80,12 +78,12 @@ public class SeleniumAdapter {
       chromeContainer.start();
       LOGGER.info("Connect to VNC via " + chromeContainer.getVncAddress());
       try {
-          if(SystemUtils.IS_OS_MAC)  {
-              Runtime.getRuntime().exec("open " + chromeContainer.getVncAddress());
-          }
-          if(SystemUtils.IS_OS_LINUX) {
-              Runtime.getRuntime().exec("krdc " + chromeContainer.getVncAddress());
-          }
+        if (SystemUtils.IS_OS_MAC) {
+          Runtime.getRuntime().exec("open " + chromeContainer.getVncAddress());
+        }
+        if (SystemUtils.IS_OS_LINUX) {
+          Runtime.getRuntime().exec("krdc " + chromeContainer.getVncAddress());
+        }
       } catch (IOException e) {
         // silently fail, if it's not working – e.printStackTrace();
       }
@@ -118,7 +116,8 @@ public class SeleniumAdapter {
   private void goToUrl(String url) {
     String concreteUrl = "http://host.testcontainers.internal:" + port + "/" + url;
     driver.get(concreteUrl);
-    if (driver.getPageSource().contains("Whitelabel Error Page")) throw new IllegalStateException("Page could not be found: " + url);
+    if (driver.getPageSource().contains("Whitelabel Error Page"))
+      throw new IllegalStateException("Page could not be found: " + url);
   }
 
   public void typeIntoField(String id, String value) {
