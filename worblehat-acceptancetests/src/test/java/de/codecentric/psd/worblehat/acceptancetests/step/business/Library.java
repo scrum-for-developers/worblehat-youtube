@@ -1,25 +1,23 @@
 package de.codecentric.psd.worblehat.acceptancetests.step.business;
 
+import com.google.common.base.Splitter;
+import de.codecentric.psd.worblehat.acceptancetests.step.StoryContext;
+import de.codecentric.psd.worblehat.domain.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Set;
+
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
-
-import com.google.common.base.Splitter;
-import de.codecentric.psd.worblehat.acceptancetests.step.StoryContext;
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookParameter;
-import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.Borrowing;
-import de.codecentric.psd.worblehat.domain.BorrowingRepository;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 public class Library {
 
@@ -109,7 +107,19 @@ public class Library {
     assertThat(bookRepository.count(), is(books));
   }
 
-  @Then("the new book {string} be added")
+    @Then("the library contains {int} book(s) with {string}")
+    public void shouldContainNumberOfBooksWithISBN(int books, String isbn) {
+        if (isbn.isEmpty()) return;
+        assertThat(bookRepository.findByIsbn(isbn).size(), is(books));
+    }
+
+    @Then("the library still contains all borrowed books {string}")
+    public void shouldContainOneCopyOf(String isbn) {
+        if (isbn.isEmpty()) return;
+        assertThat(bookRepository.findByIsbn(isbn).size(), is(1));
+    }
+
+    @Then("the new book {string} be added")
   public void shouldNotHaveCreatedANewCopy(String can) {
     Book lastInsertedBook = (Book) storyContext.getObject("LAST_INSERTED_BOOK");
     int numberOfCopies = "CAN".equals(can) ? 2 : 1;

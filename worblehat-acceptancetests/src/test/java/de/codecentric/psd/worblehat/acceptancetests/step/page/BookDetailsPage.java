@@ -1,21 +1,21 @@
 package de.codecentric.psd.worblehat.acceptancetests.step.page;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
-
 import de.codecentric.psd.worblehat.acceptancetests.adapter.SeleniumAdapter;
 import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.Page;
-import de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper.PageElement;
 import de.codecentric.psd.worblehat.acceptancetests.step.StoryContext;
 import de.codecentric.psd.worblehat.domain.Book;
 import de.codecentric.psd.worblehat.domain.BookService;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Optional;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
 
 public class BookDetailsPage {
 
@@ -39,8 +39,8 @@ public class BookDetailsPage {
 
   @When("a librarian removes book(s) {string}")
   public void a_librarian_removes_book(String isbn) {
-    seleniumAdapter.gotoPageWithParameter(Page.BOOKDETAILS, isbn);
-    seleniumAdapter.clickOnPageElementById(PageElement.REMOVE_BOOK_BUTTON);
+    seleniumAdapter.gotoPageWithParameter(Page.REMOVEBOOK, isbn);
+//    seleniumAdapter.clickOnPageElementById(PageElement.REMOVE_BOOK_BUTTON);
   }
 
   @Then("I can see all book details for that book")

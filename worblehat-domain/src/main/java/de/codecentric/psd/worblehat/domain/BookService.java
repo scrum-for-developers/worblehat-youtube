@@ -23,5 +23,5 @@ public interface BookService {
 
   List<Borrowing> findAllBorrowingsByEmailAddress(String emailAddress);
 
-  void removeBook(String anIsbn);
+  void removeBook(String isbn);
 }

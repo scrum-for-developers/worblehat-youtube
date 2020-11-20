@@ -8,12 +8,14 @@ Feature: Remove a copy of a book from the library
 
         When a librarian removes book "<removed_isbns>"
 
-        Then the library contains <number_of_books> books
+        Then the library contains <number_of_books> books with "123456789X"
+        And the library still contains all borrowed books "<user1_isbns>"
 
         Examples:
 
             | user1_isbns | removed_isbns | number_of_books |
-            |             | 123456789X    | 0                |
-#            | 9999999999  | 123456789X    | 0                |
-#            | 123456789X  | 123456789X    | 1                |
-#            | 9999999999  | 9999999999    | 1                |
+            |             | 123456789X    | 0               |
+            | 9999999999  | 123456789X    | 0               |
+            | 123456789X  | 123456789X    | 1               |
+            | 9999999999  | 9999999999    | 1               |
+            | 9999999999  | 8888888888    | 1               |
