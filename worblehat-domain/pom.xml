@@ -4,7 +4,7 @@
     <parent>
         <groupId>de.codecentric.psd</groupId>
         <artifactId>worblehat</artifactId>
-        <version>1.3.1-SNAPSHOT</version>
+        <version>1.3.2-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
+            <version>30.0-jre</version>
         </dependency>
         <dependency>
             <groupId>com.github.npathai</groupId>

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
@@ -78,7 +80,12 @@ public class SeleniumAdapter {
       chromeContainer.start();
       LOGGER.info("Connect to VNC via " + chromeContainer.getVncAddress());
       try {
-        Runtime.getRuntime().exec("open " + chromeContainer.getVncAddress());
+          if(SystemUtils.IS_OS_MAC)  {
+              Runtime.getRuntime().exec("open " + chromeContainer.getVncAddress());
+          }
+          if(SystemUtils.IS_OS_LINUX) {
+              Runtime.getRuntime().exec("krdc " + chromeContainer.getVncAddress());
+          }
       } catch (IOException e) {
         // silently fail, if it's not working – e.printStackTrace();
       }
