@@ -3,7 +3,6 @@ package de.codecentric.psd.worblehat.web.controller;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableSet;
@@ -46,5 +45,4 @@ public class BookDetailsControllerTest {
     Book actualBook = (Book) modelMap.get("book");
     assertThat(actualBook, is(TEST_BOOK));
   }
-
 }
