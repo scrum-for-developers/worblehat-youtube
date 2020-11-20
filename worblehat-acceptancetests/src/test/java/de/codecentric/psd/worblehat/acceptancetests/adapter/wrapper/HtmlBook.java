@@ -1,7 +1,6 @@
 package de.codecentric.psd.worblehat.acceptancetests.adapter.wrapper;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class HtmlBook {
 
@@ -100,10 +99,10 @@ public class HtmlBook {
   }
 
   public void setDueDate(LocalDate dueDate) {
-      this.dueDate = dueDate;
+    this.dueDate = dueDate;
   }
 
   public LocalDate getDueDate() {
-      return dueDate;
+    return dueDate;
   }
 }
