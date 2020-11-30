@@ -14,7 +14,7 @@ Feature: Borrowing borrowed and available books
             | isbn       | user      | message                       |
             | 0552131075 | user@test.com | The book is already borrowed. |
 
-    Scenario Outline: Borrow ignores whitespaces
+    Scenario: Borrow ignores whitespaces
 
         Given a library, containing only one book with isbn "0552131075"
         When "   test@me.com      " borrows the book "      0552131075"

@@ -4,28 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
-import static org.hamcrest.CoreMatchers.either;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class StandardBookServiceTest {
 
@@ -242,9 +228,35 @@ class StandardBookServiceTest {
 
     @Test
     void shouldReturnNonEmptyListOfBorrowingsForBorrower() {
-        when(borrowingRepository.findByBorrowerEmailAddress("sandra@worblehat.net")).thenReturn(List.of(aBorrowing));
-        List<Borrowing> borrowings = bookService.findAllBorrowingsByEmailAddress("sandra@worblehat.net");
+        when(borrowingRepository.findByBorrowerEmailAddress("sandra@worblehat.net"))
+            .thenReturn(List.of(aBorrowing));
+        List<Borrowing> borrowings =
+            bookService.findAllBorrowingsByEmailAddress("sandra@worblehat.net");
         assertThat(borrowings.size(), is(1));
+    }
+
+    @Test
+    public void shouldRemoveUnborrowedBookFromLibrary() {
+        when(bookRepository.findByIsbn(aBook.getIsbn())).thenReturn(Set.of(aBook));
+
+        bookService.removeBook(aBook.getIsbn());
+        verify(bookRepository).delete(aBook);
+    }
+
+    @Test
+    public void shouldDoNothingWhenBookCannotBeFound() {
+        when(bookRepository.findByIsbn(any())).thenReturn(Collections.emptySet());
+
+        bookService.removeBook(aBook.getIsbn());
+        verify(bookRepository, never()).delete(anyObject());
+    }
+
+    @Test
+    public void shoulNotRemoveABorrowedBook() {
+        when(bookRepository.findByIsbn(any())).thenReturn(Set.of(aBorrowedBook));
+
+        bookService.removeBook(aBorrowedBook.getIsbn());
+        verify(bookRepository, never()).delete(anyObject());
     }
 
 

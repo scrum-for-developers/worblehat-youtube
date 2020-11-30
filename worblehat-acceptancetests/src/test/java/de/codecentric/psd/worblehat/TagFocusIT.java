@@ -6,9 +6,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+    // run dedicated feature files
+    // features = {"src/test/resources/de/codecentric/psd/worblehat/features/book/Remove
+    // Book.feature"},
+    // run feature identified by a tag expression
+    tags = "@Focus",
     strict = true,
     stepNotifications = true,
-//    tags = "@Focus",
     plugin = {
       "pretty",
       "html:target/cucumber.html",
@@ -16,4 +20,4 @@ import org.junit.runner.RunWith;
       "json:target/cucumber-report.json"
     },
     publish = false)
-public class AcceptanceTestsIT {}
+public class TagFocusIT {}

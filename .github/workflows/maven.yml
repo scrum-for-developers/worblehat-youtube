@@ -61,4 +61,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Acceptance Test Report
-        path: worblehat-acceptancetests/target/cucumber
+        path: worblehat-acceptancetests/target/cucumber.html
