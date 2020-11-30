@@ -1,6 +1,6 @@
 plugins {
     java
-	id("org.springframework.boot") version "2.3.4.RELEASE"
+	id("org.springframework.boot") version "2.4.0"
 }
 
 apply(plugin = "io.spring.dependency-management")
@@ -29,7 +29,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.14.3"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0"))
     testImplementation("org.testcontainers:postgresql")
     testImplementation("com.google.guava:guava:30.0-jre") // TODO, replace with Set.of
 }
