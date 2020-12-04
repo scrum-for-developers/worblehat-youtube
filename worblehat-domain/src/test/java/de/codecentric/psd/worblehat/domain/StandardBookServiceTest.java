@@ -228,7 +228,7 @@ class StandardBookServiceTest {
 
     @Test
     void shouldReturnNonEmptyListOfBorrowingsForBorrower() {
-        when(borrowingRepository.findByBorrowerEmailAddress("sandra@worblehat.net"))
+        when(borrowingRepository.findByBorrowerEmailAddressOrderByBorrowDateAsc("sandra@worblehat.net"))
             .thenReturn(List.of(aBorrowing));
         List<Borrowing> borrowings =
             bookService.findAllBorrowingsByEmailAddress("sandra@worblehat.net");
