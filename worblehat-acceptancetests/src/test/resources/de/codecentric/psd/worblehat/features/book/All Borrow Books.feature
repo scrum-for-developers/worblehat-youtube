@@ -3,7 +3,7 @@ Feature: Show borrowed books from a single user
     @Focus
     Scenario Outline: Show borrowed books
 
-        Given a library, containing only one book with isbn "<isbns>"
+        Given a library, containing books with isbns "<isbns> <more_isbns>"
         And "<borrower>" has borrowed books "<isbns>" on <borrowDate>
         And "<borrower>" has borrowed books "<more_isbns>" on <anotherBorrowDate>
 
