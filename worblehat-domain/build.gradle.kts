@@ -15,7 +15,7 @@ dependencies {
   implementation("com.google.code.findbugs:jsr305:3.0.2")
   implementation("com.google.guava:guava:30.1-jre")
 
-  compileOnly("org.projectlombok:lombok:1.18.16")
+  compileOnly("org.projectlombok:lombok:1.18.18")
   annotationProcessor("org.projectlombok:lombok:1.18.12")
 
   testImplementation("org.mockito:mockito-core")
