@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 class StandardBookServiceTest {
 
     private static final String BORROWER_EMAIL = "someone@codecentric.de";
-    private static final Date NOW = new Date();
+    private static final LocalDate NOW = LocalDate.now();
     private BorrowingRepository borrowingRepository;
     private BookRepository bookRepository;
     private BookService bookService;
@@ -228,7 +229,7 @@ class StandardBookServiceTest {
 
     @Test
     void shouldReturnNonEmptyListOfBorrowingsForBorrower() {
-        when(borrowingRepository.findByBorrowerEmailAddress("sandra@worblehat.net"))
+        when(borrowingRepository.findByBorrowerEmailAddressOrderByBorrowDateAsc("sandra@worblehat.net"))
             .thenReturn(List.of(aBorrowing));
         List<Borrowing> borrowings =
             bookService.findAllBorrowingsByEmailAddress("sandra@worblehat.net");

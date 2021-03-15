@@ -12,5 +12,5 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
   @Modifying
   void deleteByBorrowerEmailAddress(String borrowerEmailAddress);
 
-  List<Borrowing> findByBorrowerEmailAddress(String borrowerEmailAddress);
+  List<Borrowing> findByBorrowerEmailAddressOrderByBorrowDateAsc(String borrowerEmailAddress);
 }

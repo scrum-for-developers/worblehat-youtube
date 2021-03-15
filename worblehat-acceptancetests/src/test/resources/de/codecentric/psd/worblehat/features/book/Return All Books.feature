@@ -2,7 +2,7 @@ Feature: Returning - giving back - borrowed books
 
     Scenario Outline: Returning all books at once
 
-        Given an empty library
+        Given a library, containing books with isbns "<isbns1> <isbns2>"
         And "<borrower1>" has borrowed books "<isbns1>"
         And "<borrower2>" has borrowed books "<isbns2>"
         When "<borrower1>" returns all books
@@ -18,7 +18,7 @@ Feature: Returning - giving back - borrowed books
             | user1@dings.com | 0321293533 1234567962 | user2@dings.com | 7784484156 1126108624 |
 
     Scenario: Returning books ignores whitespaces
-        Given an empty library
+        Given a library, containing books with isbns "1234567962"
         And "test@me.com" has borrowed book "1234567962"
         When "      test@me.com       " returns the book
         Then book "1234567962" is "not borrowed anymore" by "test@me.com"

@@ -78,7 +78,7 @@ public class StandardBookService implements BookService {
 
     @Override
     public List<Borrowing> findAllBorrowingsByEmailAddress(String emailAddress) {
-        return borrowingRepository.findByBorrowerEmailAddress(emailAddress);
+        return borrowingRepository.findByBorrowerEmailAddressOrderByBorrowDateAsc(emailAddress);
     }
 
     @Override

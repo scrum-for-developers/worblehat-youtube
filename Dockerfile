@@ -1,11 +1,11 @@
-FROM maven:3.6.3-openjdk-11-slim AS build
+FROM maven:3.6.3-openjdk-15-slim AS build
 
 WORKDIR /usr/local/src/worblehat_youtube
 COPY . /usr/local/src/worblehat_youtube
 
 RUN mvn clean install
 
-FROM openjdk:11-jre-slim
+FROM adoptopenjdk/openjdk15:jre-15.0.2_7-ubi-minimal
 
 ENV PORT=8080 DATABASE_PORT=5432 DATABASE_HOST=localhost
 

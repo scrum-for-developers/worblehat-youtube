@@ -3,7 +3,7 @@ Feature: Remove a copy of a book from the library
     @Focus
     Scenario Outline: Remove a book
 
-        Given a library, containing only one book with isbn "123456789X"
+        Given a library, containing books with isbn "123456789X <user1_isbns>"
         And "user1@discworld.dw" has borrowed books "<user1_isbns>"
 
         When a librarian removes book "<removed_isbns>"
