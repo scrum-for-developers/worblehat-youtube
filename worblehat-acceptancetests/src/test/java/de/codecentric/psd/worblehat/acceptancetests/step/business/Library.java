@@ -2,12 +2,7 @@ package de.codecentric.psd.worblehat.acceptancetests.step.business;
 
 import com.google.common.base.Splitter;
 import de.codecentric.psd.worblehat.acceptancetests.step.StoryContext;
-import de.codecentric.psd.worblehat.domain.Book;
-import de.codecentric.psd.worblehat.domain.BookParameter;
-import de.codecentric.psd.worblehat.domain.BookRepository;
-import de.codecentric.psd.worblehat.domain.BookService;
-import de.codecentric.psd.worblehat.domain.Borrowing;
-import de.codecentric.psd.worblehat.domain.BorrowingRepository;
+import de.codecentric.psd.worblehat.domain.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,7 +22,7 @@ import static org.hamcrest.Matchers.hasProperty;
 public class Library {
 
     @Autowired(required = true)
-    private BookService bookService;
+    private final BookService bookService;
 
     @Autowired
     private BorrowingRepository borrowingRepository;
@@ -36,7 +30,7 @@ public class Library {
     @Autowired
     private BookRepository bookRepository;
 
-    private StoryContext storyContext;
+    private final StoryContext storyContext;
 
     @Autowired
     public Library(ApplicationContext applicationContext, StoryContext storyContext) {
@@ -88,7 +82,7 @@ public class Library {
                                         .filter(book -> book.getIsbn().equals(isbn))
                                         .findFirst().orElseThrow();
 
-            Date date = Date.from(borrowDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            LocalDate date = borrowDate.atStartOfDay(ZoneId.systemDefault()).toLocalDate();
 
             Borrowing newBorrowing = new Borrowing(bookToBeBorrowed, borrower, date);
             borrowingRepository.save(newBorrowing);

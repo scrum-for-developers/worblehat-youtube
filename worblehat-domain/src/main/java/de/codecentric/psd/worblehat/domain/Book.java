@@ -1,9 +1,10 @@
 package de.codecentric.psd.worblehat.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -59,7 +60,7 @@ public class Book implements Serializable {
 
   public void borrowNowByBorrower(String borrowerEmailAddress) {
     if (borrowing == null) {
-      this.borrowing = new Borrowing(this, borrowerEmailAddress, new Date());
+      this.borrowing = new Borrowing(this, borrowerEmailAddress, LocalDate.now());
     }
   }
 }

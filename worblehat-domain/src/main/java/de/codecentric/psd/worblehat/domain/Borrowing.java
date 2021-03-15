@@ -1,19 +1,13 @@
 package de.codecentric.psd.worblehat.domain;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -31,14 +25,10 @@ public class Borrowing implements Serializable {
 
   @NonNull private String borrowerEmailAddress;
 
-  @Temporal(TemporalType.DATE)
   @NonNull
-  private Date borrowDate;
+  private LocalDate borrowDate;
 
-  public Date getDueDate() {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(borrowDate);
-    cal.add(Calendar.DATE, 28);
-    return cal.getTime();
+  public LocalDate getDueDate() {
+    return borrowDate.plusDays(28);
   }
 }

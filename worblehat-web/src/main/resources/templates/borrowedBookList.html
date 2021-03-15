@@ -33,7 +33,7 @@
                 <td th:text="${borrowing.borrowedBook.title}" />
                 <td th:text="${borrowing.borrowedBook.author}" />
                 <td th:text="${borrowing.borrowedBook.isbn}" />
-                <td th:text="${#dates.format(borrowing.dueDate, 'yyyy-MM-dd')}" />
+                <td th:text="${#temporals.format(borrowing.dueDate, 'yyyy-MM-dd')}" />
                 </td>
             </tr>
         </tbody>
