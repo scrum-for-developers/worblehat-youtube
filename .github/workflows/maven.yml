@@ -33,7 +33,7 @@ jobs:
       run: ./mvnw install
 
     - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1.22
+      uses: EnricoMi/publish-unit-test-result-action@v1.23
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
       run: ./mvnw -P runITs verify
 
     - name: Publish Acceptance Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1.22
+      uses: EnricoMi/publish-unit-test-result-action@v1.23
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
