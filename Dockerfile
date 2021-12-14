@@ -1,4 +1,4 @@
-FROM maven:3.6.3-openjdk-15-slim AS build
+FROM maven:3.8.1-openjdk-15-slim AS build
 
 WORKDIR /usr/local/src/worblehat_youtube
 COPY . /usr/local/src/worblehat_youtube
