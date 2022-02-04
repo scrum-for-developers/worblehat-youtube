@@ -59,7 +59,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.1</version>
                 <!--
                   Fixes build warning
                   [WARNING] The repository url 'http://url.to/repository' is invalid - Repository 'repository-id' will be blacklisted.
@@ -85,7 +85,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>3.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.liquibase</groupId>
@@ -187,7 +187,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.1</version>
                 <reportSets>
                     <reportSet>
                         <reports>
