@@ -1,6 +1,6 @@
 plugins {
     java
-	id("org.springframework.boot") version "2.6.4"
+	id("org.springframework.boot") version "2.6.5"
 }
 
 apply(plugin = "io.spring.dependency-management")
