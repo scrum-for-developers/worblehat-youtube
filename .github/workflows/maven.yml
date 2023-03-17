@@ -55,11 +55,11 @@ jobs:
         report_individual_runs: true
         deduplicate_classes_by_file_name: false
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Video
         path: worblehat-acceptancetests/target/*.flv
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Acceptance Test Report
         path: worblehat-acceptancetests/target/cucumber.html
