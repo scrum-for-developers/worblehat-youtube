@@ -13,7 +13,7 @@ dependencies {
   runtimeOnly("org.liquibase:liquibase-core")
 
   implementation("com.google.code.findbugs:jsr305:3.0.2")
-  implementation("com.google.guava:guava:30.1.1-jre")
+  implementation("com.google.guava:guava:31.1-jre")
 
   compileOnly("org.projectlombok:lombok:1.18.22")
   annotationProcessor("org.projectlombok:lombok:1.18.22")
