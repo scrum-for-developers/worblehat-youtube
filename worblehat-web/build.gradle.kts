@@ -20,7 +20,7 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     implementation("org.apache.commons:commons-lang3")
-    implementation("commons-validator:commons-validator:1.8.0")
+    implementation("commons-validator:commons-validator:1.9.0")
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 
