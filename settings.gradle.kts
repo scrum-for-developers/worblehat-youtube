@@ -8,7 +8,7 @@
  */
 
 plugins {
-  id("com.gradle.enterprise").version("3.16.1")
+  id("com.gradle.enterprise").version("3.17.5")
 }
 
 rootProject.name = "worblehat"
