@@ -31,7 +31,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation(platform("org.testcontainers:testcontainers-bom:1.19.8"))
     testImplementation("org.testcontainers:postgresql")
-    testImplementation("com.google.guava:guava:30.1.1-jre") // TODO, replace with Set.of
+    testImplementation("com.google.guava:guava:32.0.0-android") // TODO, replace with Set.of
 }
 
 tasks {
